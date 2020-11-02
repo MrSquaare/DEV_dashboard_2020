@@ -1,0 +1,52 @@
+{
+  "name": "frontend",
+  "version": "1.0.0",
+  "repository": "git@github.com:MrSquaare/DEV_dashboard_2020.git",
+  "contributors": [
+    {
+      "name": "Guillaume Bonnet",
+      "email": "guillaume.bonnet@epitech.eu"
+    },
+    {
+      "name": "Lucas Mathieux",
+      "email": "lucas.mathieux@epitech.eu"
+    }
+  ],
+  "license": "MIT",
+  "scripts": {
+    "build": "react-scripts build",
+    "start": "react-scripts start",
+    "lint": "eslint src/**/*.{ts,tsx}"
+  },
+  "devDependencies": {
+    "@types/react": "^16.9.54",
+    "@types/react-dom": "^16.9.9",
+    "@typescript-eslint/eslint-plugin": "^4.6.0",
+    "@typescript-eslint/parser": "^4.6.0",
+    "eslint": "^7.12.1",
+    "eslint-config-prettier": "^6.15.0",
+    "eslint-plugin-prettier": "^3.1.4",
+    "eslint-plugin-react": "^7.21.5",
+    "prettier": "^2.1.2",
+    "typescript": "^4.0.5"
+  },
+  "dependencies": {
+    "@material-ui/core": "^4.11.0",
+    "@material-ui/icons": "^4.9.1",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
+    "react-scripts": "^4.0.0"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}
