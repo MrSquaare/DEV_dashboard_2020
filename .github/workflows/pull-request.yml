@@ -1,0 +1,44 @@
+name: Pull Request
+
+on: [ pull_request ]
+
+jobs:
+
+  node:
+    name: Node
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Setup Node
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12
+
+      - name: Get Yarn cache directory
+        id: yarn-cache-directory
+        run: |
+          echo "::set-output name=path::$(yarn cache dir)"
+
+      - name: Cache
+        uses: actions/cache@v2
+        with:
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn
+          path: |
+            ${{ steps.yarn-cache-directory.outputs.path }}
+            **/node_modules
+
+      - name: Install dependencies
+        run: |
+          yarn install
+
+      - name: Lint
+        run: |
+          yarn lint
+
+      - name: Build
+        run: |
+          yarn build

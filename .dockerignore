@@ -1,0 +1,12 @@
+# Ignore all
+**
+
+# Whitelist
+!public/
+!src/
+!.eslintrc.json
+!.prettierrc.json
+!entrypoint.sh
+!package.json
+!tsconfig.json
+!yarn.lock
