@@ -9,7 +9,7 @@ const app = express();
 app.use(cors());
 
 app.get("/api", (req, res) => {
-    console.log("/api: Request received");
+    console.log("/api: Request received.");
 
     res.send("Connected with the backend.");
 });
