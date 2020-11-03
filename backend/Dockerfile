@@ -19,21 +19,21 @@ ENV PATH="${PATH}:${APP_DIRECTORY}/node_modules/.bin/"
 
 WORKDIR ${APP_DIRECTORY}
 
-COPY package.json ./
+COPY ./backend/package.json yarn.lock ./
 
 
 FROM base AS build
 
-RUN yarn install
+RUN yarn install --pure-lockfile
 
-COPY ./ ./
+COPY ./backend ./
 
 RUN yarn build
 
 
 FROM base
 
-RUN yarn install --production
+RUN yarn install --production --pure-lockfile
 
 RUN yarn cache clean --all
 

@@ -1,12 +1,16 @@
 version: "3"
 services:
   backend:
-    build: backend/
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
     environment:
       HOSTNAME: "0.0.0.0"
       PORT: "4000"
   frontend:
-    build: frontend/
+    build:
+      context: .
+      dockerfile: frontend/Dockerfile
     environment:
       BACKEND_HOST: "backend:4000"
       HOSTNAME: "0.0.0.0"
