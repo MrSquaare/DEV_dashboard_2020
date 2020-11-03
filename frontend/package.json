@@ -14,11 +14,13 @@
   ],
   "license": "MIT",
   "scripts": {
-    "build": "react-scripts build",
-    "start": "react-scripts start",
+    "build": "next build",
+    "dev": "next dev -H ${HOSTNAME:-localhost} -p ${PORT:-3000}",
+    "start": "next start -H ${HOSTNAME:-localhost} -p ${PORT:-3000}",
     "lint": "eslint src/**/*.{ts,tsx}"
   },
   "devDependencies": {
+    "@types/node": "^14.14.6",
     "@types/react": "^16.9.54",
     "@types/react-dom": "^16.9.9",
     "@typescript-eslint/eslint-plugin": "^4.6.0",
@@ -33,9 +35,9 @@
   "dependencies": {
     "@material-ui/core": "^4.11.0",
     "@material-ui/icons": "^4.9.1",
+    "next": "^10.0.0",
     "react": "^17.0.1",
-    "react-dom": "^17.0.1",
-    "react-scripts": "^4.0.0"
+    "react-dom": "^17.0.1"
   },
   "browserslist": {
     "production": [

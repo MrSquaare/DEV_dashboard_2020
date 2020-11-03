@@ -2,7 +2,7 @@ import cors from "cors";
 import express from "express";
 
 const hostname = process.env["HOSTNAME"] || "localhost";
-const port = parseInt(process.env["PORT"] || "8081");
+const port = parseInt(process.env["PORT"] || "4000");
 
 const app = express();
 
@@ -15,5 +15,5 @@ app.get("/api", (req, res) => {
 });
 
 app.listen(port, hostname, () =>
-    console.info(`Accepting connections at http://${hostname}:${port}`)
+    console.info(`ready - started server on http://${hostname}:${port}`)
 );

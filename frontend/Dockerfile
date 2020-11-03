@@ -33,13 +33,16 @@ RUN yarn build
 
 FROM base
 
-RUN yarn global add serve
+RUN yarn install --production
+
+RUN yarn cache clean --all
 
 COPY --from=build ${APP_DIRECTORY}/build/ ./build/
+COPY next.config.js ./
 
 ENV HOSTNAME="0.0.0.0"
-ENV PORT=8080
+ENV PORT=3000
 
 EXPOSE ${PORT}
 
-CMD serve -l "tcp://${HOSTNAME}:${PORT}" -s "./build/"
+CMD yarn start

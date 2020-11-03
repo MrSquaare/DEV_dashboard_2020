@@ -35,10 +35,12 @@ FROM base
 
 RUN yarn install --production
 
+RUN yarn cache clean --all
+
 COPY --from=build ${APP_DIRECTORY}/build/ ./build/
 
 ENV HOSTNAME="0.0.0.0"
-ENV PORT=8081
+ENV PORT=4000
 
 EXPOSE ${PORT}
 
