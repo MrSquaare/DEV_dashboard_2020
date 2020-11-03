@@ -1,0 +1,9 @@
+# Ignore all
+**
+
+# Whitelist
+!public/
+!src/
+!next.config.js
+!package.json
+!tsconfig.json
