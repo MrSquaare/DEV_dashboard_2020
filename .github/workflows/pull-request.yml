@@ -37,8 +37,10 @@ jobs:
 
       - name: Lint
         run: |
-          yarn lint
+          yarn backend lint
+          yarn frontend lint
 
       - name: Build
         run: |
-          yarn build
+          yarn backend build
+          yarn frontend build
