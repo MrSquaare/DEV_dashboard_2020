@@ -1,6 +1,9 @@
-name: Pull Request
+name: Backend Pull Request
 
-on: [ pull_request ]
+on:
+  pull_request:
+    paths:
+      - "backend/**"
 
 jobs:
 
@@ -38,9 +41,7 @@ jobs:
       - name: Lint
         run: |
           yarn backend lint
-          yarn frontend lint
 
       - name: Build
         run: |
           yarn backend build
-          yarn frontend build
