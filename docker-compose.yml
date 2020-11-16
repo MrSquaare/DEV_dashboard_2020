@@ -3,14 +3,14 @@ services:
   backend:
     build:
       context: .
-      dockerfile: backend/Dockerfile
+      dockerfile: server/app/Dockerfile
     environment:
       HOSTNAME: "0.0.0.0"
       PORT: "4000"
   frontend:
     build:
       context: .
-      dockerfile: frontend/Dockerfile
+      dockerfile: web/app/Dockerfile
     environment:
       BACKEND_HOST: "backend:4000"
       HOSTNAME: "0.0.0.0"

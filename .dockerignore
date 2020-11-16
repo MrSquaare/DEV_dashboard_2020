@@ -2,10 +2,10 @@
 **
 
 # Except
-!backend/src/
-!backend/*.json
-!frontend/src/
-!frontend/*.js
-!frontend/*.json
-!frontend/*.ts
+!server/**/src/**
+!server/**/*.config.js
+!server/**/*.json
+!web/**/src/**
+!web/**/*.config.js
+!web/**/*.json
 !yarn.lock

@@ -4,5 +4,8 @@ build/
 # Node
 node_modules/
 
+# Resources
+resources/
+
 # Jetbrains
 .idea/
