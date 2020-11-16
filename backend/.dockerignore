@@ -1,7 +1,0 @@
-# Ignore all
-**
-
-# Whitelist
-!src/
-!package.json
-!tsconfig.json
