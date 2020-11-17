@@ -10,6 +10,7 @@ env:
   REPOSITORY_HOST: github.com
   REPOSITORY_OWNER: EpitechIT2020
   REPOSITORY_NAME: B-DEV-500-TLS-5-1-cardgames-guillaume.bonnet
+  HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
 
 jobs:
 
