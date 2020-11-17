@@ -32,34 +32,34 @@ jobs:
         run: |
           git push git@$REPOSITORY_HOST:/$REPOSITORY_OWNER/$REPOSITORY_NAME --force
 
-    deploy:
-      name: Deploy
-      runs-on: ubuntu-latest
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
 
-      steps:
-        - uses: actions/checkout@v2
-            with:
-              fetch-depth: 0
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
 
-        - name: Build
-          run: |
-            docker-compose build
+      - name: Build
+        run: |
+          docker-compose build
 
-        - name: Tag images
-          run: |
-            docker tag dev_dashboard_2020_backend registry.heroku.com/epi-dashboard-back/web
-            docker tag dev_dashboard_2020_frontend registry.heroku.com/epi-dashboard/web
+      - name: Tag images
+        run: |
+          docker tag dev_dashboard_2020_backend registry.heroku.com/epi-dashboard-back/web
+          docker tag dev_dashboard_2020_frontend registry.heroku.com/epi-dashboard/web
 
-        - name: Login to heroku
-          run: |
-            heroku container:login
+      - name: Login to heroku
+        run: |
+          heroku container:login
 
-        - name: Push images
-          run: |
-            docker push registry.heroku.com/epi-dashboard-back/web
-            docker push registry.heroku.com/epi-dashboard/web
+      - name: Push images
+        run: |
+          docker push registry.heroku.com/epi-dashboard-back/web
+          docker push registry.heroku.com/epi-dashboard/web
 
-        - name: Re-deploy apps
-          run: |
-            heroku container:release web -a epi-dashboard-back
-            heroku container:release web -a epi-dashboard
+      - name: Re-deploy apps
+        run: |
+          heroku container:release web -a epi-dashboard-back
+          heroku container:release web -a epi-dashboard
