@@ -1,0 +1,51 @@
+{
+  "compilerOptions": {
+    /* Visit https://aka.ms/tsconfig.json to read more about this file */
+
+    /* Project Options */
+    "jsx": "preserve",
+    "lib": [
+      "DOM",
+      "DOM.Iterable",
+      "ESNext"
+    ],
+    "module": "ESNext",
+    "target": "ES6",
+    "outDir": "./build",
+    "rootDir": "./src",
+
+    /* Other Project Options */
+    "allowJs": false,
+
+    /* Advanced Project Options */
+    "isolatedModules": true,
+    "noEmit": true,
+
+    /* Lint Checks Options */
+    "noFallthroughCasesInSwitch": true,
+
+    /* Strict Checks Options */
+    "strict": true,
+
+    /* Module Resolution Options */
+    "baseUrl": "./src",
+    "moduleResolution": "Node",
+    "resolveJsonModule": true,
+
+    /* Advanced Module Resolution Options */
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+
+    /* Advanced Options */
+    "forceConsistentCasingInFileNames": true,
+    "skipLibCheck": true
+  },
+  "include": [
+    "next-env.d.ts",
+    "src/**/*.ts",
+    "src/**/*.tsx"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}
