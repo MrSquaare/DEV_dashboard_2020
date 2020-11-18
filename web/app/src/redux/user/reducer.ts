@@ -10,11 +10,11 @@ export function userReducer(
 ): UserState {
     switch (action.type) {
         case USER_SIGN_IN:
-            return {};
+            return "signin";
         case USER_SIGN_OUT:
-            return {};
+            return "signout";
         case USER_SIGN_UP:
-            return {};
+            return "signup";
         default:
             return state;
     }

@@ -1,6 +1,0 @@
-# Ignore all
-**
-
-# Except
-!**/*.ts
-!**/*.tsx
