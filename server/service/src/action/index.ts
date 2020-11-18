@@ -1,3 +1,3 @@
 export * from "./action";
-export * from "./request";
-export * from "./response";
+export * from "../model/request";
+export * from "../model/response";
