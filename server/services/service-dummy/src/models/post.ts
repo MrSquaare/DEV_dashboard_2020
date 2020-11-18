@@ -1,6 +1,6 @@
-import { Model } from "@dashboard/service";
+import { ServiceModel } from "@dashboard/service";
 
-export class PostModel implements Model {
+export class PostModel implements ServiceModel {
     id: number;
     userId: number;
     title: string;

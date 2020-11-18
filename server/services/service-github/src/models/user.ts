@@ -8,4 +8,8 @@ export class UserModel implements ServiceModel {
         this.id = id;
         this.name = name;
     }
+
+    static fromJSON(json: any): UserModel {
+        return new UserModel(json.id, json.login);
+    }
 }

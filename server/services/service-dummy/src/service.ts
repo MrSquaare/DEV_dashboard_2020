@@ -1,4 +1,4 @@
-import { Action, Service } from "@dashboard/service";
+import { ServiceAction, Service } from "@dashboard/service";
 import { PostsAction, UsersAction } from "./actions";
 
 export class DummyService extends Service {
@@ -6,7 +6,7 @@ export class DummyService extends Service {
     readonly name: string = "Dummy";
     readonly description: string = "A really dummy service";
     readonly version: string = "1.0.0";
-    readonly actions: Action[] = [new PostsAction(), new UsersAction()];
+    readonly actions: ServiceAction[] = [new PostsAction(), new UsersAction()];
 
     async load(): Promise<void> {
         console.log("Welcome!");
