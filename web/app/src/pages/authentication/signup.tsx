@@ -5,7 +5,6 @@ import {
     TextField,
     Typography,
 } from "@material-ui/core";
-import Router from "next/router";
 import React from "react";
 
 interface SignUpFormEventTarget extends EventTarget {
@@ -118,18 +117,14 @@ class SignUpPage extends React.Component {
                     email: target.email.value,
                     firstName: target.firstName.value,
                     lastName: target.lastName.value,
+                    verificationUrl:
+                        "http://localhost:3000/authentication/verify",
                 }),
             }
         );
-        const text = await response.text();
-
-        console.log(text);
-
         const json = await response.json();
 
-        sessionStorage.setItem("token", JSON.stringify(json["data"]));
-
-        await Router.push("/");
+        console.log(json);
     };
 }
 

@@ -1,13 +1,13 @@
-import { User } from "@dashboard/types";
+import { UserModel } from "@dashboard/types";
 
 export abstract class UserState {}
 
 export class UserInitialState extends UserState {}
 
 export class UserSignInState extends UserState {
-    user: User;
+    user: UserModel;
 
-    constructor(user: User) {
+    constructor(user: UserModel) {
         super();
 
         this.user = user;
