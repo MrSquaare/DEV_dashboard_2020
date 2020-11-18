@@ -2,7 +2,7 @@ import { Configuration, Core } from "@dashboard/core";
 import { existsSync } from "fs";
 
 import cli from "./cli";
-import { parseIntOrUndefined } from "./utils";
+import { parseIntOrUndefined } from "./utilities";
 
 const configurationPathDefault = "./dashboard.config.js";
 const configurationDefaults: Configuration = {
