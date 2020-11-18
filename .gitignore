@@ -4,5 +4,11 @@ build/
 # Node
 node_modules/
 
+# Next
+.next/
+
+# Resources
+resources/
+
 # Jetbrains
 .idea/

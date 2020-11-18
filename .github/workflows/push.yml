@@ -10,6 +10,7 @@ env:
   REPOSITORY_HOST: github.com
   REPOSITORY_OWNER: EpitechIT2020
   REPOSITORY_NAME: B-DEV-500-TLS-5-1-cardgames-guillaume.bonnet
+  HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
 
 jobs:
 
@@ -31,35 +32,31 @@ jobs:
       - name: Push
         run: |
           git push git@$REPOSITORY_HOST:/$REPOSITORY_OWNER/$REPOSITORY_NAME --force
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
 
-    deploy:
-      name: Deploy
-      runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
 
-      steps:
-        - uses: actions/checkout@v2
-            with:
-              fetch-depth: 0
-
-        - name: Build
-          run: |
-            docker-compose build
-
-        - name: Tag images
-          run: |
-            docker tag dev_dashboard_2020_backend registry.heroku.com/epi-dashboard-back/web
-            docker tag dev_dashboard_2020_frontend registry.heroku.com/epi-dashboard/web
-
-        - name: Login to heroku
-          run: |
-            heroku container:login
-
-        - name: Push images
-          run: |
-            docker push registry.heroku.com/epi-dashboard-back/web
-            docker push registry.heroku.com/epi-dashboard/web
-
-        - name: Re-deploy apps
-          run: |
-            heroku container:release web -a epi-dashboard-back
-            heroku container:release web -a epi-dashboard
+      - name: Build
+        run: |
+          docker build . -f server.Dockerfile -t epi-dashboard/server:latest
+          docker build . -f web.Dockerfile -t epi-dashboard/web:latest
+      - name: Tag images
+        run: |
+          docker tag epi-dashboard/server:latest registry.heroku.com/epi-dashboard-back/server
+          docker tag epi-dashboard/web:latest registry.heroku.com/epi-dashboard/web
+      - name: Login to heroku
+        run: |
+          heroku container:login
+      - name: Push images
+        run: |
+          docker push registry.heroku.com/epi-dashboard-back/server
+          docker push registry.heroku.com/epi-dashboard/web
+      - name: Re-deploy apps
+        run: |
+          heroku container:release server -a epi-dashboard-back
+          heroku container:release web -a epi-dashboard
