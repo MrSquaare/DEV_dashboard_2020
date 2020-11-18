@@ -5,8 +5,8 @@ ARG IMAGE_VERSION
 
 LABEL eu.epitech.image.created="${IMAGE_CREATION}"
 LABEL eu.epitech.image.authors="Guillaume BONNET <guillaume.bonnet@epitech.eu>, Lucas MATHIEUX <lucas.mathieux@epitech.eu>"
-LABEL eu.epitech.image.url="https://github.com/MrSquaare/DEV_dashboard_2020/server/README.md"
-LABEL eu.epitech.image.source="https://github.com/MrSquaare/DEV_dashboard_2020/server"
+LABEL eu.epitech.image.url="https://github.com/MrSquaare/DEV_dashboard_2020/web/README.md"
+LABEL eu.epitech.image.source="https://github.com/MrSquaare/DEV_dashboard_2020/web"
 LABEL eu.epitech.image.version="${IMAGE_VERSION}"
 LABEL eu.epitech.image.vendor="Epitech"
 LABEL eu.epitech.image.licenses="MIT"
@@ -21,7 +21,7 @@ WORKDIR ${APP_DIRECTORY}
 
 COPY lerna.json package.json tsconfig.json yarn.lock ./
 
-COPY ./server ./server
+COPY ./web ./web
 
 
 FROM base AS build
@@ -37,17 +37,13 @@ RUN yarn install --production --pure-lockfile
 
 RUN yarn cache clean --all
 
-COPY --from=build ${APP_DIRECTORY}/server/ ./server/
+COPY --from=build ${APP_DIRECTORY}/web/ ./web/
 
-RUN rm -rf ./server/**/src
+RUN rm -rf ./web/**/src
 
 ENV HOSTNAME="0.0.0.0"
-ENV PORT=4000
-
-ENV DATABASE_HOSTNAME=localhost
-ENV DATABASE_PORT=27017
-ENV DATABASE_DATABASE=db
+ENV PORT=3000
 
 EXPOSE ${PORT}
 
-CMD yarn start:server
+CMD yarn start:web
