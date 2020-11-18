@@ -32,7 +32,7 @@ export class Mailer {
             from: this.from,
             to: to,
             subject: subject,
-            text: body,
+            html: body,
         });
     }
 }

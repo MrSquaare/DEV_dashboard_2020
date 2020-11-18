@@ -1,12 +1,7 @@
 import { Router } from "express";
-import passport from "passport";
-import { baseRouter } from "./routers";
-import { jwtStrategy } from "./strategies";
-
-const baseRoute = "/user";
+import { userRoute } from "../../../constants";
+import { userBaseRouter } from "./routers";
 
 export const userRouter = Router();
 
-passport.use("jwt", jwtStrategy);
-
-userRouter.use(baseRoute, baseRouter);
+userRouter.use(userRoute, userBaseRouter);

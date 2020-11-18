@@ -1,22 +1,30 @@
-import { User } from "@dashboard/types";
-import express from "express";
+import { ResponseModel, UserModel } from "@dashboard/types";
+import express, { Router } from "express";
 import jwt from "jsonwebtoken";
 import passport from "passport";
+import {
+    authenticationSignInRoute,
+    signInStrategyName,
+} from "../../../../constants";
+import { errorMiddleware } from "../../../../middlewares";
+import { jwtSecret } from "../../../../variables";
 
-export const signInRouter = express.Router();
+export const authenticationSignInRouter = Router();
 
-signInRouter.post(
-    "/signin",
-    passport.authenticate("sign-in", { session: false }),
-    (req, res) => {
-        const user = req.user as User;
-        const token = jwt.sign(
-            { username: user.username },
-            process.env.JWT_SECRET || "unknown"
-        );
-
-        return res.json({
+authenticationSignInRouter.post(
+    authenticationSignInRoute,
+    passport.authenticate(signInStrategyName, {
+        failWithError: true,
+        session: false,
+    }),
+    (req: express.Request, res: express.Response) => {
+        const user = req.user as UserModel;
+        const token = jwt.sign({ username: user.username }, jwtSecret);
+        const resBody: ResponseModel = {
             data: token,
-        });
-    }
+        };
+
+        return res.json(resBody);
+    },
+    errorMiddleware()
 );

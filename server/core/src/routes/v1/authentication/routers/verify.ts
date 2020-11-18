@@ -1,47 +1,30 @@
-import { UserSchemaModel, VerificationSchemaModel } from "@dashboard/types";
-import express from "express";
+import { ResponseModel, UserModel } from "@dashboard/types";
+import express, { Router } from "express";
 import jwt from "jsonwebtoken";
+import passport from "passport";
+import {
+    authenticationVerifyRoute,
+    verifyStrategyName,
+} from "../../../../constants";
+import { errorMiddleware } from "../../../../middlewares";
+import { jwtSecret } from "../../../../variables";
 
-export const verifyRouter = express.Router();
+export const authenticationVerifyRouter = Router();
 
-verifyRouter.get("/verify/:id", (req, res) => {
-    VerificationSchemaModel.findOneAndDelete(
-        { id: req.params.id },
-        async (err, verification) => {
-            if (err) {
-                return res.status(500);
-            }
+authenticationVerifyRouter.get(
+    authenticationVerifyRoute,
+    passport.authenticate(verifyStrategyName, {
+        failWithError: true,
+        session: false,
+    }),
+    (req: express.Request, res: express.Response) => {
+        const user = req.user as UserModel;
+        const token = jwt.sign({ username: user.username }, jwtSecret);
+        const resBody: ResponseModel = {
+            data: token,
+        };
 
-            if (!verification) {
-                return res.status(404).json({
-                    data: "Verification not found",
-                });
-            }
-
-            UserSchemaModel.findOneAndUpdate(
-                { username: verification.username },
-                { verified: true },
-                (err, user) => {
-                    if (err) {
-                        return res.status(500);
-                    }
-
-                    if (!user) {
-                        return res.status(404).json({
-                            data: "User not found",
-                        });
-                    }
-
-                    const token = jwt.sign(
-                        { username: user.username },
-                        process.env.JWT_SECRET || "unknown"
-                    );
-
-                    return res.json({
-                        data: token,
-                    });
-                }
-            );
-        }
-    );
-});
+        return res.json(resBody);
+    },
+    errorMiddleware()
+);

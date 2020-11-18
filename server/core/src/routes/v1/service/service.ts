@@ -1,27 +1,11 @@
-import { Service } from "@dashboard/service";
 import { Router } from "express";
-import passport from "passport";
-import { serviceMiddleware } from "./middlewares";
-import { actionRouter } from "./routers";
-import { authenticationRouter } from "./authentication";
-import { baseRouter } from "./routers";
+import { serviceRoute } from "../../../constants";
+import { serviceMiddleware } from "../../../middlewares";
+import { serviceActionRouter, serviceBaseRouter } from "./routers";
 
-const baseRoute = "/:service";
+export const serviceRouter = Router();
 
-export function serviceRouter(services: Service[]): Router {
-    const router = Router();
+serviceRouter.use(serviceRoute, serviceMiddleware());
 
-    for (const service of services) {
-        if (service.strategy) {
-            passport.use(service.id, service.strategy);
-        }
-    }
-
-    router.use(baseRoute, serviceMiddleware(services));
-
-    router.use(baseRoute, baseRouter);
-    router.use(baseRoute, authenticationRouter);
-    router.use(baseRoute, actionRouter);
-
-    return router;
-}
+serviceRouter.use(serviceRoute, serviceBaseRouter);
+serviceRouter.use(serviceRoute, serviceActionRouter);

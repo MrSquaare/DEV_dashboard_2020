@@ -1,3 +1,3 @@
-import apiRoute from "./apiRoute";
+import { apiRouter } from "./api";
 
-export default apiRoute;
+export default apiRouter;

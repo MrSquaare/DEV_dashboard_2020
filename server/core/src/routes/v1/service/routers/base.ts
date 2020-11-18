@@ -1,20 +1,11 @@
-import express from "express";
+import { ResponseModel } from "@dashboard/types";
+import express, { Router } from "express";
 
-export const baseRouter = express.Router();
+export const serviceBaseRouter = Router();
 
-baseRouter.all("/", async (req, res) => {
-    const resBody = {
-        id: req.service.id,
-        name: req.service.name,
-        description: req.service.description,
-        version: req.service.version,
-        actions: req.service.actions.map((action) => {
-            return {
-                id: action.id,
-                name: action.name,
-                description: action.description,
-            };
-        }),
+serviceBaseRouter.get("/", (req: express.Request, res: express.Response) => {
+    const resBody: ResponseModel = {
+        data: req.service,
     };
 
     return res.json(resBody);

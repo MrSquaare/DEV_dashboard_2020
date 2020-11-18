@@ -1,17 +1,12 @@
-import { User } from "@dashboard/types";
+import { ResponseModel } from "@dashboard/types";
 import { Router } from "express";
-import passport from "passport";
 
-export const baseRouter = Router();
+export const userBaseRouter = Router();
 
-baseRouter.get(
-    "/",
-    passport.authenticate("jwt", { session: false }),
-    (req, res) => {
-        const user = req.user as User;
+userBaseRouter.get("/", (req, res) => {
+    const resBody: ResponseModel = {
+        data: req.user,
+    };
 
-        return res.json({
-            data: user,
-        });
-    }
-);
+    return res.json(resBody);
+});

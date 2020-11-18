@@ -1,25 +1,15 @@
 import { Router } from "express";
-import { Mailer } from "mailer/mailer";
-import passport from "passport";
-import { signInRouter, signUpRouter } from "./routers";
-import { verifyRouter } from "./routers/verify";
-import { deserialize, serialize } from "./serializers";
-import { signInStrategy, signUpStrategy } from "./strategies";
+import { authenticationRoute } from "../../../constants";
+import {
+    authenticationSignInRouter,
+    authenticationSignUpRouter,
+    authenticationVerifyRouter,
+} from "./routers";
+import authenticationServiceRouter from "./service";
 
-const baseRoute = "/authentication";
+export const authenticationRouter = Router();
 
-export function authenticationRouter(mailer: Mailer): Router {
-    const router = Router();
-
-    passport.serializeUser(serialize);
-    passport.deserializeUser(deserialize);
-
-    passport.use("sign-in", signInStrategy);
-    passport.use("sign-up", signUpStrategy(mailer));
-
-    router.use(baseRoute, signInRouter);
-    router.use(baseRoute, signUpRouter);
-    router.use(baseRoute, verifyRouter);
-
-    return router;
-}
+authenticationRouter.use(authenticationRoute, authenticationServiceRouter);
+authenticationRouter.use(authenticationRoute, authenticationSignInRouter);
+authenticationRouter.use(authenticationRoute, authenticationSignUpRouter);
+authenticationRouter.use(authenticationRoute, authenticationVerifyRouter);

@@ -1,25 +1,19 @@
-import express from "express";
+import { ResponseModel } from "@dashboard/types";
+import express, { Router } from "express";
+import { serviceActionRoute } from "../../../../constants";
+import { serviceActionMiddleware } from "../../../../middlewares";
 
-export const actionRouter = express.Router();
+export const serviceActionRouter = Router();
 
-actionRouter.all("/:action", async (req, res) => {
-    const action = req.service.actions.find(
-        (action) => action.id === req.params.action
-    );
+serviceActionRouter.use(serviceActionRoute, serviceActionMiddleware());
 
-    if (action === undefined) {
-        return res.status(404).json({
-            error: "Action not found",
-        });
-    }
-
-    try {
-        const actionResponse = await action.run({
+serviceActionRouter.all(
+    serviceActionRoute,
+    async (req: express.Request, res: express.Response) => {
+        const resBody: ResponseModel = await req.action.run({
             parameters: req.body,
         });
 
-        return res.json(actionResponse);
-    } catch (e) {
-        return res.status(500).json(e);
+        return res.json(resBody);
     }
-});
+);

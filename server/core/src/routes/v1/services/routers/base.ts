@@ -1,7 +1,12 @@
+import { ResponseModel } from "@dashboard/types";
 import { Router } from "express";
 
-export const baseRouter = Router();
+export const servicesBaseRouter = Router();
 
-baseRouter.get("/", (req, res) => {
-    return res.json(req.services);
+servicesBaseRouter.get("/", (req, res) => {
+    const resBody: ResponseModel = {
+        data: req.services,
+    };
+
+    return res.json(resBody);
 });
