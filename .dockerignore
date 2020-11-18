@@ -2,10 +2,13 @@
 **
 
 # Except
-!server/**/src/**
-!server/**/*.config.js
-!server/**/*.json
-!web/**/src/**
-!web/**/*.config.js
-!web/**/*.json
+!server/
+!web/
+!lerna.json
+!package.json
+!tsconfig.json
 !yarn.lock
+
+# Ignore specifics
+**/node_modules/
+**/build/

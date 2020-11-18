@@ -5,6 +5,13 @@
     "server/**",
     "web/**"
   ],
+  "scripts": {
+    "build": "lerna run build",
+    "clean": "lerna run clean",
+    "fclean": "lerna run fclean",
+    "start:server": "yarn workspace @dashboard/app start",
+    "start:web": "yarn workspace @dashboard-web/app start"
+  },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^4.7.0",
     "@typescript-eslint/parser": "^4.7.0",
