@@ -1,7 +1,7 @@
 import mongoose, { Document, Schema } from "mongoose";
-import { Verification } from "../models";
+import { VerificationModel } from "../models";
 
-type VerificationDocument = Verification & Document;
+type VerificationDocument = VerificationModel & Document;
 
 const VerificationSchema = new Schema({
     id: { type: String, required: true, unique: true },

@@ -1,8 +1,8 @@
 import bcrypt from "bcrypt";
 import mongoose, { Document, Schema } from "mongoose";
-import { User } from "../models";
+import { UserModel } from "../models";
 
-type UserDocument = User & Document;
+type UserDocument = UserModel & Document;
 
 const UserSchema = new Schema({
     username: { type: String, required: true, unique: true },
@@ -20,11 +20,15 @@ UserSchema.methods.comparePassword = async function (password: string) {
 };
 
 UserSchema.pre<UserDocument>("save", async function (next) {
-    const hashedPassword = await bcrypt.hash(this.password, 10);
+    try {
+        const hashedPassword = await bcrypt.hash(this.password, 10);
 
-    this.password = hashedPassword;
+        this.password = hashedPassword;
 
-    return next();
+        return next();
+    } catch (e) {
+        return next(e);
+    }
 });
 
 export const UserSchemaModel = mongoose.model<UserDocument>("User", UserSchema);

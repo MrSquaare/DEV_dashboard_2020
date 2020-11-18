@@ -13,11 +13,15 @@
   },
   "devDependencies": {
     "@types/bcrypt": "^3.0.0",
+    "@types/crypto-js": "^4.0.1",
     "@types/mongoose": "^5.10.0",
+    "@types/uuid": "^8.3.0",
     "typescript": "^4.0.5"
   },
   "dependencies": {
     "bcrypt": "^5.0.0",
-    "mongoose": "^5.10.13"
+    "crypto-js": "^4.0.0",
+    "mongoose": "^5.10.13",
+    "uuid": "^8.3.1"
   }
 }
