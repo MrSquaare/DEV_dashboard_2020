@@ -21,10 +21,17 @@ WORKDIR ${APP_DIRECTORY}
 
 COPY lerna.json package.json tsconfig.json yarn.lock ./
 
-COPY ./web ./web
 
 
 FROM base AS build
+
+COPY ./web ./web
+
+COPY ./server/service/ ./server/service/
+
+COPY ./server/services/ ./server/services/
+
+COPY ./server/types/ ./server/types/
 
 RUN yarn install --pure-lockfile
 
