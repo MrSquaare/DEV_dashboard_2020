@@ -5,11 +5,10 @@ import IconButton from '@material-ui/core/IconButton';
 import AddBoxIcon from '@material-ui/icons/AddBox';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import GitHubIcon from '@material-ui/icons/GitHub';
 import {
-    Button, Collapse,
+    Button,
     createStyles, Divider,
-    Drawer, List, ListItem, ListItemIcon, ListItemText, ListSubheader,
+    Drawer,
     Menu,
     MenuItem,
     Theme,
@@ -17,9 +16,8 @@ import {
     Typography
 } from "@material-ui/core";
 import {makeStyles} from "@material-ui/core/styles";
-import {FunctionComponent} from "react";
 import Image from "next/image";
-import {ExpandLess, ExpandMore} from "@material-ui/icons";
+import ServiceListComponent from "../components/sidebar/service/list";
 
 
 const drawerWidth = 240;
@@ -79,12 +77,11 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 );
 
-const IndexPage: FunctionComponent = () => {
+const IndexPage: React.FunctionComponent = () => {
     const classes = useStyles();
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
     const [drawerOpen, drawerSetOpen] = React.useState(false);
-    const [githubOpen, githubSetOpen] = React.useState(false);
 
     const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorEl(event.currentTarget);
@@ -98,11 +95,8 @@ const IndexPage: FunctionComponent = () => {
         drawerSetOpen(!drawerOpen);
     };
 
-    const handleGithubClick = () => {
-        githubSetOpen(!githubOpen)
-    };
-
     return (<div className={classes.root}>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
         <AppBar
             position={"fixed"}
             className={clsx(classes.appBar, {
@@ -174,34 +168,7 @@ const IndexPage: FunctionComponent = () => {
                 </IconButton>
             </div>
             <Divider/>
-            <List
-                component={"nav"}
-                aria-labelledby="nested-list-subheader"
-                subheader={
-                    <ListSubheader component="div" id="nested-list-subheader">
-                        Services List
-                    </ListSubheader>
-                }
-                className={classes.list}
-            >
-                <ListItem button onClick={handleGithubClick}>
-                    <ListItemIcon>
-                        <GitHubIcon/>
-                    </ListItemIcon>
-                    <ListItemText primary="GitHub"/>
-                    {githubOpen ? <ExpandLess/> : <ExpandMore/>}
-                </ListItem>
-                <Collapse in={githubOpen} timeout="auto" unmountOnExit>
-                    <List component="div" disablePadding>
-                        <ListItem button className={classes.nested}>
-                            <ListItemIcon>
-                                <GitHubIcon/>
-                            </ListItemIcon>
-                            <ListItemText primary="Widget 1"/>
-                        </ListItem>
-                    </List>
-                </Collapse>
-            </List>
+            <ServiceListComponent/>
         </Drawer>
     </div>);
 };
