@@ -1,7 +1,7 @@
 import * as Crypto from "crypto";
 import * as crypto from "crypto-js";
 
-export function oauthAuthorizationGenerator(
+export function oauthAuthorization(
     consumerKey: string,
     consumerSecret: string,
     token: string,
