@@ -1,14 +1,16 @@
+import { IUserLocalRepository, User, UserLocal } from "@dashboard/types";
 import * as mongoose from "mongoose";
 import { Document, Model } from "mongoose";
-import { UserSchema } from "../../schemas/user";
-import { hash } from "../../security/hashing";
-import { IUserRepository } from "@dashboard/types";
-import { User, UserAccount } from "@dashboard/types";
+import { UserLocalSchema } from "../../schemas";
+import { hash } from "../../security";
 
-export class UserRepository implements IUserRepository {
-    model: Model<UserAccount & Document> = mongoose.model("user", UserSchema);
+export class UserLocalRepository implements IUserLocalRepository {
+    model: Model<UserLocal & Document> = mongoose.model(
+        "local_user",
+        UserLocalSchema
+    );
 
-    async create(user: UserAccount): Promise<void> {
+    async create(user: UserLocal): Promise<void> {
         if (user.password) {
             user.password = hash(user.password);
         }
@@ -28,7 +30,7 @@ export class UserRepository implements IUserRepository {
 
     async update(
         username: string,
-        user: Partial<UserAccount>
+        user: Partial<UserLocal>
     ): Promise<User | undefined> {
         if (user?.password) {
             user.password = hash(user.password);

@@ -1,7 +1,7 @@
 import * as mongoose from "mongoose";
 import { Document, Model } from "mongoose";
-import { UserSettingSchema } from "../../schemas/user";
-import { decrypt, encrypt } from "../../security/encryption";
+import { UserSettingSchema } from "../../schemas";
+import { decrypt, encrypt } from "../../security";
 import { IUserSettingRepository } from "@dashboard/types";
 import { UserSetting } from "@dashboard/types";
 

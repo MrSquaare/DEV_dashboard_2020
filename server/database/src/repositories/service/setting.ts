@@ -1,9 +1,8 @@
+import { IServiceSettingRepository, ServiceSetting } from "@dashboard/types";
 import * as mongoose from "mongoose";
 import { Document, Model } from "mongoose";
-import { ServiceSettingSchema } from "../../schemas/service";
-import { decrypt, encrypt } from "../../security/encryption";
-import { IServiceSettingRepository } from "@dashboard/types";
-import { ServiceSetting } from "@dashboard/types";
+import { ServiceSettingSchema } from "../../schemas";
+import { decrypt, encrypt } from "../../security";
 
 export class ServiceSettingRepository implements IServiceSettingRepository {
     model: Model<ServiceSetting & Document>;
