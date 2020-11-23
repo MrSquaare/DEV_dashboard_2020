@@ -1,6 +1,6 @@
 import { User } from "./user";
 
-export type UserAccount = User & {
+export type UserLocal = User & {
     password: string;
     verification: string;
 };

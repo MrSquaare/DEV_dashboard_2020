@@ -1,7 +1,7 @@
-import { User, UserAccount } from "../../user";
+import { User, UserLocal } from "../../user";
 
-export interface IUserRepository {
-    create(user: UserAccount): Promise<void>;
+export interface IUserLocalRepository {
+    create(user: UserLocal): Promise<void>;
 
     delete(username: string): Promise<void>;
 
@@ -9,7 +9,7 @@ export interface IUserRepository {
 
     update(
         username: string,
-        user: Partial<UserAccount>
+        user: Partial<UserLocal>
     ): Promise<User | undefined>;
 
     comparePassword(username: string, password: string): Promise<boolean>;
