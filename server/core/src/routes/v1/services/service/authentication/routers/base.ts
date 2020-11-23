@@ -1,21 +1,15 @@
 import { Router } from "express";
-import passport from "passport";
-import {
-    jwtStrategyName,
-    serviceAuthenticationBaseRoute,
-} from "../../../../../../constants";
+import passport, { AuthenticateOptions } from "passport";
+import { serviceAuthenticationBaseRoute } from "../../../../../../constants";
 
 export const serviceAuthenticationBaseRouter = Router();
 
 serviceAuthenticationBaseRouter.get(
     serviceAuthenticationBaseRoute,
-    passport.authenticate(jwtStrategyName, { session: false }),
     (req, res, next) => {
-        const userStr = req.user ? JSON.stringify(req.user) : undefined;
-
         passport.authenticate(req.service.id, {
+            callbackURL: req.query.redirect,
             session: false,
-            state: userStr,
-        })(req, res, next);
+        } as AuthenticateOptions)(req, res, next);
     }
 );

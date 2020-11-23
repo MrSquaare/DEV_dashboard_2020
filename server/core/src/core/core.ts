@@ -38,8 +38,6 @@ export class Core {
         useMiddlewares(this.express, this.mailer, this.services);
         useServices(this.services);
         useStrategies(this.repository);
-
-        this.express.use(v1Router);
     }
 
     initialize(): void {

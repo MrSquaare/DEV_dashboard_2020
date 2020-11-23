@@ -1,6 +1,6 @@
 import { Mailer } from "@dashboard/mailer";
 import { Service } from "@dashboard/service";
-import express from "express";
+import { NextFunction, Request, Response } from "express";
 
 declare global {
     namespace Express {
@@ -14,11 +14,7 @@ declare global {
 }
 
 export function coreMiddleware(mailer: Mailer, services: Service[]) {
-    return function (
-        req: express.Request,
-        res: express.Response,
-        next: express.NextFunction
-    ) {
+    return function (req: Request, res: Response, next: NextFunction) {
         req.mailer = mailer;
         req.services = services;
 

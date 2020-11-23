@@ -1,7 +1,13 @@
 import { UserRepository } from "@dashboard/database";
+import jwt, { JsonWebTokenError } from "jsonwebtoken";
 import { Strategy } from "passport-custom";
-import jwt from "jsonwebtoken";
-import { jwtSecret } from "../constants";
+import {
+    badRequestStatus,
+    internalServerErrorStatus,
+    jwtInvalid,
+    jwtSecret,
+    userDontExist,
+} from "../constants";
 
 export function jwtStrategy(repository: UserRepository) {
     return new Strategy(async (req, done) => {
@@ -9,11 +15,11 @@ export function jwtStrategy(repository: UserRepository) {
             const authorization = req.headers.authorization?.split(" ");
 
             if (!authorization) {
-                return done(null, false);
+                return done(badRequestStatus);
             }
 
             if (authorization[0] !== "JWT") {
-                return done(null, false);
+                return done(badRequestStatus);
             }
 
             const token = authorization[1];
@@ -23,12 +29,18 @@ export function jwtStrategy(repository: UserRepository) {
             const user = await repository.read(username.toString());
 
             if (!user) {
-                return done(null, false);
+                return done(userDontExist);
             }
 
             return done(null, user);
         } catch (e) {
-            return done(e);
+            if (e instanceof JsonWebTokenError) {
+                return done(jwtInvalid);
+            }
+
+            console.error(e);
+
+            return done(internalServerErrorStatus);
         }
     });
 }

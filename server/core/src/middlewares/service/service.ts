@@ -1,5 +1,6 @@
 import { Service } from "@dashboard/service";
-import express from "express";
+import { NextFunction, Request, Response } from "express";
+import { serviceNotFoundStatus } from "../../constants";
 
 declare global {
     namespace Express {
@@ -10,17 +11,13 @@ declare global {
 }
 
 export function serviceMiddleware() {
-    return function (
-        req: express.Request,
-        res: express.Response,
-        next: express.NextFunction
-    ) {
+    return function (req: Request, res: Response, next: NextFunction) {
         const service = req.services.find(
             (service) => service.id === req.params.service
         );
 
         if (service === undefined) {
-            return res.status(404).send("Not found");
+            return next(serviceNotFoundStatus);
         }
 
         req.service = service;

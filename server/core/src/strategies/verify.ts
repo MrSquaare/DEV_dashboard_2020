@@ -1,5 +1,12 @@
 import { UserRepository } from "@dashboard/database";
 import { Strategy } from "passport-custom";
+import {
+    badRequestStatus,
+    internalServerErrorStatus,
+    userDontExist,
+    userVerified,
+    verificationInvalid
+} from "../constants";
 
 export function verifyStrategy(repository: UserRepository) {
     return new Strategy(async (req, done) => {
@@ -8,26 +15,32 @@ export function verifyStrategy(repository: UserRepository) {
             const id = req.query.id as string | undefined;
 
             if (!username || !id) {
-                return done(null, false);
+                return done(badRequestStatus);
             }
 
             const user = await repository.read(username);
 
-            if (!user || user.verified) {
-                return done(null, false);
+            if (!user) {
+                return done(userDontExist);
+            }
+
+            if (user.verified) {
+                return done(userVerified);
             }
 
             const valid = await repository.compareVerification(username, id);
 
             if (!valid) {
-                return done(null, false);
+                return done(verificationInvalid);
             }
 
             await repository.update(username, { verified: valid });
 
             return done(null, user);
         } catch (e) {
-            return done(e);
+            console.error(e);
+
+            return done(internalServerErrorStatus);
         }
     });
 }

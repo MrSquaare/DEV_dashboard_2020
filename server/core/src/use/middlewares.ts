@@ -5,6 +5,7 @@ import { Express, json } from "express";
 import morgan from "morgan";
 import passport from "passport";
 import { coreMiddleware, errorMiddleware } from "../middlewares";
+import { v1Router } from "../routes/v1";
 
 export function useMiddlewares(
     express: Express,
@@ -17,6 +18,9 @@ export function useMiddlewares(
     express.use(json());
 
     express.use(coreMiddleware(mailer, services));
+
+    express.use(v1Router);
+
     express.use(errorMiddleware());
 
     express.use(passport.initialize());

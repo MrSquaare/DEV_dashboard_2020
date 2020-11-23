@@ -4,6 +4,7 @@ import { serviceAuthenticationMiddleware } from "../../../../../middlewares";
 import {
     serviceAuthenticationBaseRouter,
     serviceAuthenticationCallbackRouter,
+    serviceAuthenticationStateRouter,
 } from "./routers";
 
 export const serviceAuthenticationRouter = Router();
@@ -21,4 +22,9 @@ serviceAuthenticationRouter.use(
 serviceAuthenticationRouter.use(
     serviceAuthenticationRoute,
     serviceAuthenticationCallbackRouter
+);
+
+serviceAuthenticationRouter.use(
+    serviceAuthenticationRoute,
+    serviceAuthenticationStateRouter
 );

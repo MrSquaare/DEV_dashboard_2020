@@ -1,22 +1,23 @@
 import { Router } from "express";
 import passport from "passport";
-import { serviceAuthenticationCallbackRoute } from "../../../../../../constants";
+import {
+    jwtStrategyName,
+    serviceAuthenticationCallbackRoute,
+} from "../../../../../../constants";
 
 export const serviceAuthenticationCallbackRouter = Router();
 
 serviceAuthenticationCallbackRouter.get(
     serviceAuthenticationCallbackRoute,
+    passport.authenticate(jwtStrategyName, { session: false }),
     (req, res, next) => {
-        const userStr = req.query.state as string;
-
-        if (userStr) {
-            req.user = JSON.parse(userStr);
-        }
-
         passport.authenticate(req.service.id, { session: false })(
             req,
             res,
             next
         );
+    },
+    (req, res) => {
+        res.send("<script>window.close();</script>");
     }
 );
