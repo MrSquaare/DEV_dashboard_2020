@@ -1,4 +1,5 @@
 export * from "./database";
+export * from "./error";
 export * from "./http";
 export * from "./mailer";
 export * from "./repositories";
