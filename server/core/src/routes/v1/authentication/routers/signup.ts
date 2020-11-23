@@ -1,27 +1,33 @@
-import { ResponseModel } from "@dashboard/types";
+import { UserAccount } from "@dashboard/types";
 import express, { Router } from "express";
 import passport from "passport";
 import {
     authenticationSignUpRoute,
     signUpStrategyName,
-    verificationEmailSentStatus,
 } from "../../../../constants";
-import { errorMiddleware } from "../../../../middlewares";
+import { verifyTemplate } from "../../../../templates/verify";
 
 export const authenticationSignUpRouter = Router();
 
 authenticationSignUpRouter.post(
     authenticationSignUpRoute,
-    passport.authenticate(signUpStrategyName, {
-        failWithError: true,
-        session: false,
-    }),
-    (req: express.Request, res: express.Response) => {
-        const resBody: ResponseModel = {
-            success: verificationEmailSentStatus,
-        };
+    passport.authenticate(signUpStrategyName, { session: false }),
+    async (req: express.Request, res: express.Response) => {
+        const user = req.user as UserAccount;
+        const serverURL = `${req.protocol}://${req.hostname}:${req.port}`;
+        const baseURL = `${serverURL}/v1/authentication/verify`;
+        let URL = `${baseURL}?username=:username&id=:id`;
 
-        return res.json(resBody);
-    },
-    errorMiddleware()
+        URL = URL.replace(":username", user.username);
+        URL = URL.replace(":id", user.verification);
+
+        const mail = verifyTemplate(user, {
+            baseURL: baseURL,
+            URL: URL,
+        });
+
+        await req.mailer.send(mail);
+
+        res.send("Success");
+    }
 );

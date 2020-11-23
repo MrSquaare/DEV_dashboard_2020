@@ -1,37 +1,31 @@
-import { UserSchemaModel } from "@dashboard/types";
-import { Strategy } from "passport-local";
-import {
-    internalServerStatus,
-    userNotFoundStatus,
-    userNotVerifiedStatus,
-} from "../constants";
+import { UserRepository } from "@dashboard/database";
+import { Strategy } from "passport-custom";
 
-export function signInStrategy() {
-    return new Strategy(async (username, password, done) => {
+export function signInStrategy(repository: UserRepository) {
+    return new Strategy(async (req, done) => {
         try {
-            const user = await UserSchemaModel.findOne({
-                username: username,
-            }).exec();
+            const username = req.body.username;
+            const password = req.body.password;
 
-            if (!user) {
-                return done(userNotFoundStatus, false);
+            if (!username || !password) {
+                return done(null, false);
             }
 
-            const comparedPassword = await user.comparePassword(password);
+            const user = await repository.read(username);
 
-            if (!comparedPassword) {
-                return done(userNotFoundStatus, false);
+            if (!user || !user.verified) {
+                return done(null, false);
             }
 
-            const verified = user.verified;
+            const valid = await repository.comparePassword(username, password);
 
-            if (!verified) {
-                return done(userNotVerifiedStatus, false);
+            if (!valid) {
+                return done(null, false);
             }
 
             return done(null, user);
-        } catch (err) {
-            return done(internalServerStatus);
+        } catch (e) {
+            return done(e);
         }
     });
 }

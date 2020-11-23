@@ -1,17 +1,12 @@
-import { ResponseModel, StatusModel } from "@dashboard/types";
-import express from "express";
+import { NextFunction, Request, Response } from "express";
 
 export function errorMiddleware() {
     return function (
-        err: StatusModel,
-        req: express.Request,
-        res: express.Response,
-        next: express.NextFunction
+        err: unknown,
+        req: Request,
+        res: Response,
+        next: NextFunction
     ) {
-        const resBody: ResponseModel = {
-            error: err,
-        };
-
-        return res.status(err.code).json(resBody);
+        return res.status(500).send("Internal server error");
     };
 }
