@@ -4,12 +4,13 @@
   "description": "App of Dashboard",
   "license": "MIT",
   "scripts": {
-    "start": "dash",
+    "start": "dboard",
     "fclean": "rm -rf node_modules/"
   },
   "dependencies": {
     "@dashboard/cli": "*",
-    "@dashboard/service-dummy": "*",
-    "@dashboard/service-github": "*"
+    "@dashboard/service-facebook": "*",
+    "@dashboard/service-github": "*",
+    "@dashboard/service-twitter": "*"
   }
 }
