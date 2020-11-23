@@ -1,26 +1,27 @@
 import {
+    OAuth2,
+    OAuth2Options,
+    OAuth2Verify,
+    OAuth2VerifyCallback,
+} from "@dashboard/oauth";
+import {
     ServiceRequest,
     ServiceResponse,
     ServiceSetting,
     User,
 } from "@dashboard/types";
 import { ServiceAction } from "../action";
-import {
-    ServiceOAuth2Options,
-    ServiceOAuth2Verify,
-    ServiceOAuth2VerifyCallback,
-} from "../types";
 import { Service } from "./service";
 
-export abstract class ServiceOAuth2 extends Service {
+export abstract class ServiceOAuth2 extends Service implements OAuth2 {
     abstract readonly id: string;
     abstract readonly name: string;
     abstract readonly description: string;
     abstract readonly version: string;
     abstract readonly actions: ServiceAction[];
-    abstract readonly oauth2Options: ServiceOAuth2Options;
+    abstract readonly options: OAuth2Options;
 
-    async oauth2State(request: ServiceRequest): Promise<ServiceResponse> {
+    async state(request: ServiceRequest): Promise<ServiceResponse> {
         const token = await this.repository?.read(
             request.user.username,
             "accessToken"
@@ -32,12 +33,11 @@ export abstract class ServiceOAuth2 extends Service {
         };
     }
 
-    get oauth2Verify(): ServiceOAuth2Verify {
+    verify(user: User): OAuth2Verify {
         return async (
-            user: User,
             accessToken: string,
             refreshToken: string,
-            done: ServiceOAuth2VerifyCallback
+            done: OAuth2VerifyCallback
         ) => {
             const accessTokenSetting: ServiceSetting = {
                 username: user.username,

@@ -1,14 +1,14 @@
+import { ServiceActionRequest, ServiceActionResponse } from "@dashboard/types";
 import { ServiceAction } from "./action";
-import { ServiceRequest, ServiceResponse } from "@dashboard/types";
 
 export abstract class ServiceActionSettings<T> extends ServiceAction {
     abstract readonly id: string;
     abstract readonly name: string;
     abstract readonly description: string;
 
-    abstract run(request: ServiceRequest): Promise<ServiceResponse>;
+    abstract run(request: ServiceActionRequest): Promise<ServiceActionResponse>;
 
-    abstract mapRequestToSettings(request: ServiceRequest): Partial<T>;
+    abstract mapRequestToSettings(request: ServiceActionRequest): Partial<T>;
 
     async settingsDelete(username: string, instance: string) {
         const key = `${this.id}/${instance}`;

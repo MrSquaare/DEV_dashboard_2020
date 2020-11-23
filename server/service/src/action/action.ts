@@ -1,9 +1,9 @@
 import {
     IServiceAction,
-    ServiceRequest,
-    ServiceResponse,
+    IServiceSettingRepository,
+    ServiceActionRequest,
+    ServiceActionResponse,
 } from "@dashboard/types";
-import { IServiceSettingRepository } from "@dashboard/types";
 
 export abstract class ServiceAction implements IServiceAction {
     abstract readonly id: string;
@@ -11,7 +11,7 @@ export abstract class ServiceAction implements IServiceAction {
     abstract readonly description: string;
     protected repository?: IServiceSettingRepository;
 
-    abstract run(request: ServiceRequest): Promise<ServiceResponse>;
+    abstract run(request: ServiceActionRequest): Promise<ServiceActionResponse>;
 
     initialize(repository: IServiceSettingRepository) {
         this.repository = repository;
