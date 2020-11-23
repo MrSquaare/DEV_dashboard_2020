@@ -8,9 +8,9 @@ type Settings = {
 };
 
 export class TwitterFollowingAction extends ServiceActionSettings<Settings> {
-    readonly id: string = "followers";
-    readonly name: string = "Followers";
-    readonly description: string = "Followers action";
+    readonly id: string = "following";
+    readonly name: string = "Following";
+    readonly description: string = "Following action";
 
     async run(request: ServiceRequest): Promise<ServiceResponse> {
         const token = await this.repository?.read(
@@ -46,8 +46,6 @@ export class TwitterFollowingAction extends ServiceActionSettings<Settings> {
         );
 
         if (response.status !== 200) {
-            console.log(await response.json());
-
             return {
                 code: response.status,
             };

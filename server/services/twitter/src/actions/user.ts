@@ -46,16 +46,12 @@ export class TwitterUserAction extends ServiceActionSettings<Settings> {
         );
 
         if (response.status !== 200) {
-            console.log(await response.json());
-
             return {
                 code: response.status,
             };
         }
 
         const jsonResponse = await response.json();
-
-        console.log(jsonResponse);
 
         const twitterUser = TwitterUser.fromJSON(jsonResponse);
 

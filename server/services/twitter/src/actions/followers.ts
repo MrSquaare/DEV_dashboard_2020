@@ -46,8 +46,6 @@ export class TwitterFollowersAction extends ServiceActionSettings<Settings> {
         );
 
         if (response.status !== 200) {
-            console.log(await response.json());
-
             return {
                 code: response.status,
             };
