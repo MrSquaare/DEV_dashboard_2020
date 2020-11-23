@@ -3,5 +3,5 @@ export abstract class Widget {
     abstract readonly name: string;
     abstract readonly description: string;
 
-    abstract create(): JSX.Element;
+    abstract create(instance: string): JSX.Element;
 }
