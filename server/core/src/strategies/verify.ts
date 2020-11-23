@@ -1,40 +1,33 @@
-import { UserSchemaModel, VerificationSchemaModel } from "@dashboard/types";
+import { UserRepository } from "@dashboard/database";
 import { Strategy } from "passport-custom";
-import {
-    internalServerStatus,
-    userNotFoundStatus,
-    verificationNotFoundStatus,
-} from "../constants";
 
-export function verifyStrategy() {
+export function verifyStrategy(repository: UserRepository) {
     return new Strategy(async (req, done) => {
         try {
-            const verification = await VerificationSchemaModel.findOneAndDelete(
-                {
-                    id: req.query.id,
-                }
-            ).exec();
+            const username = req.query.username as string | undefined;
+            const id = req.query.id as string | undefined;
 
-            if (!verification) {
-                return done(verificationNotFoundStatus, false);
+            if (!username || !id) {
+                return done(null, false);
             }
 
-            const user = await UserSchemaModel.findOneAndUpdate(
-                {
-                    username: verification.username,
-                },
-                {
-                    verified: true,
-                }
-            ).exec();
+            const user = await repository.read(username);
 
-            if (!user) {
-                return done(userNotFoundStatus, false);
+            if (!user || user.verified) {
+                return done(null, false);
             }
+
+            const valid = await repository.compareVerification(username, id);
+
+            if (!valid) {
+                return done(null, false);
+            }
+
+            await repository.update(username, { verified: valid });
 
             return done(null, user);
-        } catch (err) {
-            return done(internalServerStatus);
+        } catch (e) {
+            return done(e);
         }
     });
 }

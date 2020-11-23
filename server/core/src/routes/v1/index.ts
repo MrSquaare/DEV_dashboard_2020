@@ -1,3 +1,1 @@
-import { apiRouter } from "./api";
-
-export default apiRouter;
+export * from "./v1";

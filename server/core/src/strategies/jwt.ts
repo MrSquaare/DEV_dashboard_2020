@@ -1,35 +1,34 @@
-import { UserSchemaModel } from "@dashboard/types";
-import { ExtractJwt, Strategy, StrategyOptions } from "passport-jwt";
-import {
-    internalServerStatus,
-    jwtInvalidStatus,
-    userNotFoundStatus,
-} from "../constants";
-import { jwtSecret } from "../variables";
+import { UserRepository } from "@dashboard/database";
+import { Strategy } from "passport-custom";
+import jwt from "jsonwebtoken";
+import { jwtSecret } from "../constants";
 
-const options: StrategyOptions = {
-    jwtFromRequest: ExtractJwt.fromAuthHeaderWithScheme("JWT"),
-    secretOrKey: jwtSecret,
-};
-
-export function jwtStrategy() {
-    return new Strategy(options, async (payload, done) => {
+export function jwtStrategy(repository: UserRepository) {
+    return new Strategy(async (req, done) => {
         try {
-            if (!payload.username) {
-                return done(jwtInvalidStatus, false);
+            const authorization = req.headers.authorization?.split(" ");
+
+            if (!authorization) {
+                return done(null, false);
             }
 
-            const user = await UserSchemaModel.findOne({
-                username: payload.username,
-            }).exec();
+            if (authorization[0] !== "JWT") {
+                return done(null, false);
+            }
+
+            const token = authorization[1];
+
+            const username = jwt.verify(token, jwtSecret);
+
+            const user = await repository.read(username.toString());
 
             if (!user) {
-                return done(userNotFoundStatus, false);
+                return done(null, false);
             }
 
             return done(null, user);
-        } catch (err) {
-            return done(internalServerStatus);
+        } catch (e) {
+            return done(e);
         }
     });
 }
