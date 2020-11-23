@@ -1,5 +1,5 @@
 import node_fetch, { RequestInit, Response } from "node-fetch";
-import { oauthAuthorizationGenerator } from "@dashboard/service";
+import { oauthAuthorization } from "@dashboard/oauth";
 import { twitterConsumerKey, twitterConsumerSecret } from "../constants";
 
 export async function oauthFetch(
@@ -12,7 +12,7 @@ export async function oauthFetch(
 
     const method = init?.method || "GET";
     const url = `${origin}${pathname}`;
-    const authorization = oauthAuthorizationGenerator(
+    const authorization = oauthAuthorization(
         twitterConsumerKey,
         twitterConsumerSecret,
         token,

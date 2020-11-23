@@ -1,6 +1,6 @@
-import { TwitterUser } from "../models";
-import { ServiceRequest, ServiceResponse } from "@dashboard/types";
 import { ServiceActionSettings } from "@dashboard/service";
+import { ServiceActionRequest, ServiceActionResponse } from "@dashboard/types";
+import { TwitterUser } from "../models";
 import { oauthFetch } from "../utilities";
 
 type Settings = {
@@ -12,7 +12,7 @@ export class TwitterUserAction extends ServiceActionSettings<Settings> {
     readonly name: string = "User";
     readonly description: string = "User action";
 
-    async run(request: ServiceRequest): Promise<ServiceResponse> {
+    async run(request: ServiceActionRequest): Promise<ServiceActionResponse> {
         const token = await this.repository?.read(
             request.user.username,
             "token"
@@ -61,7 +61,7 @@ export class TwitterUserAction extends ServiceActionSettings<Settings> {
         };
     }
 
-    mapRequestToSettings(request: ServiceRequest): Partial<Settings> {
+    mapRequestToSettings(request: ServiceActionRequest): Partial<Settings> {
         return {
             user: request.parameters?.user,
         };

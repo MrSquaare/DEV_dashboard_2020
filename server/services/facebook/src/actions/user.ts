@@ -1,7 +1,7 @@
+import { ServiceActionSettings } from "@dashboard/service";
+import { ServiceActionRequest, ServiceActionResponse } from "@dashboard/types";
 import fetch from "node-fetch";
 import { FacebookUser } from "../models";
-import { ServiceActionSettings } from "@dashboard/service";
-import { ServiceRequest, ServiceResponse } from "@dashboard/types";
 
 type Settings = {
     user: string;
@@ -12,7 +12,7 @@ export class FacebookUserAction extends ServiceActionSettings<Settings> {
     readonly name: string = "User";
     readonly description: string = "User action";
 
-    async run(request: ServiceRequest): Promise<ServiceResponse> {
+    async run(request: ServiceActionRequest): Promise<ServiceActionResponse> {
         const accessToken = await this.repository?.read(
             request.user.username,
             "accessToken"
@@ -54,7 +54,7 @@ export class FacebookUserAction extends ServiceActionSettings<Settings> {
         };
     }
 
-    mapRequestToSettings(request: ServiceRequest): Partial<Settings> {
+    mapRequestToSettings(request: ServiceActionRequest): Partial<Settings> {
         return {
             user: request.parameters?.user,
         };
