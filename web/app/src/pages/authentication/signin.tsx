@@ -68,9 +68,14 @@ class SignInPage extends React.Component {
                 }),
             }
         );
+
+        if (response.status !== 200) {
+            return;
+        }
+
         const json = await response.json();
 
-        console.log(json);
+        sessionStorage.setItem("jwt", json["data"]);
     };
 }
 

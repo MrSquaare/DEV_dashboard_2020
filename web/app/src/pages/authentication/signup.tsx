@@ -104,7 +104,7 @@ class SignUpPage extends React.Component {
 
         const target = event.target as SignUpFormEventTarget;
 
-        const response = await fetch(
+        await fetch(
             "http://localhost:4242/v1/authentication/signup",
             {
                 method: "POST",
@@ -117,14 +117,9 @@ class SignUpPage extends React.Component {
                     email: target.email.value,
                     firstName: target.firstName.value,
                     lastName: target.lastName.value,
-                    verificationUrl:
-                        "http://localhost:3000/authentication/verify",
                 }),
             }
         );
-        const json = await response.json();
-
-        console.log(json);
     };
 }
 
