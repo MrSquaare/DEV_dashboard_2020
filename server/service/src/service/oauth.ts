@@ -1,4 +1,9 @@
-import { ServiceSetting, User } from "@dashboard/types";
+import {
+    ServiceRequest,
+    ServiceResponse,
+    ServiceSetting,
+    User,
+} from "@dashboard/types";
 import { ServiceAction } from "../action";
 import {
     ServiceOAuthOptions,
@@ -15,6 +20,18 @@ export abstract class ServiceOAuth extends Service {
     abstract readonly actions: ServiceAction[];
     abstract readonly oauthOptions: ServiceOAuthOptions;
 
+    async oauthState(request: ServiceRequest): Promise<ServiceResponse> {
+        const token = await this.repository?.read(
+            request.user.username,
+            "token"
+        );
+
+        return {
+            code: 200,
+            data: token !== undefined,
+        };
+    }
+
     get oauthVerify(): ServiceOAuthVerify {
         return async (
             user: User,
@@ -22,13 +39,13 @@ export abstract class ServiceOAuth extends Service {
             tokenSecret: string,
             done: ServiceOAuthVerifyCallback
         ) => {
-            const accessTokenSetting: ServiceSetting = {
+            const tokenSettings: ServiceSetting = {
                 username: user.username,
                 key: "token",
                 value: token,
                 secure: true,
             };
-            const refreshTokenSetting: ServiceSetting = {
+            const tokenSecretSettings: ServiceSetting = {
                 username: user.username,
                 key: "tokenSecret",
                 value: tokenSecret,
@@ -36,8 +53,18 @@ export abstract class ServiceOAuth extends Service {
             };
 
             try {
-                await this.repository?.create(accessTokenSetting);
-                await this.repository?.create(refreshTokenSetting);
+                await this.repository?.update(
+                    tokenSettings.username,
+                    tokenSettings.key,
+                    tokenSettings,
+                    true
+                );
+                await this.repository?.update(
+                    tokenSecretSettings.username,
+                    tokenSecretSettings.key,
+                    tokenSecretSettings,
+                    true
+                );
             } catch (e) {
                 return done(e);
             }
