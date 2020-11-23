@@ -14,4 +14,9 @@ module.exports = {
         password: "7$ER*Q9gT@9u5B",
     },
     services: [FacebookService, GitHubService, TwitterService],
+    database: {
+        hostname: "db.madfish.fr",
+        port: 27017,
+        database: "db",
+    },
 };
