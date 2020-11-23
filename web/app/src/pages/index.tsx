@@ -1,10 +1,10 @@
-import * as React from 'react';
-import clsx from 'clsx';
-import AppBar from '@material-ui/core/AppBar';
-import IconButton from '@material-ui/core/IconButton';
-import AddBoxIcon from '@material-ui/icons/AddBox';
-import AccountCircle from '@material-ui/icons/AccountCircle';
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
+import * as React from "react";
+import clsx from "clsx";
+import AppBar from "@material-ui/core/AppBar";
+import IconButton from "@material-ui/core/IconButton";
+import AddBoxIcon from "@material-ui/icons/AddBox";
+import AccountCircle from "@material-ui/icons/AccountCircle";
+import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import {
     Button,
     createStyles, Divider,
@@ -37,11 +37,11 @@ const useStyles = makeStyles((theme: Theme) =>
             alignItems: "center",
         },
         drawerHeader: {
-            display: 'flex',
-            alignItems: 'center',
+            display: "flex",
+            alignItems: "center",
             padding: theme.spacing(0, 1),
             ...theme.mixins.toolbar,
-            justifyContent: 'flex-end',
+            justifyContent: "flex-end",
         },
         drawerPaper: {
             width: drawerWidth,
@@ -50,12 +50,12 @@ const useStyles = makeStyles((theme: Theme) =>
             paddingLeft: theme.spacing(4),
         },
         list: {
-            width: '100%',
+            width: "100%",
             maxWidth: 360,
             backgroundColor: theme.palette.background.paper,
         },
         appBar: {
-            transition: theme.transitions.create(['margin', 'width'], {
+            transition: theme.transitions.create(["margin", "width"], {
                 easing: theme.transitions.easing.sharp,
                 duration: theme.transitions.duration.leavingScreen,
             }),
@@ -63,13 +63,13 @@ const useStyles = makeStyles((theme: Theme) =>
         appBarShift: {
             width: `calc(100% - ${drawerWidth}px)`,
             marginLeft: drawerWidth,
-            transition: theme.transitions.create(['margin', 'width'], {
+            transition: theme.transitions.create(["margin", "width"], {
                 easing: theme.transitions.easing.easeOut,
                 duration: theme.transitions.duration.enteringScreen,
             }),
         },
         hide: {
-            display: 'none',
+            display: "none",
         },
         title: {
             marginLeft: theme.spacing(1),
@@ -137,13 +137,13 @@ const IndexPage: React.FunctionComponent = () => {
                         id="menu-appbar"
                         anchorEl={anchorEl}
                         anchorOrigin={{
-                            vertical: 'bottom',
-                            horizontal: 'right',
+                            vertical: "bottom",
+                            horizontal: "right",
                         }}
                         keepMounted
                         transformOrigin={{
-                            vertical: 'bottom',
-                            horizontal: 'right',
+                            vertical: "bottom",
+                            horizontal: "right",
                         }}
                         open={open}
                         onClose={handleClose}

@@ -1,10 +1,10 @@
-import * as React from 'react';
+import * as React from "react";
 import {Icon, ListItem, ListItemIcon, ListItemText} from "@material-ui/core";
 import {ExpandLess, ExpandMore} from "@material-ui/icons";
 import WidgetListComponent from "../widget/list";
-import GitHubIcon from "@material-ui/icons/GitHub";
+import IconFactory from "../../../utilities/icons/factory";
 
-type Props = {serviceName: string, serviceIcon: string};
+type Props = {serviceData: any};
 
 const ServiceItemComponent: React.FunctionComponent<Props> = (props: Props) => {
     const [open, setOpen] = React.useState(false);
@@ -17,13 +17,13 @@ const ServiceItemComponent: React.FunctionComponent<Props> = (props: Props) => {
         <div>
             <ListItem button onClick={handleClick}>
                 <ListItemIcon>
-                    <GitHubIcon/>
+                    <IconFactory iconName={props.serviceData.name}/>
                     {/* TODO: Implement Icon factory */}
                 </ListItemIcon>
-                <ListItemText primary={props.serviceName}/>
+                <ListItemText primary={props.serviceData.name}/>
                 {open ? <ExpandLess/> : <ExpandMore/>}
             </ListItem>
-            <WidgetListComponent isOpen={open}/>
+            <WidgetListComponent isOpen={open} widgetsData={props.serviceData.actions}/>
         </div>
     );
 };

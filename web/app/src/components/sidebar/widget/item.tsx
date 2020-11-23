@@ -1,7 +1,7 @@
-import * as React from 'react';
+import * as React from "react";
 import {createStyles, ListItem, ListItemIcon, ListItemText, SvgIcon, Theme} from "@material-ui/core";
-import GitHubIcon from "@material-ui/icons/GitHub";
 import {makeStyles} from "@material-ui/core/styles";
+import IconFactory from "../../../utilities/icons/factory";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -11,7 +11,7 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 );
 
-type Props = {widgetName: string, widgetIcon: string};
+type Props = {widgetData: any};
 
 const WidgetItemComponent: React.FunctionComponent<Props> = (props: Props) => {
     const classes = useStyles();
@@ -20,9 +20,9 @@ const WidgetItemComponent: React.FunctionComponent<Props> = (props: Props) => {
         <div>
             <ListItem button className={classes.nested}>
                 <ListItemIcon>
-                    <GitHubIcon/>
+                    <IconFactory iconName={props.widgetData.name}/>
                 </ListItemIcon>
-                <ListItemText primary={props.widgetName}/>
+                <ListItemText primary={props.widgetData.name}/>
             </ListItem>
         </div>
     );
