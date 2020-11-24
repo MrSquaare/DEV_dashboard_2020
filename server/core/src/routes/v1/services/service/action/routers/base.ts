@@ -1,4 +1,4 @@
-import { Response, User } from "@dashboard/types";
+import { Response, StatusError, User } from "@dashboard/types";
 import { Router } from "express";
 import {
     internalServerErrorStatus,
@@ -23,6 +23,10 @@ serviceActionBaseRouter.get(serviceActionBaseRoute, async (req, res, next) => {
 
         return res.status(responseAction.code).json(responseBody);
     } catch (e) {
+        if (e instanceof StatusError) {
+            return res.status(e.code).json(e);
+        }
+
         console.error(e);
 
         return next(internalServerErrorStatus);

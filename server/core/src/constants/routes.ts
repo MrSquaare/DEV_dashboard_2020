@@ -1,3 +1,5 @@
+export const aboutRoute = "/about.json";
+
 export const v1Route = "/v1";
 
 export const authenticationRoute = "/authentication";

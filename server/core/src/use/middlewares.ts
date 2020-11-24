@@ -6,6 +6,7 @@ import morgan from "morgan";
 import passport from "passport";
 import { coreMiddleware, errorMiddleware } from "../middlewares";
 import { StrategyParty } from "../parties/common/strategy";
+import { aboutRouter } from "../routes/about";
 import { v1Router } from "../routes/v1";
 
 export function useMiddlewares(
@@ -21,6 +22,7 @@ export function useMiddlewares(
 
     express.use(coreMiddleware(mailer, parties, services));
 
+    express.use(aboutRouter);
     express.use(v1Router);
 
     express.use(errorMiddleware());

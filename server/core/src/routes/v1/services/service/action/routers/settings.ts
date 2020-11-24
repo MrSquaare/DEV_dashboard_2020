@@ -1,5 +1,5 @@
 import { ServiceActionSettings } from "@dashboard/service";
-import { Response, User } from "@dashboard/types";
+import { Response, StatusError, User } from "@dashboard/types";
 import { Router } from "express";
 import {
     internalServerErrorStatus,
@@ -26,6 +26,10 @@ serviceActionSettingsRouter.delete(
 
             return res.send("Success");
         } catch (e) {
+            if (e instanceof StatusError) {
+                return res.status(e.code).json(e);
+            }
+
             console.error(e);
 
             return next(internalServerErrorStatus);
@@ -49,6 +53,10 @@ serviceActionSettingsRouter.get(
 
             return res.json(responseBody);
         } catch (e) {
+            if (e instanceof StatusError) {
+                return res.status(e.code).json(e);
+            }
+
             console.error(e);
 
             return next(internalServerErrorStatus);
@@ -82,6 +90,10 @@ serviceActionSettingsRouter.post(
 
             return res.json(responseBody);
         } catch (e) {
+            if (e instanceof StatusError) {
+                return res.status(e.code).json(e);
+            }
+
             console.error(e);
 
             return next(internalServerErrorStatus);

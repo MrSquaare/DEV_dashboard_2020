@@ -1,10 +1,7 @@
 import { OAuthOptions, OAuthProfile } from "@dashboard/oauth";
-import {
-    twitterConsumerKey,
-    twitterConsumerSecret,
-} from "@dashboard/service-twitter/build/constants";
 import { Profile } from "passport";
 import OAuthStrategy from "passport-oauth1";
+import { twitterConsumerKey, twitterConsumerSecret } from "../../constants";
 import { StrategyPartyOAuth } from "../../parties/oauth/strategy";
 
 export class TwitterStrategy extends StrategyPartyOAuth {
