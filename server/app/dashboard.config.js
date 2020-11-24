@@ -1,4 +1,3 @@
-const FacebookService = require("@dashboard/service-facebook").default;
 const GitHubService = require("@dashboard/service-github").default;
 const TwitterService = require("@dashboard/service-twitter").default;
 
@@ -13,5 +12,5 @@ module.exports = {
         user: "noreply.dashboard.project@gmail.com",
         password: "7$ER*Q9gT@9u5B",
     },
-    services: [FacebookService, GitHubService, TwitterService],
+    services: [GitHubService, TwitterService],
 };
