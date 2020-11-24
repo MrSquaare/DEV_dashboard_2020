@@ -2,6 +2,10 @@ export const v1Route = "/v1";
 
 export const authenticationRoute = "/authentication";
 
+export const authenticationPartiesRoute = "/parties/:party";
+export const authenticationPartiesBaseRoute = "/";
+export const authenticationPartiesCallbackRoute = "/callback";
+
 export const authenticationSignInRoute = "/signin";
 export const authenticationSignUpRoute = "/signup";
 export const authenticationVerifyRoute = "/verify";

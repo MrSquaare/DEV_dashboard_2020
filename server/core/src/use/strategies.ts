@@ -1,4 +1,4 @@
-import { UserRepository } from "@dashboard/database";
+import { UserLocalRepository, UserOAuthRepository } from "@dashboard/database";
 import passport from "passport";
 import {
     jwtStrategyName,
@@ -13,9 +13,16 @@ import {
     verifyStrategy,
 } from "../strategies";
 
-export function useStrategies(repository: UserRepository) {
-    passport.use(jwtStrategyName, jwtStrategy(repository));
-    passport.use(signInStrategyName, signInStrategy(repository));
-    passport.use(signUpStrategyName, signUpStrategy(repository));
-    passport.use(verifyStrategyName, verifyStrategy(repository));
+export function useStrategies(
+    localRepository: UserLocalRepository,
+    oauthRepository: UserOAuthRepository
+) {
+    passport.use(
+        jwtStrategyName,
+        jwtStrategy(localRepository, oauthRepository)
+    );
+
+    passport.use(signInStrategyName, signInStrategy(localRepository));
+    passport.use(signUpStrategyName, signUpStrategy(localRepository));
+    passport.use(verifyStrategyName, verifyStrategy(localRepository));
 }

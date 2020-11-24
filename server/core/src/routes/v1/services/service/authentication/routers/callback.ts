@@ -11,13 +11,10 @@ serviceAuthenticationCallbackRouter.get(
     serviceAuthenticationCallbackRoute,
     passport.authenticate(jwtStrategyName, { session: false }),
     (req, res, next) => {
-        passport.authenticate(req.service.id, { session: false })(
+        passport.authenticate(`${req.service.id}-service`, { session: false })(
             req,
             res,
             next
         );
-    },
-    (req, res) => {
-        res.send("<script>window.close();</script>");
     }
 );

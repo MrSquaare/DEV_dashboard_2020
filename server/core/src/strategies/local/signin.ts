@@ -1,13 +1,13 @@
-import { UserRepository } from "@dashboard/database";
+import { UserLocalRepository } from "@dashboard/database";
 import { Strategy } from "passport-custom";
 import {
     badRequestStatus,
     internalServerErrorStatus,
     userDontExist,
     userNotVerified,
-} from "../constants";
+} from "../../constants";
 
-export function signInStrategy(repository: UserRepository) {
+export function signInStrategy(repository: UserLocalRepository) {
     return new Strategy(async (req, done) => {
         try {
             const username = req.body.username;

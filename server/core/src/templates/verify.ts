@@ -1,4 +1,4 @@
-import { Mail, UserAccount } from "@dashboard/types";
+import { Mail, UserLocal } from "@dashboard/types";
 import * as fs from "fs";
 import Mustache from "mustache";
 
@@ -23,7 +23,7 @@ function renderTemplate(
 }
 
 export function verifyTemplate(
-    user: UserAccount,
+    user: UserLocal,
     custom: VerifyCustomization
 ): Mail {
     const html = renderTemplate(user.firstName, user.lastName, custom.URL);

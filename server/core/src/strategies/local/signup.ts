@@ -1,14 +1,14 @@
-import { UserRepository } from "@dashboard/database";
-import { UserAccount } from "@dashboard/types";
+import { UserLocalRepository } from "@dashboard/database";
+import { UserLocal } from "@dashboard/types";
 import { Strategy } from "passport-custom";
 import { v4 } from "uuid";
 import {
     badRequestStatus,
     internalServerErrorStatus,
     userExists,
-} from "../constants";
+} from "../../constants";
 
-export function signUpStrategy(repository: UserRepository) {
+export function signUpStrategy(repository: UserLocalRepository) {
     return new Strategy(async (req, done) => {
         try {
             const username = req.body.username;
@@ -27,12 +27,13 @@ export function signUpStrategy(repository: UserRepository) {
                 return done(userExists);
             }
 
-            const user: UserAccount = {
+            const user: UserLocal = {
                 username: username,
                 password: password,
                 email: email,
                 firstName: firstName,
                 lastName: lastName,
+                type: "local",
                 verification: v4(),
             };
 

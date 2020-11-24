@@ -1,4 +1,4 @@
-import { UserAccount } from "@dashboard/types";
+import { UserLocal } from "@dashboard/types";
 import { Router } from "express";
 import passport from "passport";
 import {
@@ -15,7 +15,7 @@ authenticationSignUpRouter.post(
     passport.authenticate(signUpStrategyName, { session: false }),
     async (req, res, next) => {
         try {
-            const user = req.user as UserAccount;
+            const user = req.user as UserLocal;
             const serverURL = `${req.protocol}://${req.hostname}:${req.port}`;
             const baseURL = `${serverURL}/v1/authentication/verify`;
             let URL = `${baseURL}?username=:username&id=:id`;

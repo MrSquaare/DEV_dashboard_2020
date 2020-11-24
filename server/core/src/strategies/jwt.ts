@@ -1,4 +1,5 @@
-import { UserRepository } from "@dashboard/database";
+import { UserLocalRepository, UserOAuthRepository } from "@dashboard/database";
+import { User } from "@dashboard/types";
 import jwt, { JsonWebTokenError } from "jsonwebtoken";
 import { Strategy } from "passport-custom";
 import {
@@ -8,8 +9,12 @@ import {
     jwtSecret,
     userDontExist,
 } from "../constants";
+import { Unique } from "../types";
 
-export function jwtStrategy(repository: UserRepository) {
+export function jwtStrategy(
+    localRepository: UserLocalRepository,
+    oauthRepository: UserOAuthRepository
+) {
     return new Strategy(async (req, done) => {
         try {
             const authorization = req.headers.authorization?.split(" ");
@@ -24,9 +29,18 @@ export function jwtStrategy(repository: UserRepository) {
 
             const token = authorization[1];
 
-            const username = jwt.verify(token, jwtSecret);
+            const unique = jwt.verify(token, jwtSecret) as Unique;
 
-            const user = await repository.read(username.toString());
+            let user: User | undefined;
+
+            if (unique.type === "local") {
+                user = await localRepository.read(unique.username);
+            } else if (unique.type === "oauth" && unique.provider) {
+                user = await oauthRepository.read(
+                    unique.username,
+                    unique.provider
+                );
+            }
 
             if (!user) {
                 return done(userDontExist);

@@ -35,6 +35,11 @@ export const userNotVerified = new StatusError(401, {
     message: "User not verified",
 });
 
+export const partyNotFoundStatus = new StatusError(404, {
+    name: "PARTY_NOT_FOUND",
+    message: "Party not found",
+});
+
 export const serviceNotFoundStatus = new StatusError(404, {
     name: "SERVICE_NOT_FOUND",
     message: "Service not found",

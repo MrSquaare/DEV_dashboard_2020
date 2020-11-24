@@ -1,15 +1,17 @@
 import {
     Database,
     ServiceSettingRepository,
-    UserRepository,
+    UserLocalRepository,
+    UserOAuthRepository,
 } from "@dashboard/database";
 import { Mailer } from "@dashboard/mailer";
 import { Service } from "@dashboard/service";
 import express, { Express } from "express";
 import { Server } from "http";
-import { v1Router } from "../routes/v1";
+import { StrategyParty } from "../parties/common/strategy";
+import { TwitterStrategy } from "../strategies/oauth";
 import { Configuration } from "../types";
-import { useMiddlewares, useServices, useStrategies } from "../use";
+import { useMiddlewares, useParties, useServices, useStrategies } from "../use";
 
 export class Core {
     hostname: string;
@@ -17,7 +19,10 @@ export class Core {
     services: Service[];
 
     database: Database;
-    repository: UserRepository;
+    localRepository: UserLocalRepository;
+    oauthRepository: UserOAuthRepository;
+
+    parties: StrategyParty[];
 
     mailer: Mailer;
     express: Express;
@@ -31,13 +36,17 @@ export class Core {
         this.database = new Database(configuration.database);
         this.mailer = new Mailer(configuration.mailer);
 
-        this.repository = new UserRepository();
+        this.localRepository = new UserLocalRepository();
+        this.oauthRepository = new UserOAuthRepository();
+
+        this.parties = [new TwitterStrategy(this.oauthRepository)];
 
         this.express = express();
 
-        useMiddlewares(this.express, this.mailer, this.services);
+        useMiddlewares(this.express, this.mailer, this.parties, this.services);
+        useParties(this.parties);
         useServices(this.services);
-        useStrategies(this.repository);
+        useStrategies(this.localRepository, this.oauthRepository);
     }
 
     initialize(): void {
