@@ -1,7 +1,11 @@
-import { ServiceActionSettings } from "@dashboard/service";
+import {
+    badRequestStatus,
+    getOAuthTokens,
+    ServiceActionSettings,
+} from "@dashboard/service";
 import { ServiceActionRequest, ServiceActionResponse } from "@dashboard/types";
+import { oauthClient } from "../constants/oauth";
 import { TwitterUser } from "../models";
-import { oauthFetch } from "../utilities";
 
 type Settings = {
     user: string;
@@ -11,22 +15,15 @@ export class TwitterFollowersAction extends ServiceActionSettings<Settings> {
     readonly id: string = "followers";
     readonly name: string = "Followers";
     readonly description: string = "Followers action";
+    readonly settings: Record<keyof Settings, string> = {
+        user: "string",
+    };
 
     async run(request: ServiceActionRequest): Promise<ServiceActionResponse> {
-        const token = await this.repository?.read(
+        const { token, tokenSecret } = await getOAuthTokens(
             request.user.username,
-            "token"
+            this.repository
         );
-        const tokenSecret = await this.repository?.read(
-            request.user.username,
-            "tokenSecret"
-        );
-
-        if (!token || !tokenSecret) {
-            return {
-                code: 400,
-            };
-        }
 
         const settings = await this.settingsGet(
             request.user.username,
@@ -34,15 +31,13 @@ export class TwitterFollowersAction extends ServiceActionSettings<Settings> {
         );
 
         if (!settings) {
-            return {
-                code: 400,
-            };
+            throw badRequestStatus;
         }
 
-        const response = await oauthFetch(
-            `https://api.twitter.com/1.1/followers/list.json?screen_name=${settings.user}`,
-            token.value,
-            tokenSecret.value
+        const response = await oauthClient.fetch(
+            token,
+            tokenSecret,
+            `https://api.twitter.com/1.1/followers/list.json?screen_name=${settings.user}`
         );
 
         if (response.status !== 200) {

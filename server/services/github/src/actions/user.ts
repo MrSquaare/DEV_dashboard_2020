@@ -11,6 +11,9 @@ export class GitHubUserAction extends ServiceActionSettings<Settings> {
     readonly id: string = "user";
     readonly name: string = "User";
     readonly description: string = "User action";
+    readonly settings: Record<keyof Settings, string> = {
+        user: "string",
+    };
 
     async run(request: ServiceActionRequest): Promise<ServiceActionResponse> {
         const settings = await this.settingsGet(
