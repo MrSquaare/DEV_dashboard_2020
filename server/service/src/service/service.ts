@@ -18,4 +18,10 @@ export abstract class Service implements IService {
             action.initialize(repository);
         }
     }
+
+    toJSON(): Partial<Service> {
+        const { repository, ...rest } = this;
+
+        return rest;
+    }
 }

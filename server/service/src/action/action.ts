@@ -16,4 +16,10 @@ export abstract class ServiceAction implements IServiceAction {
     initialize(repository: IServiceSettingRepository) {
         this.repository = repository;
     }
+
+    toJSON(): Partial<ServiceAction> {
+        const { repository, ...rest } = this;
+
+        return rest;
+    }
 }

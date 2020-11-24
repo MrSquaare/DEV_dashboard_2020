@@ -5,6 +5,7 @@ export abstract class ServiceActionSettings<T> extends ServiceAction {
     abstract readonly id: string;
     abstract readonly name: string;
     abstract readonly description: string;
+    abstract readonly settings: Record<keyof T, string>;
 
     abstract run(request: ServiceActionRequest): Promise<ServiceActionResponse>;
 
@@ -51,5 +52,11 @@ export abstract class ServiceActionSettings<T> extends ServiceAction {
         );
 
         return document?.value ? JSON.parse(document?.value) : undefined;
+    }
+
+    toJSON(): Partial<ServiceAction> {
+        const { repository, ...rest } = this;
+
+        return rest;
     }
 }

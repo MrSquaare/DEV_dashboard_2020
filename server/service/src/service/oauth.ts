@@ -72,4 +72,10 @@ export abstract class ServiceOAuth extends Service implements OAuth {
             done();
         };
     }
+
+    toJSON(): Partial<Service> {
+        const { repository, options, ...rest } = this;
+
+        return rest;
+    }
 }
