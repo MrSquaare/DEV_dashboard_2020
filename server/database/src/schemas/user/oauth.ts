@@ -8,7 +8,4 @@ export const UserOAuthSchema = new Schema({
     type: { type: String, required: true },
     provider: { type: String, required: true },
     verified: { type: Boolean, default: false },
-
-    token: { type: String, required: true, select: false },
-    tokenSecret: { type: String, required: true, select: false },
 });
