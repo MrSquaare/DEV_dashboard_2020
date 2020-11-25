@@ -31,6 +31,7 @@ const CardItemComponent: React.FunctionComponent<Props> = (props: Props) => {
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const [value, setValue] = React.useState("1x1");
 
+    const [open, setOpen] = React.useState(false);
 
     const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
         setAnchorEl(event.currentTarget);
@@ -42,7 +43,7 @@ const CardItemComponent: React.FunctionComponent<Props> = (props: Props) => {
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         let layout = getFromLS("layouts");
-        let item: number = -1;
+        let item = -1;
 
         layout.forEach(function (value: any) {
             if (value.i === props.divKey) {
@@ -50,13 +51,8 @@ const CardItemComponent: React.FunctionComponent<Props> = (props: Props) => {
             }
         });
 
-        console.log(layout);
-        console.log(props.divKey);
-        console.log(item);
-
         if (item === -1) return;
 
-        console.log(layout[item]);
 
         switch ((event.target as HTMLInputElement).value) {
             case "1x2":

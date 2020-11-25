@@ -58,7 +58,7 @@ const ServiceListComponent: React.FunctionComponent<Props> = (props: Props) => {
             </List>
             {data ? data.data.map((service: any) => {
                 return <ServiceItemComponent
-                    key={v4()}
+                    key={service.id}
                     serviceData={service}
                     drawerSetOpen={props.drawerSetOpen}
                     items={props.items}

@@ -7,7 +7,7 @@ export function getFromLS(key: string) {
                 ls = JSON.parse(tmp);
             }
         } catch (e) {
-            /*Ignore*/
+            console.log(e);
         }
     }
     return ls[key];
