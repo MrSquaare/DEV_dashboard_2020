@@ -3,7 +3,8 @@ import { ParsedUrlQuery } from "querystring";
 import React from "react";
 
 interface VerifyFormEventTarget extends EventTarget {
-    verification: HTMLInputElement;
+    username: HTMLInputElement;
+    id: HTMLInputElement;
 }
 
 interface VerifyProps {
@@ -20,10 +21,22 @@ class VerifyPage extends React.Component<VerifyProps> {
                 <form onSubmit={this.handleSubmit} noValidate>
                     <TextField
                         required
-                        label="Verification ID"
-                        id="verification"
-                        name="verification"
-                        autoComplete="verification"
+                        label="Username"
+                        id="username"
+                        name="username"
+                        autoComplete="username"
+                        autoFocus
+                        variant="outlined"
+                        margin="normal"
+                        fullWidth
+                        value={this.props.query.username}
+                    />
+                    <TextField
+                        required
+                        label="ID"
+                        id="id"
+                        name="id"
+                        autoComplete="id"
                         autoFocus
                         variant="outlined"
                         margin="normal"
@@ -49,11 +62,16 @@ class VerifyPage extends React.Component<VerifyProps> {
         const target = event.target as VerifyFormEventTarget;
 
         const response = await fetch(
-            `http://localhost:4242/v1/authentication/verify?id=${target.verification.value}`
+            `http://localhost:4242/v1/authentication/verify?username=${target.username.value}&id=${target.id.value}`
         );
+
+        if (response.status !== 200) {
+            return;
+        }
+
         const json = await response.json();
 
-        console.log(json);
+        sessionStorage.setItem("jwt", json["data"]);
     };
 }
 

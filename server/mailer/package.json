@@ -1,0 +1,23 @@
+{
+  "name": "@dashboard/mailer",
+  "version": "1.0.0",
+  "description": "Mailer implementation for Dashboard",
+  "license": "MIT",
+  "main": "build/index.js",
+  "module": "build/index.js",
+  "typings": "build/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "start": "build/index.js",
+    "clean": "rm -rf build/",
+    "fclean": "rm -rf build/ node_modules/"
+  },
+  "devDependencies": {
+    "@dashboard/types": "*",
+    "@types/nodemailer": "^6.4.0",
+    "typescript": "^4.0.5"
+  },
+  "dependencies": {
+    "nodemailer": "^6.4.16"
+  }
+}

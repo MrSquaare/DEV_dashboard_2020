@@ -1,28 +1,17 @@
+import {
+    Database,
+    ServiceSettingRepository,
+    UserLocalRepository,
+    UserOAuthRepository,
+} from "@dashboard/database";
+import { Mailer } from "@dashboard/mailer";
 import { Service } from "@dashboard/service";
-import bodyParser from "body-parser";
-import cors from "cors";
 import express, { Express } from "express";
 import { Server } from "http";
-import morgan from "morgan";
-import passport from "passport";
-import { Configuration } from "types";
-import {
-    apiRoute,
-    jwtStrategyName,
-    signInStrategyName,
-    signUpStrategyName,
-    verifyStrategyName,
-} from "../constants";
-import { Database } from "../database";
-import { Mailer } from "../mailer";
-import { errorMiddleware, servicesMiddleware } from "../middlewares";
-import apiRouter from "../routes/v1";
-import {
-    jwtStrategy,
-    signInStrategy,
-    signUpStrategy,
-    verifyStrategy,
-} from "../strategies";
+import { StrategyParty } from "../parties/common/strategy";
+import { TwitterStrategy } from "../strategies/oauth";
+import { Configuration } from "../types";
+import { useMiddlewares, useParties, useServices, useStrategies } from "../use";
 
 export class Core {
     hostname: string;
@@ -30,6 +19,11 @@ export class Core {
     services: Service[];
 
     database: Database;
+    localRepository: UserLocalRepository;
+    oauthRepository: UserOAuthRepository;
+
+    parties: StrategyParty[];
+
     mailer: Mailer;
     express: Express;
     server?: Server;
@@ -39,27 +33,27 @@ export class Core {
         this.port = configuration.port;
         this.services = configuration.services || [];
 
-        this.express = express();
         this.database = new Database(configuration.database);
         this.mailer = new Mailer(configuration.mailer);
 
-        this.initExpress();
-        this.initPassport();
+        this.localRepository = new UserLocalRepository();
+        this.oauthRepository = new UserOAuthRepository();
+
+        this.parties = [new TwitterStrategy(this.oauthRepository)];
+
+        this.express = express();
+
+        useMiddlewares(this.express, this.mailer, this.parties, this.services);
+        useParties(this.parties);
+        useServices(this.services);
+        useStrategies(this.localRepository, this.oauthRepository);
     }
 
-    async load(): Promise<void> {
-        if (this.services === undefined) return;
-
+    initialize(): void {
         for (const service of this.services) {
-            await service.load();
-        }
-    }
+            const repository = new ServiceSettingRepository(service.id);
 
-    async unload(): Promise<void> {
-        if (this.services === undefined) return;
-
-        for (const service of this.services) {
-            await service.unload();
+            service.initialize(repository);
         }
     }
 
@@ -81,34 +75,5 @@ export class Core {
                 err ? reject(err) : resolve();
             });
         });
-    }
-
-    private initExpress() {
-        this.express.use(morgan("tiny"));
-
-        this.express.use(bodyParser.json());
-        this.express.use(cors());
-
-        this.express.use(errorMiddleware());
-
-        this.express.use(apiRoute, servicesMiddleware(this.services));
-        this.express.use(apiRouter);
-    }
-
-    private initPassport() {
-        const host = `http://${this.hostname}:${this.port}`;
-
-        this.express.use(passport.initialize());
-
-        passport.use(jwtStrategyName, jwtStrategy());
-        passport.use(signInStrategyName, signInStrategy());
-        passport.use(signUpStrategyName, signUpStrategy(this.mailer, host));
-        passport.use(verifyStrategyName, verifyStrategy());
-
-        for (const service of this.services) {
-            if (service.strategy) {
-                passport.use(service.strategy);
-            }
-        }
     }
 }

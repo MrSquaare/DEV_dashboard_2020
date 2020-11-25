@@ -1,70 +1,66 @@
-import { StatusModel } from "@dashboard/types";
-import {
-    jwtInvalidMessage,
-    serviceActionNotFoundMessage,
-    serviceNotFoundMessage,
-    serviceStrategyNotFoundMessage,
-    userExistsMessage,
-    userNotFoundMessage,
-    userNotVerifiedMessage, verificationEmailSentMessage,
-    verificationNotFoundMessage
-} from "./messages";
+import { StatusError } from "@dashboard/types";
 
-export const jwtInvalidStatus: StatusModel = {
-    code: 401,
+export const badRequestStatus = new StatusError(400, {
+    name: "BAD_REQUEST",
+    message: "Bad request",
+});
+
+export const jwtInvalid = new StatusError(401, {
     name: "JWT_INVALID",
-    message: jwtInvalidMessage,
-};
+    message: "Invalid JWT",
+});
 
-export const serviceNotFoundStatus: StatusModel = {
-    code: 404,
-    name: "SERVICE_NOT_FOUND",
-    message: serviceNotFoundMessage,
-};
+export const verificationInvalid = new StatusError(401, {
+    name: "VERIFICATION_INVALID",
+    message: "Invalid verification",
+});
 
-export const serviceActionNotFoundStatus: StatusModel = {
-    code: 404,
-    name: "SERVICE_ACTION_NOT_FOUND",
-    message: serviceActionNotFoundMessage,
-};
-
-export const serviceStrategyNotFoundStatus: StatusModel = {
-    code: 404,
-    name: "SERVICE_STRATEGY_NOT_FOUND",
-    message: serviceStrategyNotFoundMessage,
-};
-
-export const userExistsStatus: StatusModel = {
-    code: 401,
+export const userExists = new StatusError(401, {
     name: "USER_EXISTS",
-    message: userExistsMessage,
-};
+    message: "User exists",
+});
 
-export const userNotFoundStatus: StatusModel = {
-    code: 401,
-    name: "USER_NOT_FOUND",
-    message: userNotFoundMessage,
-};
+export const userDoesntExist = new StatusError(401, {
+    name: "USER_DOESNT_EXIST",
+    message: "User doesn't exist",
+});
 
-export const userNotVerifiedStatus: StatusModel = {
-    code: 401,
+export const userVerified = new StatusError(401, {
+    name: "USER_VERIFIED",
+    message: "User verified",
+});
+
+export const userNotVerified = new StatusError(401, {
     name: "USER_NOT_VERIFIED",
-    message: userNotVerifiedMessage,
-};
+    message: "User not verified",
+});
 
-export const verificationEmailSentStatus: StatusModel = {
-    code: 200,
-    name: "VERIFICATION_EMAIL_SENT",
-    message: verificationEmailSentMessage,
-};
+export const partyNotFoundStatus = new StatusError(404, {
+    name: "PARTY_NOT_FOUND",
+    message: "Party not found",
+});
 
-export const verificationNotFoundStatus: StatusModel = {
-    code: 401,
-    name: "VERIFICATION_NOT_FOUND",
-    message: verificationNotFoundMessage,
-};
+export const serviceNotFoundStatus = new StatusError(404, {
+    name: "SERVICE_NOT_FOUND",
+    message: "Service not found",
+});
 
-export const internalServerStatus: StatusModel = {
-    code: 500,
+export const serviceActionNotFoundStatus = new StatusError(404, {
+    name: "SERVICE_ACTION_NOT_FOUND",
+    message: "Service action not found",
+});
+
+export const serviceActionSettingsNotFoundStatus = new StatusError(404, {
+    name: "SERVICE_ACTION_SETTINGS_NOT_FOUND",
+    message: "Service action settings not found",
+});
+
+export const serviceAuthenticationNotFoundStatus = new StatusError(404, {
+    name: "SERVICE_AUTHENTICATION_NOT_FOUND",
+    message: "Service authentication not found",
+});
+
+export const internalServerErrorStatus: StatusError = new StatusError(500, {
     name: "INTERNAL_SERVER_ERROR",
-};
+    message: "Internal server error",
+});

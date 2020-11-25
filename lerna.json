@@ -1,6 +1,7 @@
 {
   "version": "1.0.0",
   "packages": [
+    "parties/**",
     "server/**",
     "web/**"
   ],

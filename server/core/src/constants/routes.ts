@@ -1,37 +1,28 @@
-export const apiRoute = "/v1";
+export const aboutRoute = "/about.json";
 
-export const apiFullRoute = `${apiRoute}`;
+export const v1Route = "/v1";
 
 export const authenticationRoute = "/authentication";
-export const authenticationServiceRoute = "/service/:service";
-export const authenticationServiceCallbackRoute = "/callback";
+
+export const authenticationPartiesRoute = "/parties/:party";
+export const authenticationPartiesBaseRoute = "/";
+export const authenticationPartiesCallbackRoute = "/callback";
+
 export const authenticationSignInRoute = "/signin";
 export const authenticationSignUpRoute = "/signup";
 export const authenticationVerifyRoute = "/verify";
 
-export const authenticationFullRoute = `${apiFullRoute}${authenticationRoute}`;
-export const authenticationServiceFullRoute = `${authenticationFullRoute}${authenticationServiceRoute}`;
-export const authenticationServiceCallbackFullRoute = `${authenticationServiceFullRoute}${authenticationServiceCallbackRoute}`;
-export const authenticationSignInFullRoute = `${authenticationFullRoute}${authenticationSignInRoute}`;
-export const authenticationSignUpFullRoute = `${authenticationFullRoute}${authenticationSignUpRoute}`;
-export const authenticationSignVerifyFullRoute = `${authenticationFullRoute}${authenticationVerifyRoute}`;
-
-export const serviceRoute = "/service/:service";
-export const serviceActionRoute = "/:action";
-
-export const serviceFullRoute = `${apiFullRoute}${serviceRoute}`;
-export const serviceActionFullRoute = `${serviceFullRoute}${serviceActionRoute}`;
-
 export const servicesRoute = "/services";
+export const servicesBaseRoute = "/";
 
-export const servicesFullRoute = `${apiFullRoute}${servicesRoute}`;
+export const serviceRoute = "/:service";
+export const serviceBaseRoute = "/";
 
-export const userRoute = "/user";
-export const userSettingsRoute = "/settings";
+export const serviceActionRoute = "/:action";
+export const serviceActionBaseRoute = "/";
+export const serviceActionSettingsRoute = "/settings";
 
-export const userFullRoute = `${apiFullRoute}${userRoute}`;
-export const userSettingsFullRoute = `${userFullRoute}${userSettingsRoute}`;
-
-export const usersRoute = "/users";
-
-export const usersFullRoute = `${apiFullRoute}${usersRoute}`;
+export const serviceAuthenticationRoute = "/authentication";
+export const serviceAuthenticationBaseRoute = "/";
+export const serviceAuthenticationCallbackRoute = "/callback";
+export const serviceAuthenticationStateRoute = "/state";

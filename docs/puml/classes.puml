@@ -1,0 +1,147 @@
+@startuml
+class Core {
+    +hostname: string
+    +port: number
+    +services: Service[]
+    +database: Database
+    +repository: UserRepository
+    +mailer: Mailer
+    +express: express.Express
+    +server?: Server | undefined
+    +initialize(): void
+    +start(): Promise<void>
+    +stop(): Promise<void>
+}
+
+interface IDatabase {
+    +hostname: string
+    +port: number
+    +database?: string | undefined
+    +connect(): Promise<void>
+    +disconnect(): Promise<void>
+}
+interface IMailer {
+    +hostname: string
+    +port: number
+    +send(mail: Mail): Promise<void>
+}
+interface IServiceAction {
+    +id: string
+    +name: string
+    +description: string
+    +run(request: ServiceRequest): Promise<ServiceResponse>
+}
+interface IService {
+    +id: string
+    +name: string
+    +description: string
+    +version: string
+    +actions: IServiceAction[]
+}
+interface IServiceSettingRepository {
+    +create(setting: ServiceSetting): Promise<void>
+    +delete(username: string, key: string): Promise<void>
+    +read(username: string, key: string): Promise<ServiceSetting | undefined>
+    +update(username: string, key: string, setting: Partial<ServiceSetting>, create?: boolean | undefined): Promise<ServiceSetting | undefined>
+}
+interface IUserSettingRepository {
+    +create(setting: UserSetting): Promise<void>
+    +delete(username: string, key: string): Promise<void>
+    +read(username: string, key: string): Promise<UserSetting | undefined>
+    +update(username: string, key: string, setting: Partial<UserSetting>): Promise<UserSetting | undefined>
+}
+abstract class ServiceAction implements IServiceAction {
+    +{abstract} id: string
+    +{abstract} name: string
+    +{abstract} description: string
+    #repository?: IServiceSettingRepository | undefined
+    +{abstract} run(request: ServiceRequest): Promise<ServiceResponse>
+    +initialize(repository: IServiceSettingRepository): void
+}
+abstract class ServiceActionSettings<T> extends ServiceAction {
+    +{abstract} id: string
+    +{abstract} name: string
+    +{abstract} description: string
+    +{abstract} run(request: ServiceRequest): Promise<ServiceResponse>
+    +{abstract} mapRequestToSettings(request: ServiceRequest): Partial<T>
+    +settingsDelete(username: string, instance: string): Promise<void>
+    +settingsGet(username: string, instance: string): Promise<T | undefined>
+    +settingsSet(username: string, instance: string, setting: Partial<T>): Promise<T | undefined>
+}
+abstract class Service implements IService {
+    +{abstract} id: string
+    +{abstract} name: string
+    +{abstract} description: string
+    +{abstract} version: string
+    +{abstract} actions: ServiceAction[]
+    #repository?: IServiceSettingRepository | undefined
+    +initialize(repository: IServiceSettingRepository): void
+}
+abstract class ServiceOAuth extends Service {
+    +{abstract} id: string
+    +{abstract} name: string
+    +{abstract} description: string
+    +{abstract} version: string
+    +{abstract} actions: ServiceAction[]
+    +{abstract} oauthOptions: ServiceOAuthOptions
+    +oauthVerify: ServiceOAuthVerify
+}
+abstract class ServiceOAuth2 extends Service {
+    +{abstract} id: string
+    +{abstract} name: string
+    +{abstract} description: string
+    +{abstract} version: string
+    +{abstract} actions: ServiceAction[]
+    +{abstract} oauth2Options: ServiceOAuth2Options
+    +oauth2Verify: ServiceOAuth2Verify
+}
+interface IUserRepository {
+    +create(user: UserAccount): Promise<void>
+    +delete(username: string): Promise<void>
+    +read(username: string): Promise<User | undefined>
+    +update(username: string, user: Partial<UserAccount>): Promise<User | undefined>
+    +comparePassword(username: string, password: string): Promise<boolean>
+    +compareVerification(username: string, verification: string): Promise<boolean>
+}
+class ServiceSettingRepository implements IServiceSettingRepository {
+    +model: mongoose.Model<Pair<string, string> & { username: string; secure?: boolean | undefined; } & mongoose.Document, {}>
+    +create(setting: ServiceSetting): Promise<void>
+    +delete(username: string, key: string): Promise<void>
+    +read(username: string, key: string): Promise<ServiceSetting | undefined>
+    +update(username: string, key: string, setting: Partial<ServiceSetting>, create?: boolean): Promise<ServiceSetting | undefined>
+}
+class Database implements IDatabase {
+    +hostname: string
+    +port: number
+    +database?: string | undefined
+    -user?: string | undefined
+    -password?: string | undefined
+    -mongoose?: typeof mongoose | undefined
+    +connect(): Promise<void>
+    +disconnect(): Promise<void>
+}
+class UserSettingRepository implements IUserSettingRepository {
+    +model: mongoose.Model<Pair<string, string> & { username: string; secure?: boolean | undefined; } & mongoose.Document, {}>
+    +create(setting: UserSetting): Promise<void>
+    +delete(username: string, key: string): Promise<void>
+    +read(username: string, key: string): Promise<UserSetting | undefined>
+    +update(username: string, key: string, setting: Partial<UserSetting>): Promise<UserSetting | undefined>
+}
+class UserRepository implements IUserRepository {
+    +model: mongoose.Model<User & { password: string; verification: string; } & mongoose.Document, {}>
+    +create(user: UserAccount): Promise<void>
+    +delete(username: string): Promise<void>
+    +read(username: string): Promise<User | undefined>
+    +update(username: string, user: Partial<UserAccount>): Promise<User | undefined>
+    +comparePassword(username: string, password: string): Promise<boolean>
+    +compareVerification(username: string, verification: string): Promise<boolean>
+}
+class Mailer implements IMailer {
+    +hostname: string
+    +port: number
+    -user?: string | undefined
+    -password?: string | undefined
+    -transporter?: Mail | undefined
+    +send(mail: Mail): Promise<void>
+}
+@enduml
