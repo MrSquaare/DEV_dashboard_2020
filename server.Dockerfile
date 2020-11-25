@@ -24,6 +24,7 @@ COPY lerna.json package.json tsconfig.json yarn.lock ./
 
 FROM base AS build
 
+COPY ./parties/passport-oauth1 ./parties/passport-oauth1
 COPY ./server ./server
 
 RUN yarn install --pure-lockfile

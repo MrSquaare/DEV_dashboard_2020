@@ -2,6 +2,7 @@
 **
 
 # Except
+!parties
 !server/
 !web/
 !lerna.json
@@ -10,5 +11,6 @@
 !yarn.lock
 
 # Ignore specifics
-**/node_modules/
 **/build/
+**/node_modules/
+**/.next/

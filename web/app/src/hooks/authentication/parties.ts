@@ -14,7 +14,9 @@ export function useAuthentication() {
     const [authenticated, setAuthenticated] = useState<boolean>(false);
 
     const authenticate = () => {
-        apiAuthenticate().then(() => setAuthenticated(true));
+        apiAuthenticate()
+            .then(() => setAuthenticated(true))
+            .catch((e) => console.error(e));
     };
 
     return { authenticated, authenticate };
