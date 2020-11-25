@@ -1,11 +1,30 @@
 import { Button, Container, TextField, Typography } from "@material-ui/core";
-import Router from "next/router";
 import React from "react";
+import { useAuthentication } from "../../hooks/authentication/parties";
 
 interface SignInFormEventTarget extends EventTarget {
     username: HTMLInputElement;
     password: HTMLInputElement;
 }
+
+const TwitterButton: React.FC = () => {
+    const { authenticate } = useAuthentication();
+
+    const handleClick = async (event: React.MouseEvent) => {
+        authenticate();
+    };
+
+    return (
+        <Button
+            variant="contained"
+            color="primary"
+            fullWidth
+            onClick={handleClick}
+        >
+            SignIn with Twitter
+        </Button>
+    );
+};
 
 class SignInPage extends React.Component {
     render() {
@@ -46,6 +65,7 @@ class SignInPage extends React.Component {
                         Sign In
                     </Button>
                 </form>
+                <TwitterButton />
             </Container>
         );
     }
