@@ -3,7 +3,7 @@ import { Strategy } from "passport-custom";
 import {
     badRequestStatus,
     internalServerErrorStatus,
-    userDontExist,
+    userDoesntExist,
     userVerified,
     verificationInvalid,
 } from "../../constants";
@@ -21,7 +21,7 @@ export function verifyStrategy(repository: UserLocalRepository) {
             const user = await repository.read(username);
 
             if (!user) {
-                return done(userDontExist);
+                return done(userDoesntExist);
             }
 
             if (user.verified) {

@@ -7,7 +7,7 @@ import {
     internalServerErrorStatus,
     jwtInvalid,
     jwtSecret,
-    userDontExist,
+    userDoesntExist,
 } from "../constants";
 import { Unique } from "../types";
 
@@ -43,7 +43,7 @@ export function jwtStrategy(
             }
 
             if (!user) {
-                return done(userDontExist);
+                return done(userDoesntExist);
             }
 
             return done(null, user);

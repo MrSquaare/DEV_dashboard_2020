@@ -20,7 +20,7 @@ export const userExists = new StatusError(401, {
     message: "User exists",
 });
 
-export const userDontExist = new StatusError(401, {
+export const userDoesntExist = new StatusError(401, {
     name: "USER_DOESNT_EXIST",
     message: "User doesn't exist",
 });
