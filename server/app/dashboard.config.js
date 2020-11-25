@@ -12,7 +12,6 @@ module.exports = {
         hostname: "smtp.gmail.com",
         port: 465,
         user: "noreply.dashboard.project@gmail.com",
-        password: "7$ER*Q9gT@9u5B",
     },
     services: [GitHubService, TwitterService, WeatherService, YouTubeService],
 };
