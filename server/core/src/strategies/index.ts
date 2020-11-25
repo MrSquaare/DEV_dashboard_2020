@@ -1,4 +1,3 @@
 export * from "./jwt";
-export * from "./signin";
-export * from "./signup";
-export * from "./verify";
+export * from "./local";
+export * from "./oauth";

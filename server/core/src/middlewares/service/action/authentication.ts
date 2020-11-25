@@ -1,17 +1,14 @@
 import { ServiceOAuth, ServiceOAuth2 } from "@dashboard/service";
-import express from "express";
+import { NextFunction, Request, Response } from "express";
+import { serviceAuthenticationNotFoundStatus } from "../../../constants";
 
 export function serviceAuthenticationMiddleware() {
-    return function (
-        req: express.Request,
-        res: express.Response,
-        next: express.NextFunction
-    ) {
+    return function(req: Request, res: Response, next: NextFunction) {
         if (
             !(req.service instanceof ServiceOAuth) &&
             !(req.service instanceof ServiceOAuth2)
         ) {
-            return res.status(404).send("Not found");
+            return next(serviceAuthenticationNotFoundStatus);
         }
 
         return next();

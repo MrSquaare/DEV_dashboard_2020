@@ -15,7 +15,7 @@ export class Mailer implements IMailer {
         this.user = configuration.user;
         this.password = configuration.password;
 
-        //  deepcode ignore WrongNumberOfArgs: False Positive
+        //  deepcode ignore WrongNumberOfArgs: False positive
         this.transporter = createTransport({
             host: this.hostname,
             port: this.port,

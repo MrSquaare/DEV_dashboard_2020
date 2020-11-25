@@ -12,10 +12,7 @@ import {
 
 export const serviceActionRouter = Router();
 
-serviceActionRouter.use(
-    serviceActionRoute,
-    serviceActionMiddleware()
-);
+serviceActionRouter.use(serviceActionRoute, serviceActionMiddleware());
 
 serviceActionRouter.use(
     serviceActionRoute,

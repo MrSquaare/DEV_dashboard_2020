@@ -28,6 +28,7 @@
   "dependencies": {
     "@dashboard/database": "*",
     "@dashboard/mailer": "*",
+    "@dashboard/oauth": "*",
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "jsonwebtoken": "^8.5.1",

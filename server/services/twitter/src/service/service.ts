@@ -1,11 +1,10 @@
-import { ServiceAction } from "@dashboard/service";
+import { OAuthOptions } from "@dashboard/oauth";
+import { ServiceAction, ServiceOAuth } from "@dashboard/service";
 import {
     TwitterFollowersAction,
     TwitterFollowingAction,
     TwitterUserAction,
 } from "../actions";
-import { ServiceOAuthOptions } from "@dashboard/service";
-import { ServiceOAuth } from "@dashboard/service";
 import { twitterConsumerKey, twitterConsumerSecret } from "../constants";
 
 export class TwitterService extends ServiceOAuth {
@@ -18,7 +17,7 @@ export class TwitterService extends ServiceOAuth {
         new TwitterFollowingAction(),
         new TwitterUserAction(),
     ];
-    readonly oauthOptions: ServiceOAuthOptions = {
+    readonly options: OAuthOptions = {
         requestTokenURL: "https://api.twitter.com/oauth/request_token",
         accessTokenURL: "https://api.twitter.com/oauth/access_token",
         userAuthorizationURL: "https://api.twitter.com/oauth/authorize",

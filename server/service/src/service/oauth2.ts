@@ -1,27 +1,43 @@
-import { Service } from "./service";
 import {
-    ServiceOAuth2Options,
-    ServiceOAuth2Verify,
-    ServiceOAuth2VerifyCallback,
-} from "../types";
+    OAuth2,
+    OAuth2Options,
+    OAuth2Verify,
+    OAuth2VerifyCallback,
+} from "@dashboard/oauth";
+import {
+    ServiceRequest,
+    ServiceResponse,
+    ServiceSetting,
+    User,
+} from "@dashboard/types";
 import { ServiceAction } from "../action";
-import { User } from "@dashboard/types";
-import { ServiceSetting } from "@dashboard/types";
+import { Service } from "./service";
 
-export abstract class ServiceOAuth2 extends Service {
+export abstract class ServiceOAuth2 extends Service implements OAuth2 {
     abstract readonly id: string;
     abstract readonly name: string;
     abstract readonly description: string;
     abstract readonly version: string;
     abstract readonly actions: ServiceAction[];
-    abstract readonly oauth2Options: ServiceOAuth2Options;
+    abstract readonly options: OAuth2Options;
 
-    get oauth2Verify(): ServiceOAuth2Verify {
+    async state(request: ServiceRequest): Promise<ServiceResponse> {
+        const token = await this.repository?.read(
+            request.user.username,
+            "accessToken"
+        );
+
+        return {
+            code: 200,
+            data: token !== undefined,
+        };
+    }
+
+    verify(user: User): OAuth2Verify {
         return async (
-            user: User,
             accessToken: string,
             refreshToken: string,
-            done: ServiceOAuth2VerifyCallback
+            done: OAuth2VerifyCallback
         ) => {
             const accessTokenSetting: ServiceSetting = {
                 username: user.username,
@@ -37,13 +53,29 @@ export abstract class ServiceOAuth2 extends Service {
             };
 
             try {
-                await this.repository?.create(accessTokenSetting);
-                await this.repository?.create(refreshTokenSetting);
+                await this.repository?.update(
+                    accessTokenSetting.username,
+                    accessTokenSetting.key,
+                    accessTokenSetting,
+                    true
+                );
+                await this.repository?.update(
+                    refreshTokenSetting.username,
+                    refreshTokenSetting.key,
+                    refreshTokenSetting,
+                    true
+                );
             } catch (e) {
                 return done(e);
             }
 
             done();
         };
+    }
+
+    toJSON(): Partial<Service> {
+        const { repository, options, ...rest } = this;
+
+        return rest;
     }
 }

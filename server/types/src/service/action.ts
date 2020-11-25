@@ -1,10 +1,10 @@
-import { ServiceRequest } from "./request";
-import { ServiceResponse } from "./response";
+import { ServiceActionRequest } from "./request";
+import { ServiceActionResponse } from "./response";
 
 export interface IServiceAction {
     readonly id: string;
     readonly name: string;
     readonly description: string;
 
-    run(request: ServiceRequest): Promise<ServiceResponse>;
+    run(request: ServiceActionRequest): Promise<ServiceActionResponse>;
 }

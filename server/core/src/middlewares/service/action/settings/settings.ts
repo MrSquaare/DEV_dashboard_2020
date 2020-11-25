@@ -1,14 +1,11 @@
 import { ServiceActionSettings } from "@dashboard/service";
-import express from "express";
+import { NextFunction, Request, Response } from "express";
+import { serviceActionSettingsNotFoundStatus } from "../../../../constants";
 
 export function serviceActionSettingsMiddleware() {
-    return function (
-        req: express.Request,
-        res: express.Response,
-        next: express.NextFunction
-    ) {
+    return function(req: Request, res: Response, next: NextFunction) {
         if (!(req.action instanceof ServiceActionSettings)) {
-            return res.status(404).send("Not found");
+            return next(serviceActionSettingsNotFoundStatus);
         }
 
         return next();

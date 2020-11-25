@@ -1,2 +1,3 @@
+export * from "./oauth";
 export * from "./setting";
-export * from "./user";
+export * from "./local";

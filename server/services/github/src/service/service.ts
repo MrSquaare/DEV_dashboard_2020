@@ -1,7 +1,6 @@
-import { ServiceAction } from "@dashboard/service";
+import { OAuth2Options } from "@dashboard/oauth";
+import { ServiceAction, ServiceOAuth2 } from "@dashboard/service";
 import { GitHubUserAction } from "../actions";
-import { ServiceOAuth2Options } from "@dashboard/service";
-import { ServiceOAuth2 } from "@dashboard/service";
 import { githubClientId, githubClientSecret } from "../constants";
 
 export class GitHubService extends ServiceOAuth2 {
@@ -10,7 +9,7 @@ export class GitHubService extends ServiceOAuth2 {
     readonly description = "GitHub service";
     readonly version = "1.0.0";
     readonly actions: ServiceAction[] = [new GitHubUserAction()];
-    readonly oauth2Options: ServiceOAuth2Options = {
+    readonly options: OAuth2Options = {
         authorizationURL: "https://github.com/login/oauth/authorize",
         tokenURL: "https://github.com/login/oauth/access_token",
         clientID: githubClientId,

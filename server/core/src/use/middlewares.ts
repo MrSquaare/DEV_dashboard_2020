@@ -5,10 +5,14 @@ import { Express, json } from "express";
 import morgan from "morgan";
 import passport from "passport";
 import { coreMiddleware, errorMiddleware } from "../middlewares";
+import { StrategyParty } from "../parties/common/strategy";
+import { aboutRouter } from "../routes/about";
+import { v1Router } from "../routes/v1";
 
 export function useMiddlewares(
     express: Express,
     mailer: Mailer,
+    parties: StrategyParty[],
     services: Service[]
 ) {
     express.use(morgan("common"));
@@ -16,7 +20,11 @@ export function useMiddlewares(
     express.use(cors());
     express.use(json());
 
-    express.use(coreMiddleware(mailer, services));
+    express.use(coreMiddleware(mailer, parties, services));
+
+    express.use(aboutRouter);
+    express.use(v1Router);
+
     express.use(errorMiddleware());
 
     express.use(passport.initialize());

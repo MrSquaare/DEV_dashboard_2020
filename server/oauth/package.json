@@ -1,0 +1,23 @@
+{
+  "name": "@dashboard/oauth",
+  "version": "1.0.0",
+  "description": "OAuth 1/2 for Dashboard",
+  "license": "MIT",
+  "main": "build/index.js",
+  "module": "build/index.js",
+  "typings": "build/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "clean": "rm -rf build/",
+    "fclean": "rm -rf build/ node_modules/"
+  },
+  "devDependencies": {
+    "@types/crypto-js": "^4.0.1",
+    "@types/node-fetch": "^2.5.7",
+    "typescript": "^4.0.5"
+  },
+  "dependencies": {
+    "crypto-js": "^4.0.0",
+    "node-fetch": "^2.6.1"
+  }
+}

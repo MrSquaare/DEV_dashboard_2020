@@ -1,3 +1,4 @@
+export * from "./environments";
 export * from "./routes";
 export * from "./secrets";
 export * from "./status";

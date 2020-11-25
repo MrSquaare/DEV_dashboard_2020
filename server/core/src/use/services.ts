@@ -15,6 +15,6 @@ export function useServices(services: Service[]) {
             continue;
         }
 
-        passport.use(service.id, strategy);
+        passport.use(`${service.id}-service`, strategy);
     }
 }

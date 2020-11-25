@@ -1,34 +1,51 @@
-import { ServiceSetting, User } from "@dashboard/types";
-import { ServiceAction } from "../action";
 import {
-    ServiceOAuthOptions,
-    ServiceOAuthVerify,
-    ServiceOAuthVerifyCallback,
-} from "../types";
+    OAuth,
+    OAuthOptions,
+    OAuthVerify,
+    OAuthVerifyCallback,
+} from "@dashboard/oauth";
+import {
+    ServiceRequest,
+    ServiceResponse,
+    ServiceSetting,
+    User,
+} from "@dashboard/types";
+import { ServiceAction } from "../action";
 import { Service } from "./service";
 
-export abstract class ServiceOAuth extends Service {
+export abstract class ServiceOAuth extends Service implements OAuth {
     abstract readonly id: string;
     abstract readonly name: string;
     abstract readonly description: string;
     abstract readonly version: string;
     abstract readonly actions: ServiceAction[];
-    abstract readonly oauthOptions: ServiceOAuthOptions;
+    abstract readonly options: OAuthOptions;
 
-    get oauthVerify(): ServiceOAuthVerify {
+    async state(request: ServiceRequest): Promise<ServiceResponse> {
+        const token = await this.repository?.read(
+            request.user.username,
+            "token"
+        );
+
+        return {
+            code: 200,
+            data: token !== undefined,
+        };
+    }
+
+    verify(user: User): OAuthVerify {
         return async (
-            user: User,
             token: string,
             tokenSecret: string,
-            done: ServiceOAuthVerifyCallback
+            done: OAuthVerifyCallback
         ) => {
-            const accessTokenSetting: ServiceSetting = {
+            const tokenSettings: ServiceSetting = {
                 username: user.username,
                 key: "token",
                 value: token,
                 secure: true,
             };
-            const refreshTokenSetting: ServiceSetting = {
+            const tokenSecretSettings: ServiceSetting = {
                 username: user.username,
                 key: "tokenSecret",
                 value: tokenSecret,
@@ -36,13 +53,29 @@ export abstract class ServiceOAuth extends Service {
             };
 
             try {
-                await this.repository?.create(accessTokenSetting);
-                await this.repository?.create(refreshTokenSetting);
+                await this.repository?.update(
+                    tokenSettings.username,
+                    tokenSettings.key,
+                    tokenSettings,
+                    true
+                );
+                await this.repository?.update(
+                    tokenSecretSettings.username,
+                    tokenSecretSettings.key,
+                    tokenSecretSettings,
+                    true
+                );
             } catch (e) {
                 return done(e);
             }
 
             done();
         };
+    }
+
+    toJSON(): Partial<Service> {
+        const { repository, options, ...rest } = this;
+
+        return rest;
     }
 }

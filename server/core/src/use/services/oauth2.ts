@@ -9,12 +9,12 @@ import {
 
 export function strategyFromServiceOAuth2(service: ServiceOAuth2): IStrategy {
     const strategyOptions: StrategyOptionsWithRequest = {
-        authorizationURL: service.oauth2Options.authorizationURL,
-        tokenURL: service.oauth2Options.tokenURL,
-        clientID: service.oauth2Options.clientID,
-        clientSecret: service.oauth2Options.clientSecret,
-        scope: service.oauth2Options.scope,
-        scopeSeparator: service.oauth2Options.scopeSeparator,
+        authorizationURL: service.options.authorizationURL,
+        tokenURL: service.options.tokenURL,
+        clientID: service.options.clientID,
+        clientSecret: service.options.clientSecret,
+        scope: service.options.scope,
+        scopeSeparator: service.options.scopeSeparator,
         callbackURL: `/v1/services/${service.id}/authentication/callback`,
         passReqToCallback: true,
     };
@@ -26,8 +26,7 @@ export function strategyFromServiceOAuth2(service: ServiceOAuth2): IStrategy {
         arg4,
         verified
     ) => {
-        return service.oauth2Verify(
-            req.user as User,
+        return service.verify(req.user as User)(
             accessToken,
             refreshToken,
             verified

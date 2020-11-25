@@ -1,7 +1,7 @@
+import { ServiceActionSettings } from "@dashboard/service";
+import { ServiceActionRequest, ServiceActionResponse } from "@dashboard/types";
 import fetch from "node-fetch";
 import { GitHubUser } from "../models";
-import { ServiceActionSettings } from "@dashboard/service";
-import { ServiceRequest, ServiceResponse } from "@dashboard/types";
 
 type Settings = {
     user: string;
@@ -11,8 +11,11 @@ export class GitHubUserAction extends ServiceActionSettings<Settings> {
     readonly id: string = "user";
     readonly name: string = "User";
     readonly description: string = "User action";
+    readonly settings: Record<keyof Settings, string> = {
+        user: "string",
+    };
 
-    async run(request: ServiceRequest): Promise<ServiceResponse> {
+    async run(request: ServiceActionRequest): Promise<ServiceActionResponse> {
         const settings = await this.settingsGet(
             request.user.username,
             request.instance
@@ -43,7 +46,7 @@ export class GitHubUserAction extends ServiceActionSettings<Settings> {
         };
     }
 
-    mapRequestToSettings(request: ServiceRequest): Partial<Settings> {
+    mapRequestToSettings(request: ServiceActionRequest): Partial<Settings> {
         return {
             user: request.parameters?.user,
         };

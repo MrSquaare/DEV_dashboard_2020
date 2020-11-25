@@ -2,6 +2,9 @@ import { Request } from "../http";
 import { User } from "../user";
 
 export type ServiceRequest = Request & {
-    instance: string;
     user: User;
+};
+
+export type ServiceActionRequest = ServiceRequest & {
+    instance: string;
 };
