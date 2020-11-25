@@ -11,7 +11,8 @@
     "clean": "lerna run clean",
     "fclean": "lerna run fclean",
     "start:server": "yarn workspace @dashboard/app start",
-    "start:web": "yarn workspace @dashboard-web/app start"
+    "start:web": "yarn workspace @dashboard-web/app start",
+    "dev:web": "yarn workspace @dashboard-web/app dev"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^4.7.0",

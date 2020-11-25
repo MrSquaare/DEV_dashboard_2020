@@ -33,6 +33,8 @@ COPY ./server/services/ ./server/services/
 
 COPY ./server/types/ ./server/types/
 
+COPY ./server/oauth/ ./server/oauth/
+
 RUN yarn install --pure-lockfile
 
 RUN yarn build
@@ -50,6 +52,10 @@ RUN rm -rf ./web/**/src
 
 ENV HOSTNAME="0.0.0.0"
 ENV PORT=3000
+
+ENV SERVER_PROTOCOL="http"
+ENV SERVER_HOSTNAME="localhost"
+ENV SERVER_PORT=4000
 
 EXPOSE ${PORT}
 

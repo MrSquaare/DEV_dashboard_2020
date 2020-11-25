@@ -1,23 +1,37 @@
-import github from "@dashboard-web/service-github";
-import twitter from "@dashboard-web/service-twitter";
-import weather from "@dashboard-web/service-weather";
-import youtube from "@dashboard-web/service-youtube";
-import { Container } from "@material-ui/core";
 import * as React from "react";
+import {createStyles, Theme} from "@material-ui/core";
+import {makeStyles} from "@material-ui/core/styles";
+import CardGridComponent from "../components/card/grid";
+import AppBarItemComponent from "../components/appbar/item";
+import SidebarItemComponent from "../components/sidebar/item";
 
-class IndexPage extends React.Component {
-    render() {
-        return (
-            <Container component="main" maxWidth="xs">
-                {github.widgets[0].create("1")}
-                {github.widgets[0].create("2")}
-                {twitter.widgets[0].create("1")}
-                {weather.widgets[0].create("1")}
-                {youtube.widgets[0].create("1")}
-                {youtube.widgets[1].create("1")}
-            </Container>
-        );
-    }
-}
+
+const useStyles = makeStyles((theme: Theme) =>
+    createStyles({
+        root: {
+            flexGrow: 1,
+        },
+        content: {
+            flexGrow: 1,
+            height: "100vh",
+            overflow: "auto"
+        },
+    }),
+);
+
+const IndexPage: React.FunctionComponent = () => {
+    const classes = useStyles();
+
+    const [drawerOpen, drawerSetOpen] = React.useState(false);
+    const [items, setItems] = React.useState([]);
+
+    return (
+        <div className={classes.root}>
+            <AppBarItemComponent drawerOpen={drawerOpen} drawerSetOpen={drawerSetOpen}/>
+            <SidebarItemComponent drawerOpen={drawerOpen} drawerSetOpen={drawerSetOpen} items={items} setItems={setItems}/>
+            <CardGridComponent items={items} setItems={setItems}/>
+        </div>
+    );
+};
 
 export default IndexPage;
