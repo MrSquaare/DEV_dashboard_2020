@@ -4,7 +4,12 @@ import {ExpandLess, ExpandMore} from "@material-ui/icons";
 import WidgetListComponent from "../widget/list";
 import IconFactory from "../../../utilities/icons/factory";
 
-type Props = {serviceData: any};
+type Props = {
+    serviceData: any,
+    drawerSetOpen: (drawerOpen: boolean) => void,
+    items: object[],
+    setItems: (items: any) => void
+};
 
 const ServiceItemComponent: React.FunctionComponent<Props> = (props: Props) => {
     const [open, setOpen] = React.useState(false);
@@ -23,7 +28,14 @@ const ServiceItemComponent: React.FunctionComponent<Props> = (props: Props) => {
                 <ListItemText primary={props.serviceData.name}/>
                 {open ? <ExpandLess/> : <ExpandMore/>}
             </ListItem>
-            <WidgetListComponent isOpen={open} widgetsData={props.serviceData.actions}/>
+            <WidgetListComponent
+                isOpen={open}
+                serviceName={props.serviceData.name}
+                widgetsData={props.serviceData.actions}
+                drawerSetOpen={props.drawerSetOpen}
+                items={props.items}
+                setItems={props.setItems}
+            />
         </div>
     );
 };

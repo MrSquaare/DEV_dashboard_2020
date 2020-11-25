@@ -2,7 +2,14 @@ import * as React from "react";
 import {Collapse, List} from "@material-ui/core";
 import WidgetItemComponent from "./item";
 
-type Props = {isOpen: boolean, widgetsData: any};
+type Props = {
+    isOpen: boolean,
+    serviceName: string,
+    widgetsData: any,
+    drawerSetOpen: (drawerOpen: boolean) => void,
+    items: object[],
+    setItems: (items: any) => void
+};
 
 const WidgetListComponent: React.FunctionComponent<Props> = (props: Props) => {
     return (
@@ -10,7 +17,13 @@ const WidgetListComponent: React.FunctionComponent<Props> = (props: Props) => {
             <Collapse in={props.isOpen} timeout="auto" unmountOnExit>
                 <List component="div" disablePadding>
                     {props.widgetsData.map((widget: any) => {
-                        return <WidgetItemComponent widgetData={widget}/>;
+                        return <WidgetItemComponent
+                            serviceName={props.serviceName}
+                            widgetData={widget}
+                            drawerSetOpen={props.drawerSetOpen}
+                            items={props.items}
+                            setItems={props.setItems}
+                        />;
                     })}
                 </List>
             </Collapse>

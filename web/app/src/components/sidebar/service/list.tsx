@@ -21,7 +21,11 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 );
 
-type Props = {};
+type Props = {
+    drawerSetOpen: (drawerOpen: boolean) => void,
+    items: object[],
+    setItems: (items: any) => void
+};
 
 const ServiceListComponent: React.FunctionComponent<Props> = (props: Props) => {
     const classes = useStyles();
@@ -48,7 +52,12 @@ const ServiceListComponent: React.FunctionComponent<Props> = (props: Props) => {
             >
             </List>
             {data ? data.data.map((service: any) => {
-                return <ServiceItemComponent serviceData={service}/>;
+                return <ServiceItemComponent
+                    serviceData={service}
+                    drawerSetOpen={props.drawerSetOpen}
+                    items={props.items}
+                    setItems={props.setItems}
+                />;
             }) : <div className={classes.circularProgress}><CircularProgress/></div>}
 
         </div>
