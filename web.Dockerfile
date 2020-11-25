@@ -33,6 +33,8 @@ COPY ./server/services/ ./server/services/
 
 COPY ./server/types/ ./server/types/
 
+COPY ./server/oauth/ ./server/oauth/
+
 RUN yarn install --pure-lockfile
 
 RUN yarn build
