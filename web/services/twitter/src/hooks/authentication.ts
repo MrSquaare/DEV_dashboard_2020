@@ -29,13 +29,15 @@ export function useAuthentication() {
     const [authenticated, setAuthenticated] = useState<boolean>(false);
 
     const authenticate = () => {
-        apiAuthenticate().then(() => getAuthenticated());
+        apiAuthenticate()
+            .then(() => getAuthenticated())
+            .catch((e) => console.error(e));
     };
 
     const getAuthenticated = () => {
-        apiGetAuthenticated().then((authenticated) =>
-            setAuthenticated(authenticated)
-        );
+        apiGetAuthenticated()
+            .then((authenticated) => setAuthenticated(authenticated))
+            .catch((e) => console.error(e));
     };
 
     useEffect(() => {

@@ -57,21 +57,25 @@ export function useChannel(instance: string) {
     const [channelSettings, setChannelSettingsState] = useState<any>();
 
     const getChannel = () => {
-        apiGetChannel(instance).then((channel) => setChannelState(channel));
+        apiGetChannel(instance)
+            .then((channel) => setChannelState(channel))
+            .catch((e) => console.error(e));
     };
 
     const getChannelSettings = () => {
-        apiGetChannelSettings(instance).then((channelSettings) =>
-            setChannelSettingsState(channelSettings)
-        );
+        apiGetChannelSettings(instance)
+            .then((channelSettings) => setChannelSettingsState(channelSettings))
+            .catch((e) => console.error(e));
     };
 
     const setChannelSettings = (channelURL: string) => {
-        apiSetChannelSettings(instance, channelURL).then((channelSettings) => {
-            setChannelSettingsState(channelSettings);
+        apiSetChannelSettings(instance, channelURL)
+            .then((channelSettings) => {
+                setChannelSettingsState(channelSettings);
 
-            getChannel();
-        });
+                getChannel();
+            })
+            .catch((e) => console.error(e));
     };
 
     useEffect(() => {

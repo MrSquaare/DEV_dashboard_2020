@@ -57,21 +57,25 @@ export function useCity(instance: string) {
     const [citySettings, setCitySettingsState] = useState<any>();
 
     const getCity = () => {
-        apiGetCity(instance).then((city) => setCityState(city));
+        apiGetCity(instance)
+            .then((city) => setCityState(city))
+            .catch((e) => console.error(e));
     };
 
     const getCitySettings = () => {
-        apiGetCitySettings(instance).then((citySettings) =>
-            setCitySettingsState(citySettings)
-        );
+        apiGetCitySettings(instance)
+            .then((citySettings) => setCitySettingsState(citySettings))
+            .catch((e) => console.error(e));
     };
 
     const setCitySettings = (city: string) => {
-        apiSetCitySettings(instance, city).then((citySettings) => {
-            setCitySettingsState(citySettings);
+        apiSetCitySettings(instance, city)
+            .then((citySettings) => {
+                setCitySettingsState(citySettings);
 
-            getCity();
-        });
+                getCity();
+            })
+            .catch((e) => console.error(e));
     };
 
     useEffect(() => {

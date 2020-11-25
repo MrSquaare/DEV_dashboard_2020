@@ -56,21 +56,25 @@ export function useUser(instance: string) {
     const [userSettings, setUserSettingsState] = useState<any>();
 
     const getUser = () => {
-        apiGetUser(instance).then((user) => setUserState(user));
+        apiGetUser(instance)
+            .then((user) => setUserState(user))
+            .catch((e) => console.error(e));
     };
 
     const getUserSettings = () => {
-        apiGetUserSettings(instance).then((userSettings) =>
-            setUserSettingsState(userSettings)
-        );
+        apiGetUserSettings(instance)
+            .then((userSettings) => setUserSettingsState(userSettings))
+            .catch((e) => console.error(e));
     };
 
     const setUserSettings = (user: string) => {
-        apiSetUserSettings(instance, user).then((userSettings) => {
-            setUserSettingsState(userSettings);
+        apiSetUserSettings(instance, user)
+            .then((userSettings) => {
+                setUserSettingsState(userSettings);
 
-            getUser();
-        });
+                getUser();
+            })
+            .catch((e) => console.error(e));
     };
 
     useEffect(() => {

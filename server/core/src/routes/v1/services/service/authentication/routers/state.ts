@@ -21,11 +21,10 @@ serviceAuthenticationStateRouter.get(
                 code: 200,
             };
 
-            if (req.service instanceof ServiceOAuth) {
-                serviceResponse = await req.service.state({
-                    user: user,
-                });
-            } else if (req.service instanceof ServiceOAuth2) {
+            if (
+                req.service instanceof ServiceOAuth ||
+                req.service instanceof ServiceOAuth2
+            ) {
                 serviceResponse = await req.service.state({
                     user: user,
                 });

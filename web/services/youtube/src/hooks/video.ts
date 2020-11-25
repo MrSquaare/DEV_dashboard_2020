@@ -57,21 +57,25 @@ export function useVideo(instance: string) {
     const [videoSettings, setVideoSettingsState] = useState<any>();
 
     const getVideo = () => {
-        apiGetVideo(instance).then((video) => setVideoState(video));
+        apiGetVideo(instance)
+            .then((video) => setVideoState(video))
+            .catch((e) => console.error(e));
     };
 
     const getVideoSettings = () => {
-        apiGetVideoSettings(instance).then((videoSettings) =>
-            setVideoSettingsState(videoSettings)
-        );
+        apiGetVideoSettings(instance)
+            .then((videoSettings) => setVideoSettingsState(videoSettings))
+            .catch((e) => console.error(e));
     };
 
     const setVideoSettings = (videoURL: string) => {
-        apiSetVideoSettings(instance, videoURL).then((videoSettings) => {
-            setVideoSettingsState(videoSettings);
+        apiSetVideoSettings(instance, videoURL)
+            .then((videoSettings) => {
+                setVideoSettingsState(videoSettings);
 
-            getVideo();
-        });
+                getVideo();
+            })
+            .catch((e) => console.error(e));
     };
 
     useEffect(() => {
