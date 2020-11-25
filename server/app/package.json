@@ -10,6 +10,7 @@
   "dependencies": {
     "@dashboard/cli": "*",
     "@dashboard/service-github": "*",
-    "@dashboard/service-twitter": "*"
+    "@dashboard/service-twitter": "*",
+    "@dashboard/service-weather": "*"
   }
 }

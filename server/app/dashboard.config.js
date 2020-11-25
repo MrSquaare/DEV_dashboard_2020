@@ -1,5 +1,6 @@
 const GitHubService = require("@dashboard/service-github").default;
 const TwitterService = require("@dashboard/service-twitter").default;
+const WeatherService = require("@dashboard/service-weather").default;
 
 /**
  * @type {import("@dashboard/core").Configuration}
@@ -12,5 +13,5 @@ module.exports = {
         user: "noreply.dashboard.project@gmail.com",
         password: "7$ER*Q9gT@9u5B",
     },
-    services: [GitHubService, TwitterService],
+    services: [GitHubService, TwitterService, WeatherService],
 };
