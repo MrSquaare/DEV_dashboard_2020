@@ -5,10 +5,11 @@ import {
     CardActions,
     CardContent,
     CircularProgress,
+    Dialog,
+    DialogTitle,
     IconButton,
-    Modal,
     TextField,
-    Typography
+    Typography,
 } from "@material-ui/core";
 import { Settings as SettingsIcon } from "@material-ui/icons";
 import * as React from "react";
@@ -26,15 +27,15 @@ type SettingsProps = Props & {
     set: (user: string) => void;
 };
 
-type SettingsFormEventTarget = {
-    username: HTMLInputElement;
-};
-
-type LoginProps = {
+type SignInProps = {
     authenticate: () => void;
 };
 
-const Login: React.FC<LoginProps> = (props) => {
+type FormEventTarget = {
+    username: HTMLInputElement;
+};
+
+const SignInButton: React.FC<SignInProps> = (props) => {
     const handleClick = async (event: React.MouseEvent) => {
         props.authenticate();
     };
@@ -46,7 +47,7 @@ const Login: React.FC<LoginProps> = (props) => {
     );
 };
 
-const Settings: React.FC<SettingsProps> = (props) => {
+const SettingsForm: React.FC<SettingsProps> = (props) => {
     const [username, setUsername] = useState(props.settings?.user);
     const { authenticated, authenticate } = useAuthentication();
 
@@ -59,52 +60,44 @@ const Settings: React.FC<SettingsProps> = (props) => {
     const handleSubmit = async (event: React.FormEvent) => {
         event.preventDefault();
 
-        const target = (event.target as unknown) as SettingsFormEventTarget;
+        const target = (event.target as unknown) as FormEventTarget;
 
         props.set(target.username.value);
     };
 
     return (
-        <Box
-            display={"flex"}
-            flexDirection={"column"}
-            alignItems={"center"}
-            justifyContent={"center"}
-        >
-            <Box bgcolor={"white"} padding={"2rem"}>
-                <Typography component="h1" variant="h5">
-                    Settings
-                </Typography>
-                {!authenticated ? <Login authenticate={authenticate} /> : null}
-                <form noValidate onSubmit={handleSubmit}>
-                    <TextField
-                        required
-                        label="Username"
-                        id="username"
-                        name="username"
-                        autoComplete="username"
-                        autoFocus
-                        variant="outlined"
-                        margin="normal"
-                        fullWidth
-                        value={username}
-                        onChange={handleChange}
-                    />
-                    <Button
-                        type="submit"
-                        variant="contained"
-                        color="primary"
-                        fullWidth
-                    >
-                        Save
-                    </Button>
-                </form>
-            </Box>
+        <Box paddingX={"2rem"} paddingBottom={"2rem"}>
+            {!authenticated ? (
+                <SignInButton authenticate={authenticate} />
+            ) : null}
+            <form noValidate onSubmit={handleSubmit}>
+                <TextField
+                    required
+                    label="Username"
+                    id="username"
+                    name="username"
+                    autoComplete="username"
+                    autoFocus
+                    variant="outlined"
+                    margin="normal"
+                    fullWidth
+                    value={username}
+                    onChange={handleChange}
+                />
+                <Button
+                    type="submit"
+                    variant="contained"
+                    color="primary"
+                    fullWidth
+                >
+                    Save
+                </Button>
+            </form>
         </Box>
     );
 };
 
-const SettingsModal: React.FC<SettingsProps> = (props) => {
+const SettingsDialog: React.FC<SettingsProps> = (props) => {
     const [open, setOpen] = React.useState(false);
 
     return (
@@ -112,14 +105,15 @@ const SettingsModal: React.FC<SettingsProps> = (props) => {
             <IconButton onClick={() => setOpen(true)}>
                 <SettingsIcon />
             </IconButton>
-            <Modal open={open} onClose={() => setOpen(false)}>
-                <Settings
+            <Dialog open={open} onClose={() => setOpen(false)}>
+                <DialogTitle>Settings</DialogTitle>
+                <SettingsForm
                     instance={props.instance}
                     settings={props.settings}
                     get={props.get}
                     set={props.set}
                 />
-            </Modal>
+            </Dialog>
         </div>
     );
 };
@@ -159,7 +153,7 @@ export const UserComponent: React.FC<Props> = (props: Props) => {
             <Card>
                 {user ? loadedBody : loadingBody}
                 <CardActions>
-                    <SettingsModal
+                    <SettingsDialog
                         instance={props.instance}
                         settings={userSettings}
                         get={getUserSettings}

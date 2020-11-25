@@ -5,8 +5,9 @@ import {
     CardActions,
     CardContent,
     CircularProgress,
+    Dialog,
+    DialogTitle,
     IconButton,
-    Modal,
     TextField,
     Typography,
 } from "@material-ui/core";
@@ -14,6 +15,7 @@ import { Settings as SettingsIcon } from "@material-ui/icons";
 import * as React from "react";
 import { useState } from "react";
 import { useUser } from "../hooks";
+import { useAuthentication } from "../hooks/authentication";
 
 type Props = {
     instance: string;
@@ -25,12 +27,29 @@ type SettingsProps = Props & {
     set: (user: string) => void;
 };
 
-type SettingsFormEventTarget = {
+type SignInProps = {
+    authenticate: () => void;
+};
+
+type FormEventTarget = {
     username: HTMLInputElement;
 };
 
-const Settings: React.FC<SettingsProps> = (props) => {
+const SignInButton: React.FC<SignInProps> = (props) => {
+    const handleClick = async (event: React.MouseEvent) => {
+        props.authenticate();
+    };
+
+    return (
+        <Button variant="contained" color="primary" onClick={handleClick}>
+            Login to GitHub
+        </Button>
+    );
+};
+
+const SettingsForm: React.FC<SettingsProps> = (props) => {
     const [username, setUsername] = useState(props.settings?.user);
+    const { authenticated, authenticate } = useAuthentication();
 
     const handleChange = async (event: React.ChangeEvent) => {
         event.preventDefault();
@@ -41,51 +60,44 @@ const Settings: React.FC<SettingsProps> = (props) => {
     const handleSubmit = async (event: React.FormEvent) => {
         event.preventDefault();
 
-        const target = (event.target as unknown) as SettingsFormEventTarget;
+        const target = (event.target as unknown) as FormEventTarget;
 
         props.set(target.username.value);
     };
 
     return (
-        <Box
-            display={"flex"}
-            flexDirection={"column"}
-            alignItems={"center"}
-            justifyContent={"center"}
-        >
-            <Box bgcolor={"white"} padding={"2rem"}>
-                <Typography component="h1" variant="h5">
-                    Settings
-                </Typography>
-                <form noValidate onSubmit={handleSubmit}>
-                    <TextField
-                        required
-                        label="Username"
-                        id="username"
-                        name="username"
-                        autoComplete="username"
-                        autoFocus
-                        variant="outlined"
-                        margin="normal"
-                        fullWidth
-                        value={username}
-                        onChange={handleChange}
-                    />
-                    <Button
-                        type="submit"
-                        variant="contained"
-                        color="primary"
-                        fullWidth
-                    >
-                        Save
-                    </Button>
-                </form>
-            </Box>
+        <Box paddingX={"2rem"} paddingBottom={"2rem"}>
+            {!authenticated ? (
+                <SignInButton authenticate={authenticate} />
+            ) : null}
+            <form noValidate onSubmit={handleSubmit}>
+                <TextField
+                    required
+                    label="Username"
+                    id="username"
+                    name="username"
+                    autoComplete="username"
+                    autoFocus
+                    variant="outlined"
+                    margin="normal"
+                    fullWidth
+                    value={username}
+                    onChange={handleChange}
+                />
+                <Button
+                    type="submit"
+                    variant="contained"
+                    color="primary"
+                    fullWidth
+                >
+                    Save
+                </Button>
+            </form>
         </Box>
     );
 };
 
-const SettingsModal: React.FC<SettingsProps> = (props) => {
+const SettingsDialog: React.FC<SettingsProps> = (props) => {
     const [open, setOpen] = React.useState(false);
 
     return (
@@ -93,14 +105,15 @@ const SettingsModal: React.FC<SettingsProps> = (props) => {
             <IconButton onClick={() => setOpen(true)}>
                 <SettingsIcon />
             </IconButton>
-            <Modal open={open} onClose={() => setOpen(false)}>
-                <Settings
+            <Dialog open={open} onClose={() => setOpen(false)}>
+                <DialogTitle>Settings</DialogTitle>
+                <SettingsForm
                     instance={props.instance}
                     settings={props.settings}
                     get={props.get}
                     set={props.set}
                 />
-            </Modal>
+            </Dialog>
         </div>
     );
 };
@@ -111,7 +124,12 @@ export const UserComponent: React.FC<Props> = (props: Props) => {
     );
 
     const loadingBody = (
-        <Box display={"flex"} alignItems={"center"} justifyContent={"center"} padding={"1rem"}>
+        <Box
+            display={"flex"}
+            alignItems={"center"}
+            justifyContent={"center"}
+            padding={"1rem"}
+        >
             <CircularProgress />
         </Box>
     );
@@ -135,7 +153,7 @@ export const UserComponent: React.FC<Props> = (props: Props) => {
             <Card>
                 {user ? loadedBody : loadingBody}
                 <CardActions>
-                    <SettingsModal
+                    <SettingsDialog
                         instance={props.instance}
                         settings={userSettings}
                         get={getUserSettings}

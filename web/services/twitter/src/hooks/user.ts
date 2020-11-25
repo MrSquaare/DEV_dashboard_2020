@@ -11,8 +11,6 @@ async function apiGetUser(instance: string): Promise<TwitterUser> {
         }
     );
 
-    console.log(response);
-
     const json = await response.json();
 
     return json["data"];
