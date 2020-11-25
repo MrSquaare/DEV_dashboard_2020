@@ -3,7 +3,7 @@ import {CircularProgress, createStyles, List, ListSubheader, Theme} from "@mater
 import ServiceItemComponent from "./item";
 import {makeStyles} from "@material-ui/core/styles";
 import {serverHost} from "../../../constants";
-import {useState} from "react";
+import {v4} from "uuid";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -31,12 +31,17 @@ const ServiceListComponent: React.FunctionComponent<Props> = (props: Props) => {
     const classes = useStyles();
 
     const [data, setData] = React.useState<any>(undefined);
+
     fetch(serverHost + "/v1/services").then((result) => {
             result.json().then((json) => {
                 setData(json);
+            }).catch((e) => {
+                console.log(e);
             });
         }
-    );
+    ).catch((e) => {
+        console.log(e);
+    });
 
     return (
         <div>
@@ -53,6 +58,7 @@ const ServiceListComponent: React.FunctionComponent<Props> = (props: Props) => {
             </List>
             {data ? data.data.map((service: any) => {
                 return <ServiceItemComponent
+                    key={v4()}
                     serviceData={service}
                     drawerSetOpen={props.drawerSetOpen}
                     items={props.items}
