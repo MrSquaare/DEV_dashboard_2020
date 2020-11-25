@@ -1,3 +1,3 @@
 export * from "./jwt";
-export * from "./local";
-export * from "./oauth";
+export * from "./locals";
+export * from "./parties";

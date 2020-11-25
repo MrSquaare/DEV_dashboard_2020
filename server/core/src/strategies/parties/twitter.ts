@@ -2,9 +2,9 @@ import { OAuthOptions, OAuthProfile } from "@dashboard/oauth";
 import { Profile } from "passport";
 import OAuthStrategy from "passport-oauth1";
 import { twitterConsumerKey, twitterConsumerSecret } from "../../constants";
-import { StrategyPartyOAuth } from "../../parties/oauth/strategy";
+import { PartyOAuth } from "../../party/oauth/party";
 
-export class TwitterStrategy extends StrategyPartyOAuth {
+export class TwitterStrategy extends PartyOAuth {
     readonly id = "twitter";
     readonly options: OAuthOptions = {
         requestTokenURL: "https://api.twitter.com/oauth/request_token",

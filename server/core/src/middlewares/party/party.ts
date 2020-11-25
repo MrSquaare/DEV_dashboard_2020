@@ -1,11 +1,11 @@
 import { NextFunction, Request, Response } from "express";
 import { partyNotFoundStatus } from "../../constants";
-import { StrategyParty } from "../../parties/common/strategy";
+import { Party } from "../../party";
 
 declare global {
     namespace Express {
         interface Request {
-            party: StrategyParty;
+            party: Party;
         }
     }
 }

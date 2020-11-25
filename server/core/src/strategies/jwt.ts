@@ -3,28 +3,28 @@ import { User } from "@dashboard/types";
 import jwt, { JsonWebTokenError } from "jsonwebtoken";
 import { Strategy } from "passport-custom";
 import {
-    badRequestStatus,
     internalServerErrorStatus,
     jwtInvalid,
     jwtSecret,
+    unauthorized,
     userDoesntExist,
 } from "../constants";
 import { Unique } from "../types";
 
 export function jwtStrategy(
-    localRepository: UserLocalRepository,
-    oauthRepository: UserOAuthRepository
+    userLocalRepository: UserLocalRepository,
+    userOAuthRepository: UserOAuthRepository
 ) {
     return new Strategy(async (req, done) => {
         try {
             const authorization = req.headers.authorization?.split(" ");
 
             if (!authorization) {
-                return done(badRequestStatus);
+                return done(unauthorized);
             }
 
             if (authorization[0] !== "JWT") {
-                return done(badRequestStatus);
+                return done(unauthorized);
             }
 
             const token = authorization[1];
@@ -34,9 +34,9 @@ export function jwtStrategy(
             let user: User | undefined;
 
             if (unique.type === "local") {
-                user = await localRepository.read(unique.username);
+                user = await userLocalRepository.read(unique.username);
             } else if (unique.type === "oauth" && unique.provider) {
-                user = await oauthRepository.read(
+                user = await userOAuthRepository.read(
                     unique.username,
                     unique.provider
                 );

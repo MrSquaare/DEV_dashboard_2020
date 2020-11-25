@@ -4,9 +4,9 @@ import {
     StrategyOptionsWithRequest,
     VerifyFunctionWithRequest,
 } from "passport-oauth2";
-import { StrategyPartyOAuth2 } from "../../parties/oauth2/strategy";
+import { PartyOAuth2 } from "../../party";
 
-export function strategyFromPartyOAuth2(party: StrategyPartyOAuth2): IStrategy {
+export function strategyFromPartyOAuth2(party: PartyOAuth2): IStrategy {
     const strategyOptions: StrategyOptionsWithRequest = {
         authorizationURL: party.options.authorizationURL,
         tokenURL: party.options.tokenURL,

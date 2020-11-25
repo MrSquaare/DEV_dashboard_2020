@@ -1,6 +1,6 @@
 import { UserOAuthRepository } from "@dashboard/database";
 
-export abstract class StrategyParty {
+export abstract class Party {
     abstract readonly id: string;
 
     protected repository: UserOAuthRepository;
