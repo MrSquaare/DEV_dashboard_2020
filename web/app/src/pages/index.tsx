@@ -1,6 +1,7 @@
 import github from "@dashboard-web/service-github";
 import twitter from "@dashboard-web/service-twitter";
 import weather from "@dashboard-web/service-weather";
+import youtube from "@dashboard-web/service-youtube";
 import { Container } from "@material-ui/core";
 import * as React from "react";
 
@@ -12,6 +13,8 @@ class IndexPage extends React.Component {
                 {github.widgets[0].create("2")}
                 {twitter.widgets[0].create("1")}
                 {weather.widgets[0].create("1")}
+                {youtube.widgets[0].create("1")}
+                {youtube.widgets[1].create("1")}
             </Container>
         );
     }
