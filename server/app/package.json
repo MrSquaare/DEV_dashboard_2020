@@ -11,6 +11,7 @@
     "@dashboard/cli": "*",
     "@dashboard/service-github": "*",
     "@dashboard/service-twitter": "*",
-    "@dashboard/service-weather": "*"
+    "@dashboard/service-weather": "*",
+    "@dashboard/service-youtube": "*"
   }
 }
