@@ -14,7 +14,7 @@ import { Unique } from "../types";
 export function jwtStrategy(
     userLocalRepository: UserLocalRepository,
     userOAuthRepository: UserOAuthRepository
-) {
+): Strategy {
     return new Strategy(async (req, done) => {
         try {
             const authorization = req.headers.authorization?.split(" ");

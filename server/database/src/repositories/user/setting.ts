@@ -43,7 +43,7 @@ export class UserSettingRepository implements IUserSettingRepository {
         username: string,
         key: string,
         setting: Partial<UserSetting>,
-        create: boolean = false
+        create = false
     ): Promise<UserSetting | undefined> {
         if (setting?.secure && setting?.value) {
             setting.value = encrypt(setting.value);

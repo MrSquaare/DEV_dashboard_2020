@@ -20,7 +20,7 @@ function exposeServices(express: Express, services: Service[]) {
     });
 }
 
-export function useServices(express: Express, services: Service[]) {
+export function useServices(express: Express, services: Service[]): void {
     exposeServices(express, services);
 
     for (const service of services) {

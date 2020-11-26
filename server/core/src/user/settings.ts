@@ -7,7 +7,7 @@ export class UserSettings {
         this.repository = repository;
     }
 
-    async delete(username: string, key: string) {
+    async delete(username: string, key: string): Promise<void> {
         await this.repository.delete(username, key);
     }
 

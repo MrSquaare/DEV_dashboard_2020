@@ -26,7 +26,7 @@ function exposeUtilities(express: Express) {
     });
 }
 
-export function useMiddlewares(express: Express) {
+export function useMiddlewares(express: Express): void {
     exposeUtilities(express);
 
     express.use(morgan("common"));

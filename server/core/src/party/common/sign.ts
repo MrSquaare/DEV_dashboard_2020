@@ -8,7 +8,7 @@ export async function signStrategy(
     repository: UserOAuthRepository,
     profile: Profile,
     done: OAuthVerifyCallback | OAuth2VerifyCallback
-) {
+): Promise<void> {
     try {
         const username = `${profile.username}-${profile.provider}`;
 

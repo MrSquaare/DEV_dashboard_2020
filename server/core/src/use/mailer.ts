@@ -17,6 +17,6 @@ function exposeMailer(express: Express, mailer: Mailer) {
     });
 }
 
-export function useMailer(express: Express, mailer: Mailer) {
+export function useMailer(express: Express, mailer: Mailer): void {
     exposeMailer(express, mailer);
 }

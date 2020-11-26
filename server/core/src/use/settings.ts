@@ -1,5 +1,5 @@
 import { Express } from "express";
-import { UserSettings } from "../user/settings";
+import { UserSettings } from "../user";
 
 declare global {
     namespace Express {
@@ -17,6 +17,6 @@ function exposeSettings(express: Express, settings: UserSettings) {
     });
 }
 
-export function useSettings(express: Express, settings: UserSettings) {
+export function useSettings(express: Express, settings: UserSettings): void {
     exposeSettings(express, settings);
 }

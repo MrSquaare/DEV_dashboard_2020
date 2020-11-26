@@ -24,7 +24,7 @@ export class YouTubeChannel implements IYouTubeChannel {
         this.counters = channel.counters;
     }
 
-    static fromJSON(json: any) {
+    static fromJSON(json: any): YouTubeChannel {
         return new YouTubeChannel({
             id: json.items[0].id,
             name: json.items[0].snippet.title,

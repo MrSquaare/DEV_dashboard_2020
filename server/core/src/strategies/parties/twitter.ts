@@ -2,7 +2,7 @@ import { OAuthOptions, OAuthProfile } from "@dashboard/oauth";
 import { Profile } from "passport";
 import OAuthStrategy from "passport-oauth1";
 import { twitterConsumerKey, twitterConsumerSecret } from "../../constants";
-import { PartyOAuth } from "../../party/oauth/party";
+import { PartyOAuth } from "../../party/oauth";
 
 export class TwitterStrategy extends PartyOAuth {
     readonly id = "twitter";
@@ -19,7 +19,7 @@ export class TwitterStrategy extends PartyOAuth {
             this: OAuthStrategy,
             token,
             tokenSecret,
-            params: any,
+            params,
             done
         ) {
             this._oauth.get(

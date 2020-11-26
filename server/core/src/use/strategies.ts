@@ -16,7 +16,7 @@ import {
 export function useStrategies(
     userLocalRepository: UserLocalRepository,
     userOAuthRepository: UserOAuthRepository
-) {
+): void {
     passport.use(
         jwtStrategyName,
         jwtStrategy(userLocalRepository, userOAuthRepository)

@@ -8,7 +8,7 @@ import {
     verificationInvalid,
 } from "../../constants";
 
-export function verifyStrategy(repository: UserLocalRepository) {
+export function verifyStrategy(repository: UserLocalRepository): Strategy {
     return new Strategy(async (req, done) => {
         try {
             const username = req.query.username as string | undefined;

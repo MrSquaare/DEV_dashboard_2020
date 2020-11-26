@@ -20,7 +20,7 @@ function exposeParties(express: Express, parties: Party[]) {
     });
 }
 
-export function useParties(express: Express, parties: Party[]) {
+export function useParties(express: Express, parties: Party[]): void {
     exposeParties(express, parties);
 
     for (const party of parties) {
