@@ -32,7 +32,7 @@ authenticationSignUpRouter.post(
 
             await req.mailer.send(mail);
 
-            res.send("Success");
+            return res.json({});
         } catch (e) {
             console.error(e);
 

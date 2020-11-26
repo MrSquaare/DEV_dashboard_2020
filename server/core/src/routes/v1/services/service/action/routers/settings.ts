@@ -24,7 +24,7 @@ serviceActionSettingsRouter.delete(
 
             await action.settingsDelete(user.username, instance);
 
-            return res.json();
+            return res.json({});
         } catch (e) {
             if (e instanceof StatusError) {
                 return res.status(e.code).json(e);

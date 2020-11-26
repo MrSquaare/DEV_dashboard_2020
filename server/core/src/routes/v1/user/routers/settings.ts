@@ -16,7 +16,7 @@ userSettingsRouter.delete(
             await req.settings.delete(user.username, key);
         }
 
-        return res.json();
+        return res.json({});
     }
 );
 
