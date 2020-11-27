@@ -1,8 +1,9 @@
 import * as React from "react"
-import {CircularProgress, createStyles, List, ListSubheader, Theme} from "@material-ui/core";
+import {Box, CircularProgress, createStyles, List, ListSubheader, Theme} from "@material-ui/core";
 import ServiceItemComponent from "./item";
 import {makeStyles} from "@material-ui/core/styles";
-import {serverHost} from "../../../constants";
+import {useServices} from "../../../hooks/services/services";
+import { Alert } from "@material-ui/lab";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -13,7 +14,6 @@ const useStyles = makeStyles((theme: Theme) =>
         },
         circularProgress: {
             display: "flex",
-            flexGrow: 1,
             justifyContent: "center",
             alignItems: "center",
         },
@@ -29,33 +29,22 @@ type Props = {
 const ServiceListComponent: React.FunctionComponent<Props> = (props: Props) => {
     const classes = useStyles();
 
-    const [data, setData] = React.useState<any>(undefined);
+    const { services, error } = useServices()
 
-    fetch(serverHost + "/v1/services").then((result) => {
-            result.json().then((json) => {
-                setData(json);
-            }).catch((e) => {
-                console.log(e);
-            });
-        }
-    ).catch((e) => {
-        console.log(e);
-    });
+    if (!services && !error) {
+        return (
+            <Box display={"flex"} alignItems={"center"} justifyContent={"center"}>
+                <CircularProgress/>
+            </Box>);
+    }
+
+    if (error) {
+        return (<Alert severity="error">{error.message}</Alert>);
+    }
 
     return (
         <div>
-            <List
-                component={"nav"}
-                aria-labelledby="nested-list-subheader"
-                subheader={
-                    <ListSubheader component="div" id="nested-list-subheader">
-                        Services List
-                    </ListSubheader>
-                }
-                className={classes.list}
-            >
-            </List>
-            {data ? data.data.map((service: any) => {
+            {services.map((service: any) => {
                 return <ServiceItemComponent
                     key={service.id}
                     serviceData={service}
@@ -63,8 +52,7 @@ const ServiceListComponent: React.FunctionComponent<Props> = (props: Props) => {
                     items={props.items}
                     setItems={props.setItems}
                 />;
-            }) : <div className={classes.circularProgress}><CircularProgress/></div>}
-
+            })}
         </div>
     );
 };
