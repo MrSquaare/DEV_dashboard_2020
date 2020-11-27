@@ -3,7 +3,6 @@ import {CircularProgress, createStyles, List, ListSubheader, Theme} from "@mater
 import ServiceItemComponent from "./item";
 import {makeStyles} from "@material-ui/core/styles";
 import {serverHost} from "../../../constants";
-import {v4} from "uuid";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({

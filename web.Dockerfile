@@ -42,11 +42,11 @@ RUN yarn build
 
 FROM base
 
+COPY --from=build ${APP_DIRECTORY}/web/ ./web/
+
 RUN yarn install --production --pure-lockfile
 
 RUN yarn cache clean --all
-
-COPY --from=build ${APP_DIRECTORY}/web/ ./web/
 
 RUN rm -rf ./web/**/src
 
