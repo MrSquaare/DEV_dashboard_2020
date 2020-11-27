@@ -21,6 +21,7 @@ const PartySignInPage: React.FC = () => {
         const query: Record<string, string> = {};
 
         url.searchParams.forEach((value, key) => {
+            //  deepcode ignore PrototypePollution: False positive
             query[key] = value;
         });
 

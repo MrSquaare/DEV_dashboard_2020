@@ -77,7 +77,7 @@ export function useApi<T = any>() {
             parameters,
             onSuccess,
             onError
-        ).then();
+        ).catch((e) => console.log(e));
     };
 
     return { data, error, fetch };
