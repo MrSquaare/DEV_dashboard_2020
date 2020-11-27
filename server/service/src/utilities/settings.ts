@@ -3,7 +3,7 @@ import { badRequestStatus } from "../constants";
 export function hasSettings<T>(
     object: Record<string, unknown> | undefined,
     settings: Record<keyof T, string>
-) {
+): void {
     if (!object) {
         throw badRequestStatus;
     }

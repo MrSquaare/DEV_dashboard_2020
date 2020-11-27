@@ -36,5 +36,5 @@ aboutRouter.use(aboutRoute, (req, res) => {
         server: server,
     };
 
-    res.json(about);
+    return res.json(about);
 });

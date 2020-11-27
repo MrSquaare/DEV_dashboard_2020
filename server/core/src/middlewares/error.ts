@@ -1,5 +1,6 @@
 import { StatusError } from "@dashboard/types";
 import { NextFunction, Request, Response } from "express";
+import { internalServerErrorStatus } from "../constants";
 
 export function errorMiddleware() {
     return function (
@@ -7,11 +8,13 @@ export function errorMiddleware() {
         req: Request,
         res: Response,
         next: NextFunction
-    ) {
-        if (err instanceof StatusError) {
-            return res.status(err.code).json(err);
+    ): unknown {
+        if (!(err instanceof StatusError)) {
+            console.log(err);
+
+            err = internalServerErrorStatus;
         }
 
-        return res.status(500).send(`Internal server error: ${err}`);
+        return res.status(err.code).json(err);
     };
 }

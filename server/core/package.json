@@ -7,7 +7,8 @@
   "module": "build/index.js",
   "typings": "build/index.d.ts",
   "scripts": {
-    "build": "tsc",
+    "build:copy": "cp -r src/templates build/",
+    "build": "tsc && yarn build:copy",
     "clean": "rm -rf build/",
     "fclean": "rm -rf build/ node_modules/"
   },

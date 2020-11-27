@@ -1,8 +1,6 @@
 import { Router } from "express";
 import passport, { AuthenticateOptions } from "passport";
-import {
-    authenticationPartiesBaseRoute,
-} from "../../../../../constants";
+import { authenticationPartiesBaseRoute } from "../../../../../constants";
 
 export const authenticationPartiesBaseRouter = Router();
 

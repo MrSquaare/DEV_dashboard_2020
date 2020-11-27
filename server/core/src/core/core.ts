@@ -3,15 +3,24 @@ import {
     ServiceSettingRepository,
     UserLocalRepository,
     UserOAuthRepository,
+    UserSettingRepository,
 } from "@dashboard/database";
 import { Mailer } from "@dashboard/mailer";
 import { Service } from "@dashboard/service";
 import express, { Express } from "express";
 import { Server } from "http";
-import { StrategyParty } from "../parties/common/strategy";
-import { TwitterStrategy } from "../strategies/oauth";
+import { Party } from "../party";
+import { TwitterStrategy } from "../strategies/parties";
 import { Configuration } from "../types";
-import { useMiddlewares, useParties, useServices, useStrategies } from "../use";
+import {
+    useMailer,
+    useMiddlewares,
+    useParties,
+    useServices,
+    useSettings,
+    useStrategies,
+} from "../use";
+import { UserSettings } from "../user";
 
 export class Core {
     hostname: string;
@@ -19,10 +28,11 @@ export class Core {
     services: Service[];
 
     database: Database;
-    localRepository: UserLocalRepository;
-    oauthRepository: UserOAuthRepository;
+    userLocalRepository: UserLocalRepository;
+    userOAuthRepository: UserOAuthRepository;
 
-    parties: StrategyParty[];
+    parties: Party[];
+    userSettings: UserSettings;
 
     mailer: Mailer;
     express: Express;
@@ -36,17 +46,22 @@ export class Core {
         this.database = new Database(configuration.database);
         this.mailer = new Mailer(configuration.mailer);
 
-        this.localRepository = new UserLocalRepository();
-        this.oauthRepository = new UserOAuthRepository();
+        this.userLocalRepository = new UserLocalRepository();
+        this.userOAuthRepository = new UserOAuthRepository();
+        this.userSettings = new UserSettings(new UserSettingRepository());
 
-        this.parties = [new TwitterStrategy(this.oauthRepository)];
+        this.parties = [new TwitterStrategy(this.userOAuthRepository)];
 
         this.express = express();
 
-        useMiddlewares(this.express, this.mailer, this.parties, this.services);
-        useParties(this.parties);
-        useServices(this.services);
-        useStrategies(this.localRepository, this.oauthRepository);
+        useMailer(this.express, this.mailer);
+        useParties(this.express, this.parties);
+        useServices(this.express, this.services);
+        useSettings(this.express, this.userSettings);
+
+        useStrategies(this.userLocalRepository, this.userOAuthRepository);
+
+        useMiddlewares(this.express);
     }
 
     initialize(): void {

@@ -26,3 +26,7 @@ export const serviceAuthenticationRoute = "/authentication";
 export const serviceAuthenticationBaseRoute = "/";
 export const serviceAuthenticationCallbackRoute = "/callback";
 export const serviceAuthenticationStateRoute = "/state";
+
+export const userRoute = "/user";
+export const userBaseRoute = "/";
+export const userSettingsRoute = "/settings";

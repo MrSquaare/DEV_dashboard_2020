@@ -14,7 +14,7 @@ declare global {
 }
 
 export function serviceActionMiddleware() {
-    return function (req: Request, res: Response, next: NextFunction) {
+    return function (req: Request, res: Response, next: NextFunction): void {
         if (req.params.action === "authentication") {
             return next();
         }
@@ -34,7 +34,7 @@ export function serviceActionMiddleware() {
 }
 
 export function serviceActionRequirementsMiddleware() {
-    return function (req: Request, res: Response, next: NextFunction) {
+    return function (req: Request, res: Response, next: NextFunction): void {
         if (req.params.action === "authentication") {
             return next();
         }

@@ -16,9 +16,11 @@ authenticationSignUpRouter.post(
     async (req, res, next) => {
         try {
             const user = req.user as UserLocal;
+            const custom = req.body.custom;
             const serverURL = `${req.protocol}://${req.hostname}:${req.port}`;
-            const baseURL = `${serverURL}/v1/authentication/verify`;
-            let URL = `${baseURL}?username=:username&id=:id`;
+            const baseURL =
+                custom?.baseURL || `${serverURL}/v1/authentication/verify`;
+            let URL = custom?.URL || `${baseURL}?username=:username&id=:id`;
 
             URL = URL.replace(":username", user.username);
             URL = URL.replace(":id", user.verification);
@@ -30,7 +32,7 @@ authenticationSignUpRouter.post(
 
             await req.mailer.send(mail);
 
-            res.send("Success");
+            return res.json({});
         } catch (e) {
             console.error(e);
 

@@ -37,8 +37,8 @@ export class GitHubUserAction extends ServiceActionSettings<Settings> {
             };
         }
 
-        const json = await response.json();
-        const githubUser = GitHubUser.fromJSON(json);
+        const jsonResponse: any = await response.json();
+        const githubUser = GitHubUser.fromJSON(jsonResponse);
 
         return {
             code: 200,

@@ -31,7 +31,7 @@ export class TwitterUser implements ITwitterUser {
         this.counters = user.counters;
     }
 
-    static fromJSON(json: any) {
+    static fromJSON(json: any): TwitterUser {
         return new TwitterUser({
             id: json.id,
             username: json.screen_name,

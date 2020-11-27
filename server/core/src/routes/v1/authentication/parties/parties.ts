@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { authenticationPartiesRoute } from "../../../../constants";
-import { partyMiddleware } from "../../../../middlewares/party/party";
+import { partyMiddleware } from "../../../../middlewares/party";
 import {
     authenticationPartiesBaseRouter,
     authenticationPartiesCallbackRouter,

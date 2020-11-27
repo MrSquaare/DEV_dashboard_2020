@@ -34,7 +34,7 @@ export class WeatherCity implements IWeatherCity {
         this.temperatures = weather.temperatures;
     }
 
-    static fromJSON(json: any) {
+    static fromJSON(json: any): WeatherCity {
         return new WeatherCity({
             id: json.weather?.id,
             name: json.name,

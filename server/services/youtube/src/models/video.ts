@@ -28,7 +28,7 @@ export class YouTubeVideo implements IYouTubeVideo {
         this.counters = video.counters;
     }
 
-    static fromJSON(json: any) {
+    static fromJSON(json: any): YouTubeVideo {
         return new YouTubeVideo({
             id: json.items[0].id,
             name: json.items[0].snippet.title,

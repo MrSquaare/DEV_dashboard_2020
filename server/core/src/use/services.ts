@@ -1,9 +1,28 @@
 import { Service, ServiceOAuth, ServiceOAuth2 } from "@dashboard/service";
+import { Express } from "express";
 import passport, { Strategy } from "passport";
 import { strategyFromServiceOAuth } from "./services/oauth";
 import { strategyFromServiceOAuth2 } from "./services/oauth2";
 
-export function useServices(services: Service[]) {
+declare global {
+    namespace Express {
+        interface Request {
+            services: Service[];
+        }
+    }
+}
+
+function exposeServices(express: Express, services: Service[]) {
+    express.use((req, res, next) => {
+        req.services = services;
+
+        return next();
+    });
+}
+
+export function useServices(express: Express, services: Service[]): void {
+    exposeServices(express, services);
+
     for (const service of services) {
         let strategy: Strategy;
 

@@ -1,13 +1,13 @@
 import { Strategy as IStrategy } from "passport";
-import OAuthStrategy, {
+import {
     Strategy,
     StrategyOptionsWithRequest,
     VerifyFunctionWithRequest,
 } from "passport-oauth1";
-import { StrategyPartyOAuth } from "../../parties/oauth/strategy";
+import { PartyOAuth } from "../../party";
 import { OAuthSessionStore } from "../store/oauth";
 
-export function strategyFromPartyOAuth(party: StrategyPartyOAuth): IStrategy {
+export function strategyFromPartyOAuth(party: PartyOAuth): IStrategy {
     const strategyOptions: StrategyOptionsWithRequest = {
         requestTokenURL: party.options.requestTokenURL,
         accessTokenURL: party.options.accessTokenURL,

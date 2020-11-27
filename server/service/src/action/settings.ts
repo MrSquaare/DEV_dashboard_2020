@@ -11,7 +11,7 @@ export abstract class ServiceActionSettings<T> extends ServiceAction {
 
     abstract mapRequestToSettings(request: ServiceActionRequest): Partial<T>;
 
-    async settingsDelete(username: string, instance: string) {
+    async settingsDelete(username: string, instance: string): Promise<void> {
         const key = `${this.id}/${instance}`;
 
         await this.repository?.delete(username, key);
