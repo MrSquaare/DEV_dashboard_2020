@@ -34,11 +34,12 @@ RUN yarn build
 
 FROM base
 
+COPY --from=build ${APP_DIRECTORY}/parties/passport-oauth1/ ./parties/passport-oauth1/
+COPY --from=build ${APP_DIRECTORY}/server/ ./server/
+
 RUN yarn install --production --pure-lockfile
 
 RUN yarn cache clean --all
-
-COPY --from=build ${APP_DIRECTORY}/server/ ./server/
 
 RUN rm -rf ./server/**/src
 

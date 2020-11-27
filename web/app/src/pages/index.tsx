@@ -25,6 +25,8 @@ const IndexPage: React.FunctionComponent = () => {
     const [drawerOpen, drawerSetOpen] = React.useState(false);
     const [items, setItems] = React.useState([]);
 
+    console.log("pute");
+
     return (
         <div className={classes.root}>
             <AppBarItemComponent drawerOpen={drawerOpen} drawerSetOpen={drawerSetOpen}/>

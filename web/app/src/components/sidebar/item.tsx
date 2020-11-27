@@ -1,7 +1,7 @@
 import * as React from "react"
 import IconButton from "@material-ui/core/IconButton";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
-import {createStyles, Divider, Drawer, Theme, Toolbar} from "@material-ui/core";
+import {createStyles, Divider, Drawer, List, ListSubheader, Theme, Toolbar} from "@material-ui/core";
 import ServiceListComponent from "./service/list";
 import {makeStyles} from "@material-ui/core/styles";
 
@@ -46,11 +46,22 @@ const SidebarItemComponent: React.FunctionComponent<Props> = (props: Props) => {
             <Toolbar/>
             <div className={classes.drawerContainer}>
                 <Divider/>
-                <ServiceListComponent
-                    drawerSetOpen={props.drawerSetOpen}
-                    items={props.items}
-                    setItems={props.setItems}
-                />
+                <List
+                    component={"nav"}
+                    aria-labelledby="nested-list-subheader"
+                    subheader={
+                        <ListSubheader component="div" id="nested-list-subheader">
+                            Services List
+                        </ListSubheader>
+                    }
+                    className={classes.list}
+                >
+                    <ServiceListComponent
+                        drawerSetOpen={props.drawerSetOpen}
+                        items={props.items}
+                        setItems={props.setItems}
+                    />
+                </List>
             </div>
         </Drawer>
     );
