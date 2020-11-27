@@ -1,102 +1,78 @@
-import { Button, Container, TextField, Typography } from "@material-ui/core";
+import {
+    Backdrop,
+    Box, CircularProgress,
+    Container,
+    CssBaseline,
+    makeStyles,
+    Typography
+} from "@material-ui/core";
 import React from "react";
-import { useAuthentication } from "../../hooks/authentication/parties";
+import { SignInSignUp } from "../../components/authentication/signin/buttons/signup";
+import { SignInForm } from "../../components/authentication/signin/form";
+import { SignInTwitter } from "../../components/authentication/signin/buttons/twitter";
+import { useUser } from "../../hooks/user/user";
 
-interface SignInFormEventTarget extends EventTarget {
-    username: HTMLInputElement;
-    password: HTMLInputElement;
-}
+const useBaseStyle = makeStyles({
+    "@global": {
+        html: {
+            height: "100%",
+        },
+        body: {
+            height: "100%",
+        },
+        "#__next": {
+            height: "100%",
+        },
+    },
+});
 
-const TwitterButton: React.FC = () => {
-    const { authenticate } = useAuthentication();
+const useStyle = makeStyles({
+    main: {
+        height: "100%",
+    },
+    backdrop: {
+        color: "#ffffff",
+        zIndex: 100,
+    },
+});
 
-    const handleClick = async (event: React.MouseEvent) => {
-        authenticate();
-    };
+const SignInPage: React.FC = () => {
+    const baseClasses = useBaseStyle();
+    const classes = useStyle();
+
+    const {error} = useUser("/", true);
+
+    if (!error) {
+        return (
+            <Backdrop open={!error} className={classes.backdrop}>
+                <CircularProgress color="inherit" />
+            </Backdrop>
+        )
+    }
 
     return (
-        <Button
-            variant="contained"
-            color="primary"
-            fullWidth
-            onClick={handleClick}
+        <Container
+            component={"main"}
+            maxWidth={"xs"}
+            className={classes.main}
         >
-            SignIn with Twitter
-        </Button>
-    );
-};
-
-class SignInPage extends React.Component {
-    render() {
-        return (
-            <Container component="main" maxWidth="xs">
+            <CssBaseline classes={baseClasses} />
+            <Box
+                display={"flex"}
+                height={"100%"}
+                flexDirection={"column"}
+                alignItems={"center"}
+                justifyContent={"center"}
+            >
                 <Typography component="h1" variant="h5">
                     Sign in
                 </Typography>
-                <form onSubmit={this.handleSubmit} noValidate>
-                    <TextField
-                        required
-                        label="Username"
-                        id="username"
-                        name="username"
-                        autoComplete="username"
-                        autoFocus
-                        variant="outlined"
-                        margin="normal"
-                        fullWidth
-                    />
-                    <TextField
-                        required
-                        label="Password"
-                        name="password"
-                        type="password"
-                        id="password"
-                        autoComplete="password"
-                        variant="outlined"
-                        margin="normal"
-                        fullWidth
-                    />
-                    <Button
-                        type="submit"
-                        variant="contained"
-                        color="primary"
-                        fullWidth
-                    >
-                        Sign In
-                    </Button>
-                </form>
-                <TwitterButton />
-            </Container>
-        );
-    }
-
-    private handleSubmit = async (event: React.FormEvent) => {
-        event.preventDefault();
-
-        const target = event.target as SignInFormEventTarget;
-
-        const response = await fetch(
-            "http://localhost:4242/v1/authentication/signin",
-            {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    username: target.username.value,
-                    password: target.password.value,
-                }),
-            }
-        );
-
-        if (response.status !== 200) {
-            return;
-        }
-
-        const json = await response.json();
-
-        sessionStorage.setItem("jwt", json["data"]);
-    };
-}
+                <SignInForm />
+                <SignInTwitter />
+                <SignInSignUp />
+            </Box>
+        </Container>
+    );
+};
 
 export default SignInPage;

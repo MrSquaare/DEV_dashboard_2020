@@ -1,126 +1,60 @@
 import {
-    Button,
+    Box,
     Container,
-    Grid,
-    TextField,
+    CssBaseline,
+    makeStyles,
     Typography,
 } from "@material-ui/core";
 import React from "react";
+import { SignUpSignIn } from "../../components/authentication/signup/buttons/signin";
+import { SignUpForm } from "../../components/authentication/signup/form";
 
-interface SignUpFormEventTarget extends EventTarget {
-    username: HTMLInputElement;
-    password: HTMLInputElement;
-    email: HTMLInputElement;
-    firstName: HTMLInputElement;
-    lastName: HTMLInputElement;
-}
+const useBaseStyle = makeStyles({
+    "@global": {
+        html: {
+            height: "100%",
+        },
+        body: {
+            height: "100%",
+        },
+        "#__next": {
+            height: "100%",
+        },
+    },
+});
 
-class SignUpPage extends React.Component {
-    render() {
-        return (
-            <Container component="main" maxWidth="xs">
+const useStyle = makeStyles({
+    main: {
+        height: "100%",
+    },
+});
+
+const SignUpPage: React.FC = () => {
+    const baseClasses = useBaseStyle();
+    const classes = useStyle();
+
+    return (
+        <Container
+            component={"main"}
+            maxWidth={"sm"}
+            className={classes.main}
+        >
+            <CssBaseline classes={baseClasses} />
+            <Box
+                display={"flex"}
+                height={"100%"}
+                flexDirection={"column"}
+                alignItems={"center"}
+                justifyContent={"center"}
+            >
                 <Typography component="h1" variant="h5">
                     Sign up
                 </Typography>
-                <form onSubmit={this.handleSubmit} noValidate>
-                    <Grid container spacing={2}>
-                        <Grid item xs={12} sm={6}>
-                            <TextField
-                                required
-                                label="First Name"
-                                id="firstName"
-                                name="firstName"
-                                autoComplete="firstName"
-                                autoFocus
-                                variant="outlined"
-                                fullWidth
-                            />
-                        </Grid>
-                        <Grid item xs={12} sm={6}>
-                            <TextField
-                                required
-                                label="Last Name"
-                                id="lastName"
-                                name="lastName"
-                                autoComplete="lastName"
-                                autoFocus
-                                variant="outlined"
-                                fullWidth
-                            />
-                        </Grid>
-                        <Grid item xs={12}>
-                            <TextField
-                                required
-                                label="Email"
-                                id="email"
-                                name="email"
-                                autoComplete="email"
-                                autoFocus
-                                variant="outlined"
-                                fullWidth
-                            />
-                        </Grid>
-                        <Grid item xs={12}>
-                            <TextField
-                                required
-                                label="Username"
-                                id="username"
-                                name="username"
-                                autoComplete="username"
-                                autoFocus
-                                variant="outlined"
-                                fullWidth
-                            />
-                        </Grid>
-                        <Grid item xs={12}>
-                            <TextField
-                                required
-                                label="Password"
-                                type="password"
-                                id="password"
-                                name="password"
-                                autoComplete="password"
-                                autoFocus
-                                variant="outlined"
-                                fullWidth
-                            />
-                        </Grid>
-                    </Grid>
-                    <Button
-                        type="submit"
-                        fullWidth
-                        variant="contained"
-                        color="primary"
-                    >
-                        Sign Up
-                    </Button>
-                </form>
-            </Container>
-        );
-    }
-
-    private handleSubmit = async (event: React.FormEvent) => {
-        event.preventDefault();
-
-        const target = event.target as SignUpFormEventTarget;
-
-        await fetch(
-            "http://localhost:4242/v1/authentication/signup",
-            {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    username: target.username.value,
-                    password: target.password.value,
-                    email: target.email.value,
-                    firstName: target.firstName.value,
-                    lastName: target.lastName.value,
-                }),
-            }
-        );
-    };
-}
+                <SignUpForm />
+                <SignUpSignIn />
+            </Box>
+        </Container>
+    );
+};
 
 export default SignUpPage;
