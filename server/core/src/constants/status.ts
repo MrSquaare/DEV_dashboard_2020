@@ -5,6 +5,11 @@ export const badRequestStatus = new StatusError(400, {
     message: "Bad request",
 });
 
+export const unauthorized = new StatusError(401, {
+    name: "UNAUTHORIZED",
+    message: "Unauthorized",
+});
+
 export const jwtInvalid = new StatusError(401, {
     name: "JWT_INVALID",
     message: "Invalid JWT",

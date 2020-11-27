@@ -13,7 +13,7 @@ export abstract class ServiceAction implements IServiceAction {
 
     abstract run(request: ServiceActionRequest): Promise<ServiceActionResponse>;
 
-    initialize(repository: IServiceSettingRepository) {
+    initialize(repository: IServiceSettingRepository): void {
         this.repository = repository;
     }
 

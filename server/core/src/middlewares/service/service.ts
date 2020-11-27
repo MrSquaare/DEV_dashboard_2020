@@ -11,7 +11,7 @@ declare global {
 }
 
 export function serviceMiddleware() {
-    return function (req: Request, res: Response, next: NextFunction) {
+    return function (req: Request, res: Response, next: NextFunction): void {
         const service = req.services.find(
             (service) => service.id === req.params.service
         );

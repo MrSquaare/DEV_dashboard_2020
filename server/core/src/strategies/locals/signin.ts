@@ -7,7 +7,7 @@ import {
     userNotVerified,
 } from "../../constants";
 
-export function signInStrategy(repository: UserLocalRepository) {
+export function signInStrategy(repository: UserLocalRepository): Strategy {
     return new Strategy(async (req, done) => {
         try {
             const username = req.body.username;

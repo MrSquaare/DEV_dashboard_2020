@@ -3,7 +3,7 @@ import { NextFunction, Request, Response } from "express";
 import { serviceAuthenticationNotFoundStatus } from "../../../constants";
 
 export function serviceAuthenticationMiddleware() {
-    return function(req: Request, res: Response, next: NextFunction) {
+    return function (req: Request, res: Response, next: NextFunction): void {
         if (
             !(req.service instanceof ServiceOAuth) &&
             !(req.service instanceof ServiceOAuth2)

@@ -42,7 +42,8 @@ export class UserSettingRepository implements IUserSettingRepository {
     async update(
         username: string,
         key: string,
-        setting: Partial<UserSetting>
+        setting: Partial<UserSetting>,
+        create = false
     ): Promise<UserSetting | undefined> {
         if (setting?.secure && setting?.value) {
             setting.value = encrypt(setting.value);
@@ -56,9 +57,14 @@ export class UserSettingRepository implements IUserSettingRepository {
             setting,
             {
                 new: true,
+                upsert: create,
             }
         );
 
         return userDocument || undefined;
+    }
+
+    async list(username: string): Promise<UserSetting[] | undefined> {
+        return this.model.find({ username: username });
     }
 }

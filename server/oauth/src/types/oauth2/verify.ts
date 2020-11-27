@@ -4,4 +4,4 @@ export type OAuth2Verify = (
     verify: OAuth2VerifyCallback
 ) => void;
 
-export type OAuth2VerifyCallback = (err?: Error, user?: object) => void;
+export type OAuth2VerifyCallback = (err?: Error, user?: any) => void;

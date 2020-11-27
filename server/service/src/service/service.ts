@@ -11,7 +11,7 @@ export abstract class Service implements IService {
 
     protected repository?: IServiceSettingRepository;
 
-    initialize(repository: IServiceSettingRepository) {
+    initialize(repository: IServiceSettingRepository): void {
         this.repository = repository;
 
         for (const action of this.actions) {

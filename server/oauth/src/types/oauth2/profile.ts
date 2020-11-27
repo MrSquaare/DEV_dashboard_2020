@@ -5,4 +5,4 @@ export type OAuth2Profile = (
     verify: OAuth2ProfileCallback
 ) => void;
 
-export type OAuth2ProfileCallback = (err?: Error, profile?: object) => void;
+export type OAuth2ProfileCallback = (err?: Error, profile?: any) => void;

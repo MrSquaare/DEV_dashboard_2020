@@ -8,7 +8,7 @@ import {
     userExists,
 } from "../../constants";
 
-export function signUpStrategy(repository: UserLocalRepository) {
+export function signUpStrategy(repository: UserLocalRepository): Strategy {
     return new Strategy(async (req, done) => {
         try {
             const username = req.body.username;

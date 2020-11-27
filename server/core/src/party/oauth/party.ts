@@ -5,13 +5,10 @@ import {
     OAuthVerify,
 } from "@dashboard/oauth";
 import { Profile } from "passport";
-import OAuthStrategy from "passport-oauth1";
+import { Party } from "../party";
 import { signStrategy } from "../common/sign";
-import { StrategyParty } from "../common/strategy";
 
-export abstract class StrategyPartyOAuth
-    extends StrategyParty
-    implements OAuth {
+export abstract class PartyOAuth extends Party implements OAuth {
     abstract readonly id: string;
     abstract readonly options: OAuthOptions;
 

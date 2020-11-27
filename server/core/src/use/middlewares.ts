@@ -1,26 +1,38 @@
-import { Mailer } from "@dashboard/mailer";
-import { Service } from "@dashboard/service";
 import cors from "cors";
 import { Express, json } from "express";
 import morgan from "morgan";
 import passport from "passport";
-import { coreMiddleware, errorMiddleware } from "../middlewares";
-import { StrategyParty } from "../parties/common/strategy";
+import { errorMiddleware } from "../middlewares";
 import { aboutRouter } from "../routes/about";
 import { v1Router } from "../routes/v1";
 
-export function useMiddlewares(
-    express: Express,
-    mailer: Mailer,
-    parties: StrategyParty[],
-    services: Service[]
-) {
+declare global {
+    namespace Express {
+        interface Request {
+            port: string;
+        }
+    }
+}
+
+function exposeUtilities(express: Express) {
+    express.use((req, res, next) => {
+        const host = req.get("host")?.split(":");
+
+        if (host) {
+            req.port = host[1];
+        }
+
+        return next();
+    });
+}
+
+export function useMiddlewares(express: Express): void {
+    exposeUtilities(express);
+
     express.use(morgan("common"));
 
     express.use(cors());
     express.use(json());
-
-    express.use(coreMiddleware(mailer, parties, services));
 
     express.use(aboutRouter);
     express.use(v1Router);

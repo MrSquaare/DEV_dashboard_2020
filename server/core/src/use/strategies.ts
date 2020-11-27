@@ -14,15 +14,15 @@ import {
 } from "../strategies";
 
 export function useStrategies(
-    localRepository: UserLocalRepository,
-    oauthRepository: UserOAuthRepository
-) {
+    userLocalRepository: UserLocalRepository,
+    userOAuthRepository: UserOAuthRepository
+): void {
     passport.use(
         jwtStrategyName,
-        jwtStrategy(localRepository, oauthRepository)
+        jwtStrategy(userLocalRepository, userOAuthRepository)
     );
 
-    passport.use(signInStrategyName, signInStrategy(localRepository));
-    passport.use(signUpStrategyName, signUpStrategy(localRepository));
-    passport.use(verifyStrategyName, verifyStrategy(localRepository));
+    passport.use(signInStrategyName, signInStrategy(userLocalRepository));
+    passport.use(signUpStrategyName, signUpStrategy(userLocalRepository));
+    passport.use(verifyStrategyName, verifyStrategy(userLocalRepository));
 }

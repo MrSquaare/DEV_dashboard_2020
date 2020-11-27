@@ -31,7 +31,7 @@ export class GitHubUser implements IGitHubUser {
         this.counters = user.counters;
     }
 
-    static fromJSON(json: any) {
+    static fromJSON(json: any): GitHubUser {
         return new GitHubUser({
             id: json.id,
             username: json.login,

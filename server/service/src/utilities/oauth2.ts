@@ -1,4 +1,4 @@
-import { IServiceSettingRepository, ServiceRequest } from "@dashboard/types";
+import { IServiceSettingRepository } from "@dashboard/types";
 import { userNotAuthenticated } from "../constants";
 
 type OAuth2Tokens = {

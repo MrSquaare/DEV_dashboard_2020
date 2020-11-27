@@ -1,5 +1,5 @@
-import { Callback, SessionStore } from "passport-oauth1";
 import { Request } from "express";
+import { Callback, SessionStore } from "passport-oauth1";
 
 export class OAuthSessionStore implements SessionStore {
     private token?: string;

@@ -7,11 +7,9 @@ import {
 import { Profile } from "passport";
 import OAuth2Strategy from "passport-oauth2";
 import { signStrategy } from "../common/sign";
-import { StrategyParty } from "../common/strategy";
+import { Party } from "../party";
 
-export abstract class StrategyPartyOAuth2
-    extends StrategyParty
-    implements OAuth2 {
+export abstract class PartyOAuth2 extends Party implements OAuth2 {
     abstract readonly id: string;
     abstract readonly options: OAuth2Options;
 
