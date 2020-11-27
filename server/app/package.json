@@ -1,0 +1,17 @@
+{
+  "name": "@dashboard/app",
+  "version": "1.0.0",
+  "description": "App of Dashboard",
+  "license": "MIT",
+  "scripts": {
+    "start": "dboard",
+    "fclean": "rm -rf node_modules/"
+  },
+  "dependencies": {
+    "@dashboard/cli": "*",
+    "@dashboard/service-github": "*",
+    "@dashboard/service-twitter": "*",
+    "@dashboard/service-weather": "*",
+    "@dashboard/service-youtube": "*"
+  }
+}

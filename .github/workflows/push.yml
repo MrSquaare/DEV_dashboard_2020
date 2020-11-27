@@ -32,7 +32,6 @@ jobs:
       - name: Push
         run: |
           git push git@$REPOSITORY_HOST:/$REPOSITORY_OWNER/$REPOSITORY_NAME --force
-
   deploy:
     name: Deploy
     runs-on: ubuntu-latest
@@ -44,23 +43,20 @@ jobs:
 
       - name: Build
         run: |
-          docker-compose build
-
+          docker build . -f server.Dockerfile -t epi-dashboard/server:latest
+          docker build . -f web.Dockerfile -t epi-dashboard/web:latest
       - name: Tag images
         run: |
-          docker tag dev_dashboard_2020_backend registry.heroku.com/epi-dashboard-back/web
-          docker tag dev_dashboard_2020_frontend registry.heroku.com/epi-dashboard/web
-
+          docker tag epi-dashboard/server:latest registry.heroku.com/epi-dashboard-back/server
+          docker tag epi-dashboard/web:latest registry.heroku.com/epi-dashboard/web
       - name: Login to heroku
         run: |
           heroku container:login
-
       - name: Push images
         run: |
-          docker push registry.heroku.com/epi-dashboard-back/web
+          docker push registry.heroku.com/epi-dashboard-back/server
           docker push registry.heroku.com/epi-dashboard/web
-
       - name: Re-deploy apps
         run: |
-          heroku container:release web -a epi-dashboard-back
+          heroku container:release server -a epi-dashboard-back
           heroku container:release web -a epi-dashboard

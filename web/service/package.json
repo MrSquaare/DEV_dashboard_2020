@@ -1,0 +1,21 @@
+{
+  "name": "@dashboard-web/service",
+  "version": "1.0.0",
+  "description": "Service for Dashboard for Web",
+  "license": "MIT",
+  "main": "build/index.js",
+  "module": "build/index.js",
+  "typings": "build/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "clean": "rm -rf build/",
+    "fclean": "rm -rf build/ node_modules/"
+  },
+  "devDependencies": {
+    "typescript": "^4.0.5"
+  },
+  "dependencies": {
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1"
+  }
+}

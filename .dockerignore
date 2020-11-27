@@ -2,10 +2,15 @@
 **
 
 # Except
-!backend/src/
-!backend/*.json
-!frontend/src/
-!frontend/*.js
-!frontend/*.json
-!frontend/*.ts
+!parties
+!server/
+!web/
+!lerna.json
+!package.json
+!tsconfig.json
 !yarn.lock
+
+# Ignore specifics
+**/build/
+**/node_modules/
+**/.next/

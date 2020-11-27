@@ -1,19 +1,38 @@
 version: "3"
 services:
-  backend:
+  mongo:
+    image: mongo:latest
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_INITDB_ROOT_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
+    restart: always
+  server:
     build:
       context: .
-      dockerfile: backend/Dockerfile
+      dockerfile: server.Dockerfile
     environment:
       HOSTNAME: "0.0.0.0"
       PORT: "4000"
-  frontend:
+      DATABASE_HOSTNAME: "mongo"
+      DATABASE_PORT: "27017"
+      DATABASE_DATABASE: "db"
+      MAILER_USER: ${MAILER_USER}
+      MAILER_PASSWORD: ${MAILER_PASSWORD}
+    restart: always
+    depends_on:
+      - mongo
+  web:
     build:
       context: .
-      dockerfile: frontend/Dockerfile
+      dockerfile: web.Dockerfile
     environment:
-      BACKEND_HOST: "backend:4000"
       HOSTNAME: "0.0.0.0"
       PORT: "3000"
+      SERVER_PROTOCOL: "http"
+      SERVER_HOSTNAME: "server"
+      SERVER_PORT: "4000"
     ports:
       - "3000:3000"
+    restart: always
+    depends_on:
+      - server
