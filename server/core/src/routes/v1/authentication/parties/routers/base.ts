@@ -10,6 +10,7 @@ authenticationPartiesBaseRouter.get(
         passport.authenticate(`${req.party.id}-party`, {
             callbackURL: req.query.redirect,
             session: false,
+            failWithError: true,
         } as AuthenticateOptions)(req, res, next);
     }
 );

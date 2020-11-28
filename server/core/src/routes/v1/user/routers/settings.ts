@@ -49,8 +49,6 @@ userSettingsRouter.post(
 
         let data;
 
-        console.log(req.body);
-
         if (key && value) {
             data = await req.settings.set(user.username, key, value);
         }

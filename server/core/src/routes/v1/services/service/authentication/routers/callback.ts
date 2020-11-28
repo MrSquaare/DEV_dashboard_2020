@@ -11,10 +11,9 @@ serviceAuthenticationCallbackRouter.get(
     serviceAuthenticationCallbackRoute,
     passport.authenticate(jwtStrategyName, { session: false }),
     (req, res, next) => {
-        passport.authenticate(`${req.service.id}-service`, { session: false })(
-            req,
-            res,
-            next
-        );
+        passport.authenticate(`${req.service.id}-service`, {
+            session: false,
+            failWithError: true,
+        })(req, res, next);
     }
 );
