@@ -21,7 +21,7 @@ const ServiceItemComponent: React.FunctionComponent<Props> = (props: Props) => {
         <div>
             <ListItem button onClick={handleClick}>
                 <ListItemIcon>
-                    <Help />
+                    <props.service.icon />
                 </ListItemIcon>
                 <ListItemText primary={props.service.name} />
                 {open ? <ExpandLess /> : <ExpandMore />}

@@ -35,6 +35,7 @@ const SidebarItemComponent: React.FunctionComponent<Props> = (props: Props) => {
             classes={{
                 paper: classes.paper,
             }}
+            onClose={() => props.drawerSetOpen(false)}
         >
             <Toolbar />
             <div>

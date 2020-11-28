@@ -1,7 +1,6 @@
 import { Widget } from "@dashboard-web/service";
 import { WidgetSettings } from "@dashboard-web/types";
 import { ListItem, ListItemIcon, ListItemText } from "@material-ui/core";
-import { Help as HelpIcon } from "@material-ui/icons";
 import * as React from "react";
 import { useState } from "react";
 import { v4 } from "uuid";
@@ -49,7 +48,7 @@ const WidgetItemComponent: React.FC<Props> = (props) => {
         <div>
             <ListItem button onClick={handleClick}>
                 <ListItemIcon>
-                    <HelpIcon /> {/* TODO: Support native icon */}
+                    <props.widget.icon />
                 </ListItemIcon>
                 <ListItemText primary={props.widget.name} />
             </ListItem>
