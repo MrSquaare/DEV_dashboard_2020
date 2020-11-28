@@ -33,8 +33,8 @@ jobs:
         run: |
           git push git@$REPOSITORY_HOST:/$REPOSITORY_OWNER/$REPOSITORY_NAME --force
           
-  deploy:
-    name: Deploy
+  web:
+    name: "Web: Build and Deploy"
     runs-on: ubuntu-latest
 
     steps:
@@ -44,9 +44,6 @@ jobs:
 
       - uses: docker/setup-buildx-action@v1
         id: web-builder
-        
-      - uses: docker/setup-buildx-action@v1
-        id: server-builder
 
       - name: Login to DockerHub
         uses: docker/login-action@v1 
@@ -63,7 +60,25 @@ jobs:
           push: true
           tags: madfish5415/epitech-dashboard-web:latest
           
-      - name: "Server: Build and push"
+  server:
+    name: "Server: Build and Deploy"
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+        
+      - uses: docker/setup-buildx-action@v1
+        id: server-builder
+
+      - name: Login to DockerHub
+        uses: docker/login-action@v1 
+        with:
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+          
+      - name: "Build and push"
         uses: docker/build-push-action@v2
         with:
           builder: ${{ steps.server-builder.outputs.name }}
