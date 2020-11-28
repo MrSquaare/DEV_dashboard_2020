@@ -32,7 +32,7 @@ userSettingsRouter.get(
             : await req.settings.list(user.username);
 
         const responseBody: Response = {
-            data: data || undefined,
+            data: data || "",
         };
 
         return res.json(responseBody);
@@ -49,12 +49,14 @@ userSettingsRouter.post(
 
         let data;
 
+        console.log(req.body);
+
         if (key && value) {
             data = await req.settings.set(user.username, key, value);
         }
 
         const responseBody: Response = {
-            data: data,
+            data: data || "",
         };
 
         return res.json(responseBody);

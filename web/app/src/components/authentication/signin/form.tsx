@@ -43,7 +43,7 @@ export const SignInForm: React.FC = () => {
         if (loading && (signedIn || error)) {
             setLoading(false);
         }
-    }, [signedIn, error])
+    }, [signedIn, error]);
 
     if (signedIn) {
         Router.push("/").catch((err) => console.error(err));

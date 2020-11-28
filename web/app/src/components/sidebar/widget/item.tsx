@@ -1,44 +1,40 @@
+import { Widget } from "@dashboard-web/service";
+import { ListItem, ListItemIcon, ListItemText } from "@material-ui/core";
+import { Help as HelpIcon } from "@material-ui/icons";
 import * as React from "react";
-import {createStyles, ListItem, ListItemIcon, ListItemText, SvgIcon, Theme} from "@material-ui/core";
-import {makeStyles} from "@material-ui/core/styles";
-import IconFactory from "../../../utilities/icons/factory";
-import {v4} from "uuid";
-
-const useStyles = makeStyles((theme: Theme) =>
-    createStyles({
-        nested: {
-            paddingLeft: theme.spacing(4),
-        },
-    }),
-);
+import { v4 } from "uuid";
+import { WidgetData } from "../../../types/widget";
 
 type Props = {
-    serviceName: string,
-    widgetData: any,
-    drawerSetOpen: (drawerOpen: boolean) => void,
-    items: object[],
-    setItems: (items: any) => void
+    serviceId: string;
+    widget: Widget;
+    addWidget: (widget: WidgetData) => void;
 };
 
-const WidgetItemComponent: React.FunctionComponent<Props> = (props: Props) => {
-    const classes = useStyles();
-
+const WidgetItemComponent: React.FC<Props> = (props) => {
     const handleClick = () => {
-        props.setItems(props.items.concat({i: props.serviceName + ":" + props.widgetData.id + "/" + v4(), x: 0, y: Infinity, w: 1, h: 5}));
-        props.drawerSetOpen(false);
-    }
+        props.addWidget({
+            service: props.serviceId,
+            action: props.widget.actionId,
+            id: v4(),
+            width: "1",
+            height: "2",
+            posX: "0",
+            posY: "0",
+            refreshMs: "2000",
+        });
+    };
 
     return (
         <div>
-            <ListItem button className={classes.nested} onClick={handleClick}>
+            <ListItem button onClick={handleClick}>
                 <ListItemIcon>
-                    <IconFactory iconName={props.widgetData.name}/>
+                    <HelpIcon /> {/* TODO: Support native icon */}
                 </ListItemIcon>
-                <ListItemText primary={props.widgetData.name}/>
+                <ListItemText primary={props.widget.name} />
             </ListItem>
         </div>
     );
 };
-
 
 export default WidgetItemComponent;

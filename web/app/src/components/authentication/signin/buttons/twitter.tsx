@@ -1,7 +1,6 @@
 import { Button, makeStyles } from "@material-ui/core";
 import Router from "next/router";
 import React from "react";
-import { serverHost } from "../../../../constants";
 
 const useStyle = makeStyles({
     button: {
@@ -26,8 +25,6 @@ function openPopUp(): Promise<void> {
 
 export const SignInTwitter: React.FC = () => {
     const classes = useStyle();
-
-    console.log(serverHost);
 
     const handleClick = async (event: React.MouseEvent) => {
         event.preventDefault();

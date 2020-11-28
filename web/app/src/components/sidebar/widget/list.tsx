@@ -1,14 +1,13 @@
+import { Service } from "@dashboard-web/service";
 import * as React from "react";
-import {Collapse, List} from "@material-ui/core";
+import { Collapse, List } from "@material-ui/core";
+import { WidgetData } from "../../../types/widget";
 import WidgetItemComponent from "./item";
 
 type Props = {
-    isOpen: boolean,
-    serviceName: string,
-    widgetsData: any,
-    drawerSetOpen: (drawerOpen: boolean) => void,
-    items: object[],
-    setItems: (items: any) => void
+    isOpen: boolean;
+    service: Service;
+    addWidget: (widget: WidgetData) => void;
 };
 
 const WidgetListComponent: React.FunctionComponent<Props> = (props: Props) => {
@@ -16,15 +15,15 @@ const WidgetListComponent: React.FunctionComponent<Props> = (props: Props) => {
         <div>
             <Collapse in={props.isOpen} timeout="auto" unmountOnExit>
                 <List component="div" disablePadding>
-                    {props.widgetsData.map((widget: any) => {
-                        return <WidgetItemComponent
-                            key={widget.id}
-                            serviceName={props.serviceName}
-                            widgetData={widget}
-                            drawerSetOpen={props.drawerSetOpen}
-                            items={props.items}
-                            setItems={props.setItems}
-                        />;
+                    {props.service.widgets.map((widget: any) => {
+                        return (
+                            <WidgetItemComponent
+                                key={widget.id}
+                                serviceId={props.service.id}
+                                widget={widget}
+                                addWidget={props.addWidget}
+                            />
+                        );
                     })}
                 </List>
             </Collapse>

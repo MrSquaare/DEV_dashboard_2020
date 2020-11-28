@@ -9,5 +9,5 @@ export const SignUpSignIn: React.FC = () => {
                 Already signed up?
             </Button>
         </Link>
-    )
-}
+    );
+};

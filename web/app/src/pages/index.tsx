@@ -1,37 +1,56 @@
+import { Backdrop, CircularProgress } from "@material-ui/core";
+import { Alert } from "@material-ui/lab";
 import * as React from "react";
-import {createStyles, Theme} from "@material-ui/core";
-import {makeStyles} from "@material-ui/core/styles";
-import CardGridComponent from "../components/card/grid";
 import AppBarItemComponent from "../components/appbar/item";
+import CardGridComponent from "../components/card/grid";
 import SidebarItemComponent from "../components/sidebar/item";
-
-
-const useStyles = makeStyles((theme: Theme) =>
-    createStyles({
-        root: {
-            flexGrow: 1,
-        },
-        content: {
-            flexGrow: 1,
-            height: "100vh",
-            overflow: "auto"
-        },
-    }),
-);
+import { useUser } from "../hooks/user";
+import { useWidgets } from "../hooks/widgets/widgets";
+import { WidgetData } from "../types/widget";
 
 const IndexPage: React.FunctionComponent = () => {
-    const classes = useStyles();
+    const [drawerOpen, setDrawerOpen] = React.useState(false);
 
-    const [drawerOpen, drawerSetOpen] = React.useState(false);
-    const [items, setItems] = React.useState([]);
+    const { user } = useUser("/authentication/signin");
+    const { widgets, error: error, addWidget, updateWidget } = useWidgets();
+    const loading = !user || (!widgets && !error);
 
-    console.log("pute");
+    if (loading) {
+        return (
+            <Backdrop open={loading}>
+                <CircularProgress color="inherit" />
+            </Backdrop>
+        );
+    }
+
+    const addWidgetFunc = (widget: WidgetData) => {
+        addWidget(widget);
+
+        setDrawerOpen(false);
+    };
+
+    const updateWidgetFunc = async (widget: WidgetData) => {
+        await updateWidget(widget);
+    };
 
     return (
-        <div className={classes.root}>
-            <AppBarItemComponent drawerOpen={drawerOpen} drawerSetOpen={drawerSetOpen}/>
-            <SidebarItemComponent drawerOpen={drawerOpen} drawerSetOpen={drawerSetOpen} items={items} setItems={setItems}/>
-            <CardGridComponent items={items} setItems={setItems}/>
+        <div>
+            <AppBarItemComponent
+                drawerOpen={drawerOpen}
+                setDrawerOpen={setDrawerOpen}
+            />
+            <SidebarItemComponent
+                drawerOpen={drawerOpen}
+                drawerSetOpen={setDrawerOpen}
+                addWidget={addWidgetFunc}
+            />
+            {error ? <Alert severity="error">{error.message}</Alert> : null}
+            {widgets ? (
+                <CardGridComponent
+                    widgets={widgets}
+                    updateWidget={updateWidgetFunc}
+                />
+            ) : null}
         </div>
     );
 };
