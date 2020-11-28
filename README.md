@@ -18,8 +18,8 @@ The advantages are as follows:
 - Better management of dependencies for each project
 
 To enhance the mono-repository experience, we use two tools:
-- Yarn workspace (v1)
-- Lerna
+- [Yarn workspace (v1)](https://classic.yarnpkg.com/en/docs/workspaces/)
+- [Lerna](https://lerna.js.org/)
 
 These tools allow a centralised management of external dependencies (via the npm registry) as well as the parallel construction of our projects while respecting inter-dependencies.
 
