@@ -1,6 +1,6 @@
 import { Widget } from "@dashboard-web/service";
 import React from "react";
-import { UserComponent } from "../components";
+import { UserContent, UserSettings } from "../components";
 
 export class UserWidget extends Widget {
     readonly id: string = "user";
@@ -8,7 +8,11 @@ export class UserWidget extends Widget {
     readonly description: string = "User widget";
     readonly actionId: string = "user";
 
-    create(instance: string): JSX.Element {
-        return <UserComponent instance={instance} />;
+    createContent(instance: string): JSX.Element {
+        return <UserContent instance={instance} />;
+    }
+
+    createSettings(instance: string, save?: () => void): JSX.Element {
+        return <UserSettings instance={instance} save={save} />;
     }
 }
