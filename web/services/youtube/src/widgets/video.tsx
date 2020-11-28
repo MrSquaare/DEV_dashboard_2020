@@ -6,6 +6,7 @@ export class VideoWidget extends Widget {
     readonly id: string = "video";
     readonly name: string = "Video";
     readonly description: string = "Video widget";
+    readonly actionId: string = "video";
 
     create(instance: string): JSX.Element {
         return <VideoComponent instance={instance} />;

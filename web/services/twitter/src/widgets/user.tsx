@@ -6,6 +6,7 @@ export class UserWidget extends Widget {
     readonly id: string = "user";
     readonly name: string = "User";
     readonly description: string = "User widget";
+    readonly actionId: string = "user";
 
     create(instance: string): JSX.Element {
         return <UserComponent instance={instance} />;
