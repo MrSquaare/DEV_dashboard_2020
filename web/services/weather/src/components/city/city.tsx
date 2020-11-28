@@ -14,7 +14,7 @@ import {
 import { Settings as SettingsIcon } from "@material-ui/icons";
 import * as React from "react";
 import { useState } from "react";
-import { useCity } from "../hooks";
+import { useCity } from "../../hooks";
 
 type Props = {
     instance: string;
@@ -97,7 +97,7 @@ const SettingsDialog: React.FC<SettingsProps> = (props) => {
     );
 };
 
-export const CityComponent: React.FC<Props> = (props: Props) => {
+export const CityContent: React.FC<Props> = (props: Props) => {
     const { city, citySettings, getCitySettings, setCitySettings } = useCity(
         props.instance
     );
