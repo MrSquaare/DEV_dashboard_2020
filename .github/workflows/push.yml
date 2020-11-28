@@ -47,16 +47,16 @@ jobs:
           docker build . -f web.Dockerfile -t epi-dashboard/web:latest
       - name: Tag images
         run: |
-          docker tag epi-dashboard/server:latest registry.heroku.com/epi-dashboard-back/server
+          docker tag epi-dashboard/server:latest registry.heroku.com/epi-dashboard-back/web
           docker tag epi-dashboard/web:latest registry.heroku.com/epi-dashboard/web
       - name: Login to heroku
         run: |
           heroku container:login
       - name: Push images
         run: |
-          docker push registry.heroku.com/epi-dashboard-back/server
+          docker push registry.heroku.com/epi-dashboard-back/web
           docker push registry.heroku.com/epi-dashboard/web
       - name: Re-deploy apps
         run: |
-          heroku container:release server -a epi-dashboard-back
+          heroku container:release web -a epi-dashboard-back
           heroku container:release web -a epi-dashboard
