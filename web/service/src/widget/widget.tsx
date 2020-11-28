@@ -1,3 +1,4 @@
+import { SvgIconComponent } from "@material-ui/icons";
 import React, { useState } from "react";
 import { WidgetCard } from "../components/card/card";
 import { WidgetSettingsDialog } from "../components/settings/dialog";
@@ -7,6 +8,7 @@ export abstract class Widget {
     abstract readonly name: string;
     abstract readonly description: string;
     abstract readonly actionId: string;
+    abstract readonly icon: SvgIconComponent;
 
     abstract createContent(instance: string): JSX.Element;
 

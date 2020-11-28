@@ -1,4 +1,5 @@
 import {
+    Box,
     Card,
     CardActions,
     CardContent,
@@ -25,12 +26,16 @@ export const WidgetCard: React.FC<Props> = (props) => {
 
     return (
         <Card className={classes.card}>
-            <CardContent>{props.content}</CardContent>
-            <CardActions className={classes.card}>
-                <IconButton onClick={() => props.setOpen(true)}>
-                    <Settings />
-                </IconButton>
-            </CardActions>
+            <Box display={"flex"} flexDirection={"column"} height={"100%"}>
+                <Box flexGrow={"1"}>
+                    <CardContent>{props.content}</CardContent>
+                </Box>
+                <CardActions>
+                    <IconButton onClick={() => props.setOpen(true)}>
+                        <Settings />
+                    </IconButton>
+                </CardActions>
+            </Box>
             {props.settings}
         </Card>
     );
