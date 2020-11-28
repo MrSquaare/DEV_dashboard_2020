@@ -41,58 +41,6 @@ function layoutToWidget(
     };
 }
 
-function layoutsToResponsive(
-    layouts: Layout[],
-    currentCols: number,
-    cols: { [P: string]: number }
-): Layouts {
-    return Object.entries(cols).reduce((layoutsRes: Layouts, cols, i) => {
-        layoutsRes[cols[0]] = layouts.map((layout) => {
-            const nb = layout.x + layout.y * currentCols;
-            const x = nb % cols[1];
-            const y = (nb - x) / cols[1];
-
-            return {
-                ...layout,
-                x: x,
-                y: y,
-            };
-        });
-
-        return layoutsRes;
-    }, {});
-}
-
-function getBreakpointFromWindowWidth(breakpoints: {
-    [P: string]: number;
-}): [string, number] {
-    const width = window.innerWidth;
-    const breakpoint = Object.entries(breakpoints).find((breakpoint) => {
-        return width > breakpoint[1];
-    });
-
-    if (!breakpoint) {
-        return ["lg", 1200];
-    }
-
-    return breakpoint;
-}
-
-function getColsFromBreakpoint(
-    breakpoint: [string, number],
-    cols: { [P: string]: number }
-): number {
-    const col = Object.entries(cols).find((col) => {
-        return col[0] === breakpoint[0];
-    });
-
-    if (!col) {
-        return -1;
-    }
-
-    return col[1];
-}
-
 const ResponsiveGridLayout = WidthProvider(Responsive);
 
 const breakpoints = { lg: 1200, md: 992, sm: 576, xs: 0 };
@@ -102,7 +50,6 @@ const defaults: ResponsiveProps = {
     breakpoints: breakpoints,
     cols: cols,
     rowHeight: 200,
-    compactType: null,
     style: {
         position: "relative",
     },
@@ -130,23 +77,17 @@ const CardGridComponent: React.FC<Props> = (props: Props) => {
         })();
     }, [responsiveLayouts]);
 
-    const onLayoutChange = (newLayouts: Layout[]) => {
+    const onLayoutChange = (
+        newLayouts: Layout[],
+        newResponseLayouts: Layouts
+    ) => {
         const currentUpdate = Date.now();
 
         if (currentUpdate < lastUpdate) {
             return;
         }
 
-        const currentBP = getBreakpointFromWindowWidth(breakpoints);
-        const currentCols = getColsFromBreakpoint(currentBP, cols);
-
-        const responsiveLayouts = layoutsToResponsive(
-            newLayouts,
-            currentCols,
-            cols
-        );
-
-        setResponsiveLayouts(responsiveLayouts);
+        setResponsiveLayouts(newResponseLayouts);
         setLastUpdate(currentUpdate);
     };
 
