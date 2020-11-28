@@ -15,5 +15,8 @@ serviceAuthenticationCallbackRouter.get(
             session: false,
             failWithError: true,
         })(req, res, next);
+    },
+    (req, res) => {
+        return res.json({});
     }
 );
