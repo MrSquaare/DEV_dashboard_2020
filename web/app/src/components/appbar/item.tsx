@@ -8,6 +8,7 @@ import {
     Typography,
 } from "@material-ui/core";
 import { AccountCircle, AddBox } from "@material-ui/icons";
+import Router from "next/router";
 import * as React from "react";
 
 type Props = {
@@ -26,6 +27,10 @@ const AppBarItemComponent: React.FC<Props> = (props: Props) => {
 
     const handleProfileClose = () => {
         setProfileAnchor(undefined);
+
+        localStorage.removeItem("jwt");
+
+        Router.push("/authentication/signin");
     };
 
     return (
@@ -69,10 +74,7 @@ const AppBarItemComponent: React.FC<Props> = (props: Props) => {
                         onClose={handleProfileClose}
                     >
                         <MenuItem onClick={handleProfileClose}>
-                            Profile
-                        </MenuItem>
-                        <MenuItem onClick={handleProfileClose}>
-                            My account
+                            Sign out
                         </MenuItem>
                     </Menu>
                 </Toolbar>

@@ -1,4 +1,4 @@
-import { useApi } from "../api/api";
+import { useApi } from "@dashboard-web/hooks";
 import { useEffect } from "react";
 
 export function useServices() {

@@ -1,3 +1,4 @@
+import { WidgetSettings } from "@dashboard-web/types";
 import { Box } from "@material-ui/core";
 import * as React from "react";
 import { useEffect, useState } from "react";
@@ -8,26 +9,25 @@ import {
     ResponsiveProps,
     WidthProvider,
 } from "react-grid-layout";
-import { WidgetData } from "../../types/widget";
+import { WidgetFactory } from "../../utilities/widgets/factory";
 
 type Props = {
-    widgets: WidgetData[];
-    updateWidget: (widget: WidgetData) => Promise<void>;
+    widgets: WidgetSettings[];
+    updateWidgets: (widgets: WidgetSettings[]) => Promise<void>;
+    removeWidget: (widget: WidgetSettings) => Promise<void>;
 };
 
-function widgetToLayout(widget: WidgetData): Layout {
+function widgetToLayout(widget: WidgetSettings): Layout {
     return {
         i: `${widget.service}:${widget.action}:${widget.id}`,
-        w: widget.width === "-1" ? Infinity : parseInt(widget.width),
-        h: widget.height === "-1" ? Infinity : parseInt(widget.height),
+        w: parseInt(widget.width),
+        h: parseInt(widget.height),
         x: parseInt(widget.posX),
         y: parseInt(widget.posY),
     };
 }
 
-function layoutToWidget(
-    layout: Layout
-): Omit<WidgetData, "refreshMs"> & { refreshMs?: string } {
+function layoutToWidget(layout: Layout): WidgetSettings {
     const id = layout.i.split(":");
 
     return {
@@ -38,6 +38,7 @@ function layoutToWidget(
         height: layout.h.toString(),
         posX: layout.x.toString(),
         posY: layout.y.toString(),
+        refreshMs: "600000",
     };
 }
 
@@ -66,15 +67,11 @@ const CardGridComponent: React.FC<Props> = (props: Props) => {
     useEffect(() => {
         if (!responsiveLayouts) return;
 
-        (async function () {
-            for (const layout of responsiveLayouts.lg.entries()) {
-                const widget = layoutToWidget(layout[1]);
+        const widgets = responsiveLayouts.lg.map((layout) => {
+            return layoutToWidget(layout);
+        });
 
-                widget.refreshMs = "3000";
-
-                await props.updateWidget(widget as WidgetData);
-            }
-        })();
+        props.updateWidgets(widgets);
     }, [responsiveLayouts]);
 
     const onLayoutChange = (
@@ -98,9 +95,18 @@ const CardGridComponent: React.FC<Props> = (props: Props) => {
             {...defaults}
         >
             {layouts.map((layout) => {
+                const widget = layoutToWidget(layout);
+
                 return (
                     <Box key={layout.i} data-grid={layout} bgcolor={"#e1e1e1"}>
-                        {layout.i}
+                        {WidgetFactory(
+                            widget.service,
+                            widget.action,
+                            widget.id,
+                            () => {
+                                props.removeWidget(widget as WidgetSettings);
+                            }
+                        )}
                     </Box>
                 );
             })}

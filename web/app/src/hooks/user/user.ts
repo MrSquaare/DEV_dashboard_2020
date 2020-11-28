@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 import { useEffect } from "react";
-import { useApi } from "../api/api";
+import { useApi } from "@dashboard-web/hooks";
 
 export function useUser(redirectTo?: string, redirectIfFound = false) {
     const { data, error, fetch } = useApi();

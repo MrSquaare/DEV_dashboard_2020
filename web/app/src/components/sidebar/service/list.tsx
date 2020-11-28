@@ -1,10 +1,10 @@
+import { WidgetSettings } from "@dashboard-web/types";
 import * as React from "react";
 import core from "../../../index";
-import { WidgetData } from "../../../types/widget";
 import ServiceItemComponent from "./item";
 
 type Props = {
-    addWidget: (widget: WidgetData) => void;
+    addWidget: (widget: WidgetSettings) => void;
 };
 
 const ServiceListComponent: React.FunctionComponent<Props> = (props: Props) => {

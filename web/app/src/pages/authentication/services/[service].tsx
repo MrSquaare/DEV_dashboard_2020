@@ -16,6 +16,12 @@ const ServiceSignInPage: React.FC = () => {
     const { serviceSignedIn, error, serviceSignIn } = useServiceSignIn();
 
     useEffect(() => {
+        if (serviceSignedIn) {
+            window.close();
+        }
+    }, [serviceSignedIn]);
+
+    useEffect(() => {
         const url = new URL(window.location.href);
         const service = url.pathname.substr("/authentication/services/".length);
         const query: Record<string, string> = {};
@@ -27,10 +33,6 @@ const ServiceSignInPage: React.FC = () => {
 
         serviceSignIn(service, query);
     }, []);
-
-    useEffect(() => {
-        window.close();
-    }, [serviceSignedIn]);
 
     return (
         <div>

@@ -1,13 +1,13 @@
 import { Service } from "@dashboard-web/service";
+import { WidgetSettings } from "@dashboard-web/types";
 import { ListItem, ListItemIcon, ListItemText } from "@material-ui/core";
 import { ExpandLess, ExpandMore, Help } from "@material-ui/icons";
 import * as React from "react";
-import { WidgetData } from "../../../types/widget";
 import WidgetListComponent from "../widget/list";
 
 type Props = {
     service: Service;
-    addWidget: (widget: WidgetData) => void;
+    addWidget: (widget: WidgetSettings) => void;
 };
 
 const ServiceItemComponent: React.FunctionComponent<Props> = (props: Props) => {

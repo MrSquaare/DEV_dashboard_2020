@@ -1,4 +1,4 @@
-import { useApi } from "../api/api";
+import { useApi } from "@dashboard-web/hooks";
 
 export function usePartySignIn() {
     const { data, error, fetch } = useApi();

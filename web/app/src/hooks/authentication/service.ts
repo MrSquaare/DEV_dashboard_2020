@@ -1,4 +1,4 @@
-import { useApi } from "../api/api";
+import { useApi } from "@dashboard-web/hooks";
 
 export function useServiceSignIn() {
     const { data, error, fetch } = useApi();
@@ -8,6 +8,9 @@ export function useServiceSignIn() {
         query: Record<string, string> | string[][]
     ) => {
         fetch(`/api/server/services/${service}/authentication/callback`, {
+            headers: {
+                Authorization: `JWT ${window.opener.localStorage.getItem("jwt")}`,
+            },
             query: query,
         });
     };

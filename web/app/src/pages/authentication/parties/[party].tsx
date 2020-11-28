@@ -1,7 +1,7 @@
 import { Backdrop, CircularProgress, makeStyles } from "@material-ui/core";
 import { Alert } from "@material-ui/lab";
 import React, { useEffect } from "react";
-import { usePartySignIn } from "../../../hooks/authentication/party";
+import { usePartySignIn } from "../../../hooks/authentication/";
 
 const useStyle = makeStyles({
     backdrop: {
@@ -16,6 +16,12 @@ const PartySignInPage: React.FC = () => {
     const { partySignedIn, error, partySignIn } = usePartySignIn();
 
     useEffect(() => {
+        if (partySignedIn) {
+            window.close();
+        }
+    }, [partySignedIn]);
+
+    useEffect(() => {
         const url = new URL(window.location.href);
         const party = url.pathname.substr("/authentication/parties/".length);
         const query: Record<string, string> = {};
@@ -27,10 +33,6 @@ const PartySignInPage: React.FC = () => {
 
         partySignIn(party, query);
     }, []);
-
-    useEffect(() => {
-        window.close();
-    }, [partySignedIn]);
 
     return (
         <div>

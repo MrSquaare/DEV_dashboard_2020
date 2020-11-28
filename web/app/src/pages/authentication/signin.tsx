@@ -9,8 +9,8 @@ import {
 } from "@material-ui/core";
 import React from "react";
 import { SignInSignUp } from "../../components/authentication/signin/buttons/signup";
-import { SignInForm } from "../../components/authentication/signin/form";
 import { SignInTwitter } from "../../components/authentication/signin/buttons/twitter";
+import { SignInForm } from "../../components/authentication/signin/form";
 import { useUser } from "../../hooks/user/user";
 
 const useBaseStyle = makeStyles({

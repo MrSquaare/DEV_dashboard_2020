@@ -1,3 +1,5 @@
+import { useWidgets } from "@dashboard-web/hooks";
+import { WidgetSettings } from "@dashboard-web/types";
 import { Backdrop, CircularProgress } from "@material-ui/core";
 import { Alert } from "@material-ui/lab";
 import * as React from "react";
@@ -5,14 +7,18 @@ import AppBarItemComponent from "../components/appbar/item";
 import CardGridComponent from "../components/card/grid";
 import SidebarItemComponent from "../components/sidebar/item";
 import { useUser } from "../hooks/user";
-import { useWidgets } from "../hooks/widgets/widgets";
-import { WidgetData } from "../types/widget";
 
 const IndexPage: React.FunctionComponent = () => {
     const [drawerOpen, setDrawerOpen] = React.useState(false);
 
     const { user } = useUser("/authentication/signin");
-    const { widgets, error: error, addWidget, updateWidget } = useWidgets();
+    const {
+        widgets,
+        error: error,
+        addWidget,
+        updateWidgets,
+        removeWidget,
+    } = useWidgets();
     const loading = !user || (!widgets && !error);
 
     if (loading) {
@@ -23,14 +29,18 @@ const IndexPage: React.FunctionComponent = () => {
         );
     }
 
-    const addWidgetFunc = (widget: WidgetData) => {
+    const addWidgetFunc = (widget: WidgetSettings) => {
         addWidget(widget);
 
         setDrawerOpen(false);
     };
 
-    const updateWidgetFunc = async (widget: WidgetData) => {
-        await updateWidget(widget);
+    const updateWidgetsFunc = async (widgets: WidgetSettings[]) => {
+        await updateWidgets(widgets);
+    };
+
+    const removeWidgetFunc = async (widget: WidgetSettings) => {
+        await removeWidget(widget);
     };
 
     return (
@@ -48,7 +58,8 @@ const IndexPage: React.FunctionComponent = () => {
             {widgets ? (
                 <CardGridComponent
                     widgets={widgets}
-                    updateWidget={updateWidgetFunc}
+                    updateWidgets={updateWidgetsFunc}
+                    removeWidget={removeWidgetFunc}
                 />
             ) : null}
         </div>
