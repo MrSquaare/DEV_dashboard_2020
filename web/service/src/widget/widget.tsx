@@ -1,5 +1,7 @@
+import { WidgetSettings } from "@dashboard-web/types";
+import { Box } from "@material-ui/core";
 import { SvgIconComponent } from "@material-ui/icons";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { WidgetCard } from "../components/card/card";
 import { WidgetSettingsDialog } from "../components/settings/dialog";
 
@@ -15,42 +17,58 @@ export abstract class Widget {
     abstract createSettings(instance: string, save?: () => void): JSX.Element;
 
     wrapContent(
-        instance: string,
-        deleteWidget: () => void,
+        widget: WidgetSettings,
+        updateWidget: (widget: WidgetSettings) => void,
+        deleteWidget: (widget: WidgetSettings) => void,
         save?: () => void
     ): JSX.Element {
         const [open, setOpen] = useState(false);
+        const [refresh, setRefresh] = useState(0);
+
+        useEffect(() => {
+            const timeout = setTimeout(() => {
+                setRefresh(Date.now);
+            }, parseInt(widget.refreshMs));
+
+            return () => clearTimeout(timeout);
+        }, []);
 
         return (
-            <WidgetCard
-                setOpen={setOpen}
-                content={this.createContent(instance)}
-                settings={this.wrapSettings(
-                    instance,
+            <Box height={"100%"}>
+                <WidgetCard
+                    key={refresh}
+                    setOpen={setOpen}
+                    content={this.createContent(widget.id)}
+                />
+                {this.wrapSettings(
                     open,
                     setOpen,
+                    widget,
+                    updateWidget,
                     deleteWidget,
-                    save
+                    () => setRefresh(Date.now())
                 )}
-            />
+            </Box>
         );
     }
 
     wrapSettings(
-        instance: string,
         open: boolean,
         setOpen: (open: boolean) => void,
-        deleteWidget?: () => void,
+        widget: WidgetSettings,
+        updateWidget?: (widget: WidgetSettings) => void,
+        deleteWidget?: (widget: WidgetSettings) => void,
         save?: () => void
     ) {
         return (
             <WidgetSettingsDialog
                 open={open}
                 setOpen={setOpen}
+                settings={this.createSettings(widget.id, save)}
+                widget={widget}
                 deleteWidget={deleteWidget}
-            >
-                {this.createSettings(instance, save)}
-            </WidgetSettingsDialog>
+                updateWidget={updateWidget}
+            />
         );
     }
 }

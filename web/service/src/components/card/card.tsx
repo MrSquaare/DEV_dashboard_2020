@@ -12,7 +12,6 @@ import React from "react";
 type Props = {
     setOpen: (open: boolean) => void;
     content: JSX.Element;
-    settings: JSX.Element;
 };
 
 const useStyle = makeStyles({
@@ -27,7 +26,7 @@ export const WidgetCard: React.FC<Props> = (props) => {
     return (
         <Card className={classes.card}>
             <Box display={"flex"} flexDirection={"column"} height={"100%"}>
-                <Box flexGrow={"1"}>
+                <Box flexGrow={"1"} className={"draggable"}>
                     <CardContent>{props.content}</CardContent>
                 </Box>
                 <CardActions>
@@ -36,7 +35,6 @@ export const WidgetCard: React.FC<Props> = (props) => {
                     </IconButton>
                 </CardActions>
             </Box>
-            {props.settings}
         </Card>
     );
 };
