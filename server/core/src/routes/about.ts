@@ -24,15 +24,15 @@ aboutRouter.use(aboutRoute, (req, res) => {
             }),
         };
     });
-    const customer = {
-        host: req.ip,
+    const client = {
+        host: req.get("x-real-ip") || req.ip,
     };
     const server = {
         current_time: Math.ceil(Date.now() / 1000),
         services: services,
     };
     const about = {
-        customer: customer,
+        client: client,
         server: server,
     };
 
