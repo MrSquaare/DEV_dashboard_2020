@@ -1,15 +1,16 @@
 import {
     Backdrop,
-    Box, CircularProgress,
+    Box,
+    CircularProgress,
     Container,
     CssBaseline,
     makeStyles,
-    Typography
+    Typography,
 } from "@material-ui/core";
 import React from "react";
 import { SignInSignUp } from "../../components/authentication/signin/buttons/signup";
-import { SignInForm } from "../../components/authentication/signin/form";
 import { SignInTwitter } from "../../components/authentication/signin/buttons/twitter";
+import { SignInForm } from "../../components/authentication/signin/form";
 import { useUser } from "../../hooks/user/user";
 
 const useBaseStyle = makeStyles({
@@ -40,22 +41,18 @@ const SignInPage: React.FC = () => {
     const baseClasses = useBaseStyle();
     const classes = useStyle();
 
-    const {error} = useUser("/", true);
+    const { error } = useUser("/", true);
 
     if (!error) {
         return (
             <Backdrop open={!error} className={classes.backdrop}>
                 <CircularProgress color="inherit" />
             </Backdrop>
-        )
+        );
     }
 
     return (
-        <Container
-            component={"main"}
-            maxWidth={"xs"}
-            className={classes.main}
-        >
+        <Container component={"main"} maxWidth={"xs"} className={classes.main}>
             <CssBaseline classes={baseClasses} />
             <Box
                 display={"flex"}

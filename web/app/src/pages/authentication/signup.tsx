@@ -34,11 +34,7 @@ const SignUpPage: React.FC = () => {
     const classes = useStyle();
 
     return (
-        <Container
-            component={"main"}
-            maxWidth={"sm"}
-            className={classes.main}
-        >
+        <Container component={"main"} maxWidth={"sm"} className={classes.main}>
             <CssBaseline classes={baseClasses} />
             <Box
                 display={"flex"}

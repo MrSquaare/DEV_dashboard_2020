@@ -1,44 +1,66 @@
+import { Widget } from "@dashboard-web/service";
+import { WidgetSettings } from "@dashboard-web/types";
+import { ListItem, ListItemIcon, ListItemText, makeStyles } from "@material-ui/core";
 import * as React from "react";
-import {createStyles, ListItem, ListItemIcon, ListItemText, SvgIcon, Theme} from "@material-ui/core";
-import {makeStyles} from "@material-ui/core/styles";
-import IconFactory from "../../../utilities/icons/factory";
-import {v4} from "uuid";
-
-const useStyles = makeStyles((theme: Theme) =>
-    createStyles({
-        nested: {
-            paddingLeft: theme.spacing(4),
-        },
-    }),
-);
+import { useState } from "react";
+import { v4 } from "uuid";
+import { WidgetSettingsFactory } from "../../../utilities/widgets/factory";
 
 type Props = {
-    serviceName: string,
-    widgetData: any,
-    drawerSetOpen: (drawerOpen: boolean) => void,
-    items: object[],
-    setItems: (items: any) => void
+    serviceId: string;
+    widget: Widget;
+    addWidget: (widget: WidgetSettings) => void;
 };
 
-const WidgetItemComponent: React.FunctionComponent<Props> = (props: Props) => {
-    const classes = useStyles();
+const useStyle = makeStyles({
+    nested: {
+        paddingLeft: "2rem",
+    }
+})
+
+const WidgetItemComponent: React.FC<Props> = (props) => {
+    const classes = useStyle();
+
+    const [modal, setModal] = useState<JSX.Element>();
 
     const handleClick = () => {
-        props.setItems(props.items.concat({i: props.serviceName + ":" + props.widgetData.id + "/" + v4(), x: 0, y: Infinity, w: 1, h: 5}));
-        props.drawerSetOpen(false);
-    }
+        const id = v4();
+        const widget: WidgetSettings = {
+            service: props.serviceId,
+            action: props.widget.actionId,
+            id: id,
+            width: "1",
+            height: "2",
+            posX: "0",
+            posY: "0",
+            refreshMs: "600000",
+        };
+
+        const modal = WidgetSettingsFactory(
+            true,
+            (_) => setModal(undefined),
+            widget,
+            undefined,
+            undefined,
+            () => {
+                props.addWidget(widget);
+            }
+        );
+
+        setModal(modal);
+    };
 
     return (
         <div>
             <ListItem button className={classes.nested} onClick={handleClick}>
                 <ListItemIcon>
-                    <IconFactory iconName={props.widgetData.name}/>
+                    <props.widget.icon />
                 </ListItemIcon>
-                <ListItemText primary={props.widgetData.name}/>
+                <ListItemText primary={props.widget.name} />
             </ListItem>
+            {modal ? modal : null}
         </div>
     );
 };
-
 
 export default WidgetItemComponent;

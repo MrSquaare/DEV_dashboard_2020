@@ -33,11 +33,7 @@ const VerifyPage: React.FC = () => {
     const classes = useStyle();
 
     return (
-        <Container
-            component={"main"}
-            maxWidth={"xs"}
-            className={classes.main}
-        >
+        <Container component={"main"} maxWidth={"xs"} className={classes.main}>
             <CssBaseline classes={baseClasses} />
             <Box
                 display={"flex"}

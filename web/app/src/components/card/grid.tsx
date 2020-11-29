@@ -1,44 +1,119 @@
+import { WidgetSettings } from "@dashboard-web/types";
+import { Box } from "@material-ui/core";
 import * as React from "react";
-import {getFromLS, saveToLS} from "../../utilities/localstorage";
-import {Responsive, WidthProvider} from "react-grid-layout";
-import CardItemComponent from "./item";
+import { useEffect, useState } from "react";
+import {
+    Layout,
+    Layouts,
+    Responsive,
+    ResponsiveProps,
+    WidthProvider,
+} from "react-grid-layout";
+import { WidgetFactory } from "../../utilities/widgets/factory";
 
-const originalLayouts = {lg: getFromLS("layouts")} || {};
+type Props = {
+    widgets: WidgetSettings[];
+    updateWidgets: (widgets: WidgetSettings[]) => Promise<void>;
+    updateWidget: (widget: WidgetSettings) => Promise<void>;
+    removeWidget: (widget: WidgetSettings) => Promise<void>;
+};
 
-type Props = {items: object[], setItems: (items: any) => void};
+function widgetToLayout(widget: WidgetSettings): Layout {
+    return {
+        i: `${widget.service}:${widget.action}:${widget.id}`,
+        w: parseInt(widget.width),
+        h: parseInt(widget.height),
+        x: parseInt(widget.posX),
+        y: parseInt(widget.posY),
+    };
+}
 
-const CardGridComponent: React.FunctionComponent<Props> = (props: Props) => {
-    const ResponsiveGridLayout = WidthProvider(Responsive);
+function layoutToWidget(layout: Layout): WidgetSettings {
+    const id = layout.i.split(":");
 
-    const [layout, setLayout] = React.useState(originalLayouts);
+    return {
+        service: id[0],
+        action: id[1],
+        id: id[2],
+        width: layout.w.toString(),
+        height: layout.h.toString(),
+        posX: layout.x.toString(),
+        posY: layout.y.toString(),
+        refreshMs: "600000",
+    };
+}
 
-    const onLayoutChange = (layout: any, layouts: any) => {
-        saveToLS("layouts", layouts);
-        setLayout(layouts);
-    }
+const ResponsiveGridLayout = WidthProvider(Responsive);
 
-    const createElement = (el: any) => {
-        console.log(el);
+const breakpoints = { lg: 1200, md: 992, sm: 576, xs: 0 };
+const cols = { lg: 4, md: 3, sm: 2, xs: 1 };
+const defaults: ResponsiveProps = {
+    className: "layout",
+    breakpoints: breakpoints,
+    cols: cols,
+    rowHeight: 200,
+    draggableHandle: ".draggable",
+    style: {
+        position: "relative",
+    },
+};
 
-        return (
-            <div key={el.i} data-grid={el}>
-                <CardItemComponent divKey={el.i} setLayout={setLayout}/>
-            </div>
-        );
-    }
+const CardGridComponent: React.FC<Props> = (props: Props) => {
+    const layoutsMap = props.widgets.reduce(
+        (map: Record<string, [Layout, WidgetSettings]>, widget) => {
+            const layout = widgetToLayout(widget);
+
+            map[layout.i] = [layout, widget];
+
+            return map;
+        },
+        {}
+    );
+
+    const [lastUpdate, setLastUpdate] = useState(Date.now());
+    const [responsiveLayouts, setResponsiveLayouts] = useState<Layouts>();
+
+    useEffect(() => {
+        if (!responsiveLayouts) return;
+
+        const widgets = responsiveLayouts.lg.map((layout) => {
+            return layoutToWidget(layout);
+        });
+
+        props.updateWidgets(widgets);
+    }, [responsiveLayouts]);
+
+    const onLayoutChange = (
+        newLayouts: Layout[],
+        newResponseLayouts: Layouts
+    ) => {
+        const currentUpdate = Date.now();
+
+        if (currentUpdate < lastUpdate) {
+            return;
+        }
+
+        setResponsiveLayouts(newResponseLayouts);
+        setLastUpdate(currentUpdate);
+    };
 
     return (
         <ResponsiveGridLayout
-            className="layout"
-            breakpoints={{lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0}}
-            cols={{lg: 4, md: 4, sm: 4, xs: 4, xxs: 2}}
-            layouts={layout}
+            layouts={responsiveLayouts}
             onLayoutChange={onLayoutChange}
-            rowHeight={70}
-            compactType={"vertical"}
+            {...defaults}
         >
-            <div key={"spacer"} data-grid={{x: 0, y: 0, w: 4, h: 1, static: true}}/>
-            {props.items.map((el) => createElement(el))}
+            {Object.entries(layoutsMap).map(([id, [layout, widget]]) => {
+                return (
+                    <Box key={layout.i} data-grid={layout} bgcolor={"#e1e1e1"}>
+                        {WidgetFactory(
+                            widget,
+                            props.updateWidget,
+                            props.removeWidget
+                        )}
+                    </Box>
+                );
+            })}
         </ResponsiveGridLayout>
     );
 };

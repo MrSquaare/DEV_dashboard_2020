@@ -8,11 +8,13 @@
     "build": "next build",
     "dev": "next dev -H ${HOSTNAME:-localhost} -p ${PORT:-3000}",
     "start": "next start -H ${HOSTNAME:-localhost} -p ${PORT:-3000}",
-    "clean": "rm -rf build",
-    "fclean": "rm -rf build node_modules/"
+    "clean": "rm -rf build .next",
+    "fclean": "rm -rf build .next node_modules/"
   },
   "devDependencies": {
     "@dashboard/types": "*",
+    "@dashboard-web/service": "*",
+    "@dashboard-web/types": "*",
     "@types/node": "^14.14.6",
     "@types/react": "^16.9.56",
     "@types/react-dom": "^16.9.9",
@@ -22,6 +24,11 @@
   },
   "dependencies": {
     "@dashboard-web/core": "*",
+    "@dashboard-web/hooks": "*",
+    "@dashboard-web/service-github": "*",
+    "@dashboard-web/service-twitter": "*",
+    "@dashboard-web/service-weather": "*",
+    "@dashboard-web/service-youtube": "*",
     "@material-ui/core": "^4.11.0",
     "@material-ui/icons": "^4.9.1",
     "@material-ui/lab": "^4.0.0-alpha.56",

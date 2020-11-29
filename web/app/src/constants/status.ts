@@ -1,5 +1,15 @@
 import { StatusError } from "@dashboard/types";
 
+export const badRequestStatus = new StatusError(400, {
+    name: "BAD_REQUEST",
+    message: "Bad request",
+});
+
+export const unauthorizedStatus = new StatusError(401, {
+    name: "UNAUTHORIZED",
+    message: "Unauthorized",
+});
+
 export const serviceUnavailableStatus = new StatusError(503, {
     name: "SERVICE_UNAVAILABLE",
     message: "Service unavailable",
