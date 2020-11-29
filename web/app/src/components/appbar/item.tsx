@@ -1,3 +1,4 @@
+import { User } from "@dashboard/types";
 import {
     AppBar,
     Box,
@@ -12,6 +13,7 @@ import Router from "next/router";
 import * as React from "react";
 
 type Props = {
+    user: User;
     drawerOpen: boolean;
     setDrawerOpen: (open: boolean) => void;
 };
@@ -27,7 +29,9 @@ const AppBarItemComponent: React.FC<Props> = (props: Props) => {
 
     const handleProfileClose = () => {
         setProfileAnchor(undefined);
+    };
 
+    const handleMenuClose = () => {
         localStorage.removeItem("jwt");
 
         Router.push("/authentication/signin");
@@ -56,7 +60,9 @@ const AppBarItemComponent: React.FC<Props> = (props: Props) => {
                         endIcon={<AccountCircle />}
                         onClick={handleProfileClick}
                     >
-                        john.doe@email.com
+                        {props.user.type === "local"
+                            ? `${props.user.firstName} ${props.user.lastName}`
+                            : props.user.firstName}
                     </Button>
                     <Menu
                         id="profile-menu"
@@ -73,7 +79,7 @@ const AppBarItemComponent: React.FC<Props> = (props: Props) => {
                         open={!!profileAnchor}
                         onClose={handleProfileClose}
                     >
-                        <MenuItem onClick={handleProfileClose}>
+                        <MenuItem onClick={handleMenuClose}>
                             Sign out
                         </MenuItem>
                     </Menu>

@@ -14,6 +14,7 @@ import { WidgetFactory } from "../../utilities/widgets/factory";
 type Props = {
     widgets: WidgetSettings[];
     updateWidgets: (widgets: WidgetSettings[]) => Promise<void>;
+    updateWidget: (widget: WidgetSettings) => Promise<void>;
     removeWidget: (widget: WidgetSettings) => Promise<void>;
 };
 
@@ -51,15 +52,23 @@ const defaults: ResponsiveProps = {
     breakpoints: breakpoints,
     cols: cols,
     rowHeight: 200,
+    draggableHandle: ".draggable",
     style: {
         position: "relative",
     },
 };
 
 const CardGridComponent: React.FC<Props> = (props: Props) => {
-    const layouts = props.widgets.map((widget) => {
-        return widgetToLayout(widget);
-    });
+    const layoutsMap = props.widgets.reduce(
+        (map: Record<string, [Layout, WidgetSettings]>, widget) => {
+            const layout = widgetToLayout(widget);
+
+            map[layout.i] = [layout, widget];
+
+            return map;
+        },
+        {}
+    );
 
     const [lastUpdate, setLastUpdate] = useState(Date.now());
     const [responsiveLayouts, setResponsiveLayouts] = useState<Layouts>();
@@ -94,18 +103,13 @@ const CardGridComponent: React.FC<Props> = (props: Props) => {
             onLayoutChange={onLayoutChange}
             {...defaults}
         >
-            {layouts.map((layout) => {
-                const widget = layoutToWidget(layout);
-
+            {Object.entries(layoutsMap).map(([id, [layout, widget]]) => {
                 return (
                     <Box key={layout.i} data-grid={layout} bgcolor={"#e1e1e1"}>
                         {WidgetFactory(
-                            widget.service,
-                            widget.action,
-                            widget.id,
-                            () => {
-                                props.removeWidget(widget as WidgetSettings);
-                            }
+                            widget,
+                            props.updateWidget,
+                            props.removeWidget
                         )}
                     </Box>
                 );

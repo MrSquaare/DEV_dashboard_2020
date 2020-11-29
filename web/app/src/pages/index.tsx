@@ -16,6 +16,7 @@ const IndexPage: React.FunctionComponent = () => {
         widgets,
         error: error,
         addWidget,
+        updateWidget,
         updateWidgets,
         removeWidget,
     } = useWidgets();
@@ -35,6 +36,10 @@ const IndexPage: React.FunctionComponent = () => {
         setDrawerOpen(false);
     };
 
+    const updateWidgetFunc = async (widgets: WidgetSettings) => {
+        await updateWidget(widgets, true);
+    };
+
     const updateWidgetsFunc = async (widgets: WidgetSettings[]) => {
         await updateWidgets(widgets);
     };
@@ -46,6 +51,7 @@ const IndexPage: React.FunctionComponent = () => {
     return (
         <div>
             <AppBarItemComponent
+                user={user}
                 drawerOpen={drawerOpen}
                 setDrawerOpen={setDrawerOpen}
             />
@@ -59,6 +65,7 @@ const IndexPage: React.FunctionComponent = () => {
                 <CardGridComponent
                     widgets={widgets}
                     updateWidgets={updateWidgetsFunc}
+                    updateWidget={updateWidgetFunc}
                     removeWidget={removeWidgetFunc}
                 />
             ) : null}

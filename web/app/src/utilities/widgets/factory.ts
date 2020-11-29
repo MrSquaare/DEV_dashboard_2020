@@ -1,32 +1,42 @@
+import { WidgetSettings } from "@dashboard-web/types";
 import core from "../../index";
 
 export const WidgetFactory = (
-    serviceId: string,
-    actionId: string,
-    id: string,
-    deleteWidget: () => void,
+    widget: WidgetSettings,
+    updateWidget: (widget: WidgetSettings) => void,
+    deleteWidget: (widget: WidgetSettings) => void,
 ): JSX.Element | undefined => {
-    const service = core.services?.find((service) => service.id === serviceId);
-    const widget = service?.widgets.find(
-        (widget) => widget.actionId === actionId
+    const service = core.services?.find(
+        (serviceItem) => serviceItem.id === widget.service
+    );
+    const widgetBuilder = service?.widgets.find(
+        (widgetItem) => widgetItem.actionId === widget.action
     );
 
-    return widget?.wrapContent(id, deleteWidget);
+    return widgetBuilder?.wrapContent(widget, updateWidget, deleteWidget);
 };
 
 export const WidgetSettingsFactory = (
-    serviceId: string,
-    actionId: string,
-    id: string,
     open: boolean,
     setOpen: (open: boolean) => void,
-    deleteWidget?: () => void,
-    save?: () => void,
+    widget: WidgetSettings,
+    updateWidget?: (widget: WidgetSettings) => void,
+    deleteWidget?: (widget: WidgetSettings) => void,
+    save?: () => void
 ): JSX.Element | undefined => {
-    const service = core.services?.find((service) => service.id === serviceId);
-    const widget = service?.widgets.find(
-        (widget) => widget.actionId === actionId
+    const service = core.services?.find(
+        (serviceItem) => serviceItem.id === widget.service
+    );
+    const widgetBuilder = service?.widgets.find(
+        (widgetItem) => widgetItem.actionId === widget.action
     );
 
-    return widget?.wrapSettings(id, open, setOpen, deleteWidget, save);
+    return widgetBuilder?.wrapSettings(
+        open,
+        setOpen,
+        widget,
+        updateWidget,
+        deleteWidget,
+        save
+    );
 };

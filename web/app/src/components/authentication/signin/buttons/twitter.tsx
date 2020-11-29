@@ -31,8 +31,6 @@ export const SignInTwitter: React.FC = () => {
 
         await openPopUp();
 
-        console.log("OUI");
-
         Router.push("/");
     };
 
