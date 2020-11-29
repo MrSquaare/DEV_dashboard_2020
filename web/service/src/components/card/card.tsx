@@ -18,6 +18,9 @@ const useStyle = makeStyles({
     card: {
         height: "100%",
     },
+    overflow: {
+        "overflow-y": "auto",
+    },
 });
 
 export const WidgetCard: React.FC<Props> = (props) => {
@@ -26,8 +29,14 @@ export const WidgetCard: React.FC<Props> = (props) => {
     return (
         <Card className={classes.card}>
             <Box display={"flex"} flexDirection={"column"} height={"100%"}>
-                <Box flexGrow={"1"} className={"draggable"}>
-                    <CardContent>{props.content}</CardContent>
+                <Box
+                    display={"flex"}
+                    flexGrow={"1"}
+                    className={classes.overflow}
+                >
+                    <Box flexGrow={"1"} className={"draggable"}>
+                        <CardContent>{props.content}</CardContent>
+                    </Box>
                 </Box>
                 <CardActions>
                     <IconButton onClick={() => props.setOpen(true)}>
