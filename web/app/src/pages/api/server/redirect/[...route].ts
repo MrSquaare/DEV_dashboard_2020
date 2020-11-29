@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { serverHost } from "../../../../constants";
+import { serverRedirectHost } from "../../../../constants";
 import { serviceUnavailableStatus } from "../../../../constants/status";
 
 export default async function server(
@@ -9,7 +9,7 @@ export default async function server(
     const routes = req.url?.substr("/api/server/redirect/".length);
 
     try {
-        const url = `${serverHost}/v1/${routes}`;
+        const url = `${serverRedirectHost}/v1/${routes}`;
 
         return res.redirect(url);
     } catch (err) {
