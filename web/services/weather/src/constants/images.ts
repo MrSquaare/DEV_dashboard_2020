@@ -10,7 +10,7 @@ export const images = (weatherID: number, day: string) => {
         case 230:
         case 231:
         case 232:
-            return "/assets/images/005-thunderstorm.png";
+            return "/assets/images/thunderstorm.png";
 
         case 300:
         case 301:
@@ -21,23 +21,23 @@ export const images = (weatherID: number, day: string) => {
         case 313:
         case 314:
         case 321:
-            return "/assets/images/060-rain.png";
+            return "/assets/images/sun-rain.png";
 
         case 500:
         case 501:
         case 502:
         case 503:
         case 504:
-            return "/assets/images/002-rain.png";
+            return "/assets/images/rain.png";
 
         case 511:
-            return "/assets/images/043-winter.png";
+            return "/assets/images/winter.png";
 
         case 520:
         case 521:
         case 522:
         case 531:
-            return "/assets/images/004-storm.png";
+            return "/assets/images/storm.png";
 
         case 600:
         case 601:
@@ -50,7 +50,7 @@ export const images = (weatherID: number, day: string) => {
         case 620:
         case 621:
         case 622:
-            return "/assets/images/006-blizzard.png";
+            return "/assets/images/blizzard.png";
 
         case 701:
         case 711:
@@ -62,22 +62,22 @@ export const images = (weatherID: number, day: string) => {
         case 762:
         case 771:
         case 781:
-            return "/assets/images/014-cloud.png";
+            return "/assets/images/cloud.png";
 
         case 800:
             if (day === "day") {
-                return "/assets/images/029-sunrise.png";
+                return "/assets/images/sunrise.png";
             } else {
-                return "/assets/images/031-night.png";
+                return "/assets/images/night.png";
             }
 
         case 801:
         case 802:
         case 803:
         case 804:
-            return "/assets/images/013-cloudy.png";
+            return "/assets/images/cloudy.png";
 
         default:
-            return "/assets/images/029-sunrise.png";
+            return "/assets/images/sunrise.png";
     }
 };
