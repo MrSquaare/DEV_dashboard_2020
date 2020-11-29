@@ -8,8 +8,8 @@
     "build": "next build",
     "dev": "next dev -H ${HOSTNAME:-localhost} -p ${PORT:-3000}",
     "start": "next start -H ${HOSTNAME:-localhost} -p ${PORT:-3000}",
-    "clean": "rm -rf build",
-    "fclean": "rm -rf build node_modules/"
+    "clean": "rm -rf build .next",
+    "fclean": "rm -rf build .next node_modules/"
   },
   "devDependencies": {
     "@dashboard/types": "*",
