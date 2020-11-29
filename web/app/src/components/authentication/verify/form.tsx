@@ -89,6 +89,7 @@ export const VerifyForm: React.FC = () => {
                                 errors.username &&
                                 "A valid username is required"
                             }
+                            color={"secondary"}
                         />
                     </Grid>
                     <Grid item xs={12}>
@@ -105,13 +106,14 @@ export const VerifyForm: React.FC = () => {
                             inputRef={register({ required: true })}
                             error={!!errors.id}
                             helperText={errors.id && "A valid ID is required"}
+                            color={"secondary"}
                         />
                     </Grid>
                     <Grid item xs={12}>
                         <Button
                             type="submit"
                             variant="contained"
-                            color="primary"
+                            color="secondary"
                             fullWidth
                         >
                             Verify

@@ -78,6 +78,7 @@ export const SignUpForm: React.FC = () => {
                                 errors.firstName &&
                                 "A valid first name is required"
                             }
+                            color={"secondary"}
                         />
                     </Grid>
                     <Grid item xs={12} sm={6}>
@@ -96,6 +97,7 @@ export const SignUpForm: React.FC = () => {
                                 errors.lastName &&
                                 "A valid last name is required"
                             }
+                            color={"secondary"}
                         />
                     </Grid>
                     <Grid item xs={12}>
@@ -116,6 +118,7 @@ export const SignUpForm: React.FC = () => {
                             helperText={
                                 errors.email && "A valid email is required"
                             }
+                            color={"secondary"}
                         />
                     </Grid>
                     <Grid item xs={12}>
@@ -134,6 +137,7 @@ export const SignUpForm: React.FC = () => {
                                 errors.username &&
                                 "A valid username is required"
                             }
+                            color={"secondary"}
                         />
                     </Grid>
                     <Grid item xs={12}>
@@ -153,13 +157,14 @@ export const SignUpForm: React.FC = () => {
                                 errors.password &&
                                 "A valid password is required"
                             }
+                            color={"secondary"}
                         />
                     </Grid>
                     <Grid item xs={12}>
                         <Button
                             type="submit"
                             variant="contained"
-                            color="primary"
+                            color="secondary"
                             fullWidth
                         >
                             Sign Up

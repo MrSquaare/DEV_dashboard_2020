@@ -27,7 +27,7 @@ export class WeatherCityAction extends ServiceActionSettings<Settings> {
         }
 
         const response = await fetch(
-            `https://api.openweathermap.org/data/2.5/weather?q=${settings.city}&appid=${openWeatherMapKey}`
+            `https://api.openweathermap.org/data/2.5/weather?q=${settings.city}&units=metric&appid=${openWeatherMapKey}`
         );
 
         if (response.status !== 200) {

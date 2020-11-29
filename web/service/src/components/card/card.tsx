@@ -35,7 +35,7 @@ export const WidgetCard: React.FC<Props> = (props) => {
                     className={classes.overflow}
                 >
                     <Box flexGrow={"1"} className={"draggable"}>
-                        <CardContent>{props.content}</CardContent>
+                        {props.content}
                     </Box>
                 </Box>
                 <CardActions>

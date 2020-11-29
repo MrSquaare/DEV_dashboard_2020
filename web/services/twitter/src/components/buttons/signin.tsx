@@ -46,7 +46,7 @@ export const SignIn: React.FC<Props> = (props) => {
     return (
         <Button
             variant="contained"
-            color="primary"
+            color="secondary"
             fullWidth
             className={classes.button}
             onClick={handleClick}

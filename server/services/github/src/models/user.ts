@@ -3,6 +3,7 @@ type IGitHubUser = {
     username: string;
     name: string;
     biography: string;
+    avatarURL: string;
     counters: {
         followers: number;
         following: number;
@@ -16,6 +17,7 @@ export class GitHubUser implements IGitHubUser {
     username: string;
     name: string;
     biography: string;
+    avatarURL: string;
     counters: {
         gists: number;
         followers: number;
@@ -28,6 +30,7 @@ export class GitHubUser implements IGitHubUser {
         this.username = user.username;
         this.name = user.name;
         this.biography = user.biography;
+        this.avatarURL = user.avatarURL;
         this.counters = user.counters;
     }
 
@@ -37,6 +40,7 @@ export class GitHubUser implements IGitHubUser {
             username: json.login,
             name: json.name,
             biography: json.bio,
+            avatarURL: json.avatar_url,
             counters: {
                 followers: json.followers,
                 following: json.following,
