@@ -5,6 +5,6 @@ export const appHost = appProtocol + "://" + appHostname + ":" + appPort;
 
 export const serverProtocol = process.env.SERVER_PROTOCOL || "http";
 export const serverHostname = process.env.SERVER_HOSTNAME || "localhost";
-export const serverPort = process.env.SERVER_PORT || 4000;
+export const serverPort = process.env.SERVER_PORT || 8080;
 export const serverHost =
     serverProtocol + "://" + serverHostname + ":" + serverPort;
