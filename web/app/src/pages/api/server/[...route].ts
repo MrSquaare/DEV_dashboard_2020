@@ -21,7 +21,7 @@ function rawBody(req: NextApiRequest): Promise<string | undefined> {
         });
 
         req.on("end", () => {
-            setTimeout(() => resolve(buffer), 0);
+            resolve(buffer);
         });
     });
 }

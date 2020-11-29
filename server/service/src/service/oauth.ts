@@ -69,7 +69,7 @@ export abstract class ServiceOAuth extends Service implements OAuth {
                 return done(e);
             }
 
-            done();
+            done(undefined, user);
         };
     }
 

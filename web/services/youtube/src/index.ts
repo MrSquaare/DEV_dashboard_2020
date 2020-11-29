@@ -1,5 +1,5 @@
-import { WeatherService } from "./service";
+import { YouTubeService } from "./service";
 
-const service = new WeatherService();
+const service = new YouTubeService();
 
 export default service;

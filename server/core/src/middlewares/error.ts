@@ -10,7 +10,7 @@ export function errorMiddleware() {
         next: NextFunction
     ): unknown {
         if (!(err instanceof StatusError)) {
-            console.log(err);
+            console.error(err);
 
             err = internalServerErrorStatus;
         }

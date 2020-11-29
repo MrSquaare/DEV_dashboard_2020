@@ -1,6 +1,9 @@
 import { StatusError } from "@dashboard/types";
 import { useState } from "react";
-import { serviceUnavailableStatus, unknownErrorStatus } from "../../constants/status";
+import {
+    serviceUnavailableStatus,
+    unknownErrorStatus,
+} from "../../constants/status";
 
 async function apiVerify(
     username: string,

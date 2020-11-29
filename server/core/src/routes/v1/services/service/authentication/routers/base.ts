@@ -10,6 +10,7 @@ serviceAuthenticationBaseRouter.get(
         passport.authenticate(`${req.service.id}-service`, {
             callbackURL: req.query.redirect,
             session: false,
+            failWithError: true,
         } as AuthenticateOptions)(req, res, next);
     }
 );

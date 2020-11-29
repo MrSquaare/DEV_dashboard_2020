@@ -1,35 +1,28 @@
-import * as React from "react"
-import IconButton from "@material-ui/core/IconButton";
-import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
-import {createStyles, Divider, Drawer, List, ListSubheader, Theme, Toolbar} from "@material-ui/core";
+import { WidgetSettings } from "@dashboard-web/types";
+import {
+    Divider,
+    Drawer,
+    List,
+    ListSubheader,
+    Toolbar,
+} from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
+import * as React from "react";
 import ServiceListComponent from "./service/list";
-import {makeStyles} from "@material-ui/core/styles";
 
-const useStyles = makeStyles((theme: Theme) =>
-    createStyles({
-        drawer: {
-            width: 300,
-            flexShrink: 0,
-            zIndex: 1300,
-        },
-        drawerPaper: {
-            width: 300,
-        },
-        drawerContainer: {
-            overflow: 'auto',
-        },
-        list: {
-            flexGrow: 1,
-            backgroundColor: theme.palette.background.paper,
-        },
-    }),
-);
+const useStyles = makeStyles({
+    drawer: {
+        "z-index": "1000 !important",
+    },
+    paper: {
+        width: 300,
+    }
+});
 
 type Props = {
-    drawerOpen: boolean,
-    drawerSetOpen: (drawerOpen: boolean) => void,
-    items: object[],
-    setItems: (items: any) => void
+    drawerOpen: boolean;
+    drawerSetOpen: (open: boolean) => void;
+    addWidget: (widget: WidgetSettings) => void;
 };
 
 const SidebarItemComponent: React.FunctionComponent<Props> = (props: Props) => {
@@ -40,31 +33,19 @@ const SidebarItemComponent: React.FunctionComponent<Props> = (props: Props) => {
             open={props.drawerOpen}
             className={classes.drawer}
             classes={{
-                paper: classes.drawerPaper,
+                paper: classes.paper,
             }}
+            onClose={() => props.drawerSetOpen(false)}
         >
-            <Toolbar/>
-            <div className={classes.drawerContainer}>
-                <Divider/>
-                <List
-                    component={"nav"}
-                    aria-labelledby="nested-list-subheader"
-                    subheader={
-                        <ListSubheader component="div" id="nested-list-subheader">
-                            Services List
-                        </ListSubheader>
-                    }
-                    className={classes.list}
-                >
-                    <ServiceListComponent
-                        drawerSetOpen={props.drawerSetOpen}
-                        items={props.items}
-                        setItems={props.setItems}
-                    />
+            <Toolbar />
+            <div>
+                <Divider />
+                <List subheader={<ListSubheader>Services</ListSubheader>}>
+                    <ServiceListComponent addWidget={props.addWidget} />
                 </List>
             </div>
         </Drawer>
     );
-}
+};
 
 export default SidebarItemComponent;

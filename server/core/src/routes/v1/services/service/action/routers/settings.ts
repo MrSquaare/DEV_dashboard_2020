@@ -48,7 +48,7 @@ serviceActionSettingsRouter.get(
             const settings = await action.settingsGet(user.username, instance);
 
             const responseBody: Response = {
-                data: settings,
+                data: settings || {},
             };
 
             return res.json(responseBody);
@@ -85,7 +85,7 @@ serviceActionSettingsRouter.post(
             );
 
             const responseBody: Response = {
-                data: settings,
+                data: settings || {},
             };
 
             return res.json(responseBody);
