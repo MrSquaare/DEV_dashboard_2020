@@ -51,11 +51,12 @@ export const VideoSettings: React.FC<Props> = (props) => {
                     helperText={
                         errors.videoURL && "A valid video URL is required"
                     }
+                    color={"secondary"}
                 />
                 <Button
                     type="submit"
                     variant="contained"
-                    color="primary"
+                    color="secondary"
                     fullWidth
                 >
                     Save

@@ -59,11 +59,12 @@ export const FollowingSettings: React.FC<Props> = (props) => {
                         helperText={
                             errors.username && "A valid username is required"
                         }
+                        color={"secondary"}
                     />
                     <Button
                         type="submit"
                         variant="contained"
-                        color="primary"
+                        color="secondary"
                         fullWidth
                     >
                         Save

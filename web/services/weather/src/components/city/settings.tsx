@@ -51,11 +51,12 @@ export const CitySettings: React.FC<Props> = (props) => {
                     helperText={
                         errors.city && "A valid city is required"
                     }
+                    color={"secondary"}
                 />
                 <Button
                     type="submit"
                     variant="contained"
-                    color="primary"
+                    color="secondary"
                     fullWidth
                 >
                     Save

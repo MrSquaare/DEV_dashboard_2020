@@ -3,6 +3,7 @@ interface ITwitterUser {
     username: string;
     name: string;
     biography: string;
+    avatarURL: string;
     counters: {
         favourites: number;
         followers: number;
@@ -16,6 +17,7 @@ export class TwitterUser implements ITwitterUser {
     username: string;
     name: string;
     biography: string;
+    avatarURL: string;
     counters: {
         favourites: number;
         followers: number;
@@ -28,6 +30,7 @@ export class TwitterUser implements ITwitterUser {
         this.username = user.username;
         this.name = user.name;
         this.biography = user.biography;
+        this.avatarURL = user.avatarURL;
         this.counters = user.counters;
     }
 
@@ -37,6 +40,7 @@ export class TwitterUser implements ITwitterUser {
             username: json.screen_name,
             name: json.name,
             biography: json.description,
+            avatarURL: json.profile_image_url_https,
             counters: {
                 favourites: json.favourites_count,
                 followers: json.followers_count,

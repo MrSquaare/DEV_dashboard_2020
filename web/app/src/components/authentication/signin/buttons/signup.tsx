@@ -6,7 +6,7 @@ import React from "react";
 export const SignInSignUp: React.FC = () => {
     return (
         <Link href={"/authentication/signup"}>
-            <Button color="primary" fullWidth>
+            <Button color="secondary" fullWidth>
                 Not yet signed up?
             </Button>
         </Link>

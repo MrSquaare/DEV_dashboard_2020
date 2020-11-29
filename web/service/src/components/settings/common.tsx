@@ -43,6 +43,7 @@ export const CommonSettings: React.FC<Props> = (props) => {
                 marks
                 min={5}
                 max={15}
+                color={"secondary"}
             />
             <Typography gutterBottom>
                 Width
@@ -55,6 +56,7 @@ export const CommonSettings: React.FC<Props> = (props) => {
                 marks
                 min={1}
                 max={4}
+                color={"secondary"}
             />
             <Typography gutterBottom>
                 Height
@@ -67,10 +69,11 @@ export const CommonSettings: React.FC<Props> = (props) => {
                 marks
                 min={1}
                 max={4}
+                color={"secondary"}
             />
             <Button
                 variant="contained"
-                color="primary"
+                color="secondary"
                 fullWidth
                 onClick={handleClick}
             >

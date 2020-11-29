@@ -86,6 +86,7 @@ export const SignInForm: React.FC = () => {
                                 errors.username &&
                                 "A valid username is required"
                             }
+                            color={"secondary"}
                         />
                     </Grid>
                     <Grid item xs={12}>
@@ -104,13 +105,14 @@ export const SignInForm: React.FC = () => {
                                 errors.password &&
                                 "A valid password is required"
                             }
+                            color={"secondary"}
                         />
                     </Grid>
                     <Grid item xs={12}>
                         <Button
                             type="submit"
                             variant="contained"
-                            color="primary"
+                            color="secondary"
                             fullWidth
                         >
                             Sign In
