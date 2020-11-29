@@ -33,7 +33,7 @@ const useStyle = (url: string) => {
         },
         box: {
             backgroundColor: "rgba(0, 0, 0, 0.75)",
-            padding: "0.25rem",
+            padding: "0.5rem",
         },
     });
 };

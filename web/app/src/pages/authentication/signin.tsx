@@ -12,6 +12,7 @@ import { SignInSignUp } from "../../components/authentication/signin/buttons/sig
 import { SignInTwitter } from "../../components/authentication/signin/buttons/twitter";
 import { SignInForm } from "../../components/authentication/signin/form";
 import { useUser } from "../../hooks/user/user";
+import Image from "next/image";
 
 const useBaseStyle = makeStyles({
     "@global": {
@@ -34,6 +35,9 @@ const useStyle = makeStyles({
     backdrop: {
         color: "#ffffff",
         zIndex: 100,
+    },
+    text: {
+        marginTop: 50,
     },
 });
 
@@ -61,7 +65,8 @@ const SignInPage: React.FC = () => {
                 alignItems={"center"}
                 justifyContent={"center"}
             >
-                <Typography component="h1" variant="h5">
+                <Image src={"/assets/images/logo.png"} width={"150"} height={"150"}/>
+                <Typography component="h1" variant="h5" className={classes.text}>
                     Sign in
                 </Typography>
                 <SignInForm />
