@@ -4,7 +4,7 @@ export const defaultConfigurationPath = "./dashboard.config.js";
 
 export const defaultConfiguration: Configuration = {
     hostname: "localhost",
-    port: 4000,
+    port: 8080,
     database: {
         hostname: "localhost",
         port: 27017,
