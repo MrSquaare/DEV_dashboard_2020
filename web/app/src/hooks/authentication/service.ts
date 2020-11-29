@@ -9,7 +9,9 @@ export function useServiceSignIn() {
     ) => {
         fetch(`/api/server/services/${service}/authentication/callback`, {
             headers: {
-                Authorization: `JWT ${window.opener.localStorage.getItem("jwt")}`,
+                Authorization: `JWT ${window.opener.localStorage.getItem(
+                    "jwt"
+                )}`,
             },
             query: query,
         });

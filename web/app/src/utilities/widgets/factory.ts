@@ -4,7 +4,7 @@ import core from "../../index";
 export const WidgetFactory = (
     widget: WidgetSettings,
     updateWidget: (widget: WidgetSettings) => void,
-    deleteWidget: (widget: WidgetSettings) => void,
+    deleteWidget: (widget: WidgetSettings) => void
 ): JSX.Element | undefined => {
     const service = core.services?.find(
         (serviceItem) => serviceItem.id === widget.service

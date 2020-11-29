@@ -27,20 +27,17 @@ async function userSetWidgets(
     req: NextApiRequest,
     widgets: WidgetSettings[]
 ): Promise<WidgetSettings[] | undefined> {
-    const json = await apiFetch<any>(
-        `${appHost}/api/server/user/settings`,
-        {
-            method: "POST",
-            headers: {
-                Authorization: req.headers.authorization!,
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                key: "widgets",
-                value: JSON.stringify(widgets),
-            }),
-        }
-    );
+    const json = await apiFetch<any>(`${appHost}/api/server/user/settings`, {
+        method: "POST",
+        headers: {
+            Authorization: req.headers.authorization!,
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            key: "widgets",
+            value: JSON.stringify(widgets),
+        }),
+    });
 
     let newWidgets = json["data"];
 

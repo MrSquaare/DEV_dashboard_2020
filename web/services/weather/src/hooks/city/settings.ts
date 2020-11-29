@@ -31,5 +31,9 @@ export function useCitySettings(instance: string) {
         });
     }, []);
 
-    return { citySettings: data ? data["data"] : undefined, error, setCitySettings };
+    return {
+        citySettings: data ? data["data"] : undefined,
+        error,
+        setCitySettings,
+    };
 }

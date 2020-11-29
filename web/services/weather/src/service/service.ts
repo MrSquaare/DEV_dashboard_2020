@@ -1,6 +1,6 @@
 import { Service, Widget } from "@dashboard-web/service";
 import { CityWidget } from "../widgets";
-import { SvgIconComponent, Cloud } from '@material-ui/icons/';
+import { SvgIconComponent, Cloud } from "@material-ui/icons/";
 
 export class WeatherService extends Service {
     readonly id: string = "weather";

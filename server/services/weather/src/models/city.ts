@@ -3,7 +3,7 @@ interface IWeatherCity {
     name: string;
     day: string;
     weather: {
-        id: number,
+        id: number;
         name: string;
         description: string;
     };
@@ -20,7 +20,7 @@ export class WeatherCity implements IWeatherCity {
     name: string;
     day: string;
     weather: {
-        id: number,
+        id: number;
         name: string;
         description: string;
     };
@@ -43,7 +43,7 @@ export class WeatherCity implements IWeatherCity {
         return new WeatherCity({
             id: json.id,
             name: json.name,
-            day: (json.weather[0].icon.slice(-1) === 'd') ? "day" : "night",
+            day: json.weather[0].icon.slice(-1) === "d" ? "day" : "night",
             weather: {
                 id: json.weather[0].id,
                 name: json.weather[0].main,

@@ -1,6 +1,6 @@
 import { Service, Widget } from "@dashboard-web/service";
 import { ChannelWidget, VideoWidget } from "../widgets";
-import {YouTube, SvgIconComponent} from "@material-ui/icons";
+import { YouTube, SvgIconComponent } from "@material-ui/icons";
 
 export class YouTubeService extends Service {
     readonly id: string = "youtube";
