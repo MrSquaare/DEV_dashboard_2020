@@ -52,11 +52,12 @@ export const ChannelSettings: React.FC<Props> = (props) => {
                         errors.channelURL &&
                         "A valid channelURL URL is required"
                     }
+                    color={"secondary"}
                 />
                 <Button
                     type="submit"
                     variant="contained"
-                    color="primary"
+                    color="secondary"
                     fullWidth
                 >
                     Save

@@ -105,7 +105,7 @@ const CardGridComponent: React.FC<Props> = (props: Props) => {
         >
             {Object.entries(layoutsMap).map(([id, [layout, widget]]) => {
                 return (
-                    <Box key={layout.i} data-grid={layout} bgcolor={"#e1e1e1"}>
+                    <Box key={layout.i} data-grid={layout}>
                         {WidgetFactory(
                             widget,
                             props.updateWidget,
