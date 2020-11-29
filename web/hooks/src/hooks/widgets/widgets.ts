@@ -1,6 +1,6 @@
 import { WidgetSettings } from "@dashboard-web/types";
 import { useEffect } from "react";
-import { apiFetchCb } from "../../lib";
+import { apiFetchCb, RequestParameters } from "../../lib";
 import { useApi } from "../api";
 
 export function useWidgets() {
@@ -45,11 +45,12 @@ export function useWidgets() {
             service: string;
             action: string;
             id: string;
-        }
+        },
+        refresh = false
     ) => {
         const jwt = localStorage.getItem("jwt");
-
-        apiFetchCb(`/api/widgets`, {
+        const route = `/api/widgets`;
+        const params: RequestParameters = {
             method: "POST",
             headers: {
                 Authorization: `JWT ${jwt}`,
@@ -67,7 +68,13 @@ export function useWidgets() {
                 posY: settings.posY,
                 refreshMs: settings.refreshMs,
             }),
-        }).catch((e) => console.error(e));
+        };
+
+        if (!refresh) {
+            apiFetchCb(route, params).catch((e: Error) => console.error(e));
+        } else {
+            fetch(route, params);
+        }
     };
 
     const updateWidgets = async (
