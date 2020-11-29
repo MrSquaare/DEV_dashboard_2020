@@ -16,14 +16,14 @@ export const VideoSettings: React.FC<Props> = (props) => {
     );
     const { register, errors, handleSubmit } = useForm();
 
-    const [video, setVideo] = useState("");
+    const [videoURL, setVideoURL] = useState("");
 
     useEffect(() => {
-        setVideo(videoSettings?.video || "");
+        setVideoURL(videoSettings?.videoURL || "");
     }, [videoSettings]);
 
     const afterSubmit = async (data: any) => {
-        setVideoSettings(data.video);
+        setVideoSettings(data.videoURL);
 
         if (props.save) {
             props.save();
@@ -36,20 +36,20 @@ export const VideoSettings: React.FC<Props> = (props) => {
             <form noValidate onSubmit={handleSubmit(afterSubmit)}>
                 <TextField
                     required
-                    label="video"
-                    id="video"
-                    name="video"
-                    autoComplete="video"
+                    label="Video URL"
+                    id="videoURL"
+                    name="videoURL"
+                    autoComplete="videoURL"
                     autoFocus
                     variant="outlined"
                     margin="normal"
                     fullWidth
-                    value={video}
-                    onChange={(e) => setVideo(e.target.value)}
+                    value={videoURL}
+                    onChange={(e) => setVideoURL(e.target.value)}
                     inputRef={register({ required: true })}
-                    error={!!errors.video}
+                    error={!!errors.videoURL}
                     helperText={
-                        errors.video && "A valid video is required"
+                        errors.videoURL && "A valid video URL is required"
                     }
                 />
                 <Button

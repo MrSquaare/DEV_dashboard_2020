@@ -3,27 +3,30 @@ import { Alert } from "@material-ui/lab";
 import * as React from "react";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { useChannelSettings } from "../../hooks/channel";
+import { useFollowersSettings } from "../../hooks/followers";
+import { SignIn } from "../buttons/signin";
 
 type Props = {
     instance: string;
     save?: () => void;
 };
 
-export const ChannelSettings: React.FC<Props> = (props) => {
-    const { channelSettings, error, setChannelSettings } = useChannelSettings(
-        props.instance
-    );
+export const FollowersSettings: React.FC<Props> = (props) => {
+    const {
+        followersSettings,
+        error,
+        setFollowersSettings,
+    } = useFollowersSettings(props.instance);
     const { register, errors, handleSubmit } = useForm();
 
-    const [channelURL, setChannelURL] = useState("");
+    const [username, setUsername] = useState("");
 
     useEffect(() => {
-        setChannelURL(channelSettings?.channelURL || "");
-    }, [channelSettings]);
+        setUsername(followersSettings?.user || "");
+    }, [followersSettings]);
 
     const afterSubmit = async (data: any) => {
-        setChannelSettings(data.channelURL);
+        setFollowersSettings(data.username);
 
         if (props.save) {
             props.save();
@@ -36,21 +39,20 @@ export const ChannelSettings: React.FC<Props> = (props) => {
             <form noValidate onSubmit={handleSubmit(afterSubmit)}>
                 <TextField
                     required
-                    label="Channel URL"
-                    id="channelURL"
-                    name="channelURL"
-                    autoComplete="channelURL"
+                    label="Username"
+                    id="username"
+                    name="username"
+                    autoComplete="username"
                     autoFocus
                     variant="outlined"
                     margin="normal"
                     fullWidth
-                    value={channelURL}
-                    onChange={(e) => setChannelURL(e.target.value)}
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
                     inputRef={register({ required: true })}
-                    error={!!errors.channelURL}
+                    error={!!errors.username}
                     helperText={
-                        errors.channelURL &&
-                        "A valid channelURL URL is required"
+                        errors.username && "A valid username is required"
                     }
                 />
                 <Button

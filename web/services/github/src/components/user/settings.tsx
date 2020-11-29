@@ -34,7 +34,6 @@ export const UserSettings: React.FC<Props> = (props) => {
     return (
         <Box padding={"2rem"}>
             {error ? <Alert severity="error">{error.message}</Alert> : null}
-            <SignIn />
             <form noValidate onSubmit={handleSubmit(afterSubmit)}>
                 <TextField
                     required

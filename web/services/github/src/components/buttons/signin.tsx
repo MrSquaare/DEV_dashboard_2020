@@ -1,6 +1,12 @@
 import { Button, makeStyles } from "@material-ui/core";
 import React from "react";
 
+declare global {
+    interface Window {
+        successSignal: () => void;
+    }
+}
+
 const useStyle = makeStyles({
     button: {
         "margin-bottom": "0.75rem",
@@ -15,7 +21,7 @@ function openPopUp(): Promise<void> {
         );
 
         if (popUp) {
-            popUp.onclose = () => resolve();
+            window.successSignal = () => resolve();
         } else {
             reject();
         }

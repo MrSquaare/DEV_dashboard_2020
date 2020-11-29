@@ -27,14 +27,17 @@ export const VideoContent: React.FC<Props> = (props: Props) => {
 
     const videoBody = (
         <CardContent>
-            <Typography gutterBottom>{video?.name}</Typography>
             <Typography variant="h5" component="h2">
-                {video?.video}
+                {video?.name}
             </Typography>
             <Typography variant="body2" component="p">
-                Followers: {video?.counters?.followers}
+                Likes: {video?.counters.likes}
                 <br />
-                Following: {video?.counters?.following}
+                Dislikes: {video?.counters.dislikes}
+                <br />
+                Comments: {video?.counters.comments}
+                <br />
+                Views: {video?.counters.views}
             </Typography>
         </CardContent>
     );

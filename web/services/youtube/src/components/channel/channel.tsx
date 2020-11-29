@@ -27,14 +27,13 @@ export const ChannelContent: React.FC<Props> = (props: Props) => {
 
     const channelBody = (
         <CardContent>
-            <Typography gutterBottom>{channel?.name}</Typography>
             <Typography variant="h5" component="h2">
-                {channel?.video}
+                {channel?.name}
             </Typography>
             <Typography variant="body2" component="p">
-                Followers: {channel?.counters?.followers}
+                Subscribers: {channel?.counters.subscribers}
                 <br />
-                Following: {channel?.counters?.following}
+                Views: {channel?.counters.views}
             </Typography>
         </CardContent>
     );

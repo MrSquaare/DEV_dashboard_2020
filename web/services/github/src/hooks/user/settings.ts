@@ -31,5 +31,9 @@ export function useUserSettings(instance: string) {
         });
     }, []);
 
-    return { userSettings: data ? data["data"] : undefined, error, setUserSettings };
+    return {
+        userSettings: data ? data["data"] : undefined,
+        error,
+        setUserSettings: setUserSettings,
+    };
 }

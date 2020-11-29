@@ -1,7 +1,7 @@
 import { Widget } from "@dashboard-web/service";
+import { PeopleAlt, SvgIconComponent } from "@material-ui/icons";
 import React from "react";
-import {PeopleAlt, SvgIconComponent} from "@material-ui/icons";
-import {ChannelContent, ChannelSettings} from "../components/channel";
+import { ChannelContent, ChannelSettings } from "../components/channel";
 
 export class ChannelWidget extends Widget {
     readonly id: string = "channel";

@@ -4,7 +4,7 @@ import { useEffect } from "react";
 export function useChannelSettings(instance: string) {
     const { data, error, fetch } = useApi<any>();
 
-    const setChannelSettings = (channel: string) => {
+    const setChannelSettings = (channelURL: string) => {
         fetch(`/api/server/services/youtube/channel/settings`, {
             method: "POST",
             headers: {
@@ -15,7 +15,7 @@ export function useChannelSettings(instance: string) {
                 instance: instance,
             },
             body: JSON.stringify({
-                channelURL: channel,
+                channelURL: channelURL,
             }),
         });
     };
@@ -31,5 +31,9 @@ export function useChannelSettings(instance: string) {
         });
     }, []);
 
-    return { channelSettings: data ? data["data"] : undefined, error, setChannelSettings };
+    return {
+        channelSettings: data ? data["data"] : undefined,
+        error,
+        setChannelSettings,
+    };
 }

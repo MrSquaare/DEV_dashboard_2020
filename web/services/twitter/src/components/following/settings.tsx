@@ -4,7 +4,7 @@ import * as React from "react";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useAuthentication } from "../../hooks/authentication";
-import { useUserSettings } from "../../hooks/user";
+import { useFollowingSettings } from "../../hooks/following";
 import { SignIn } from "../buttons/signin";
 
 type Props = {
@@ -12,21 +12,23 @@ type Props = {
     save?: () => void;
 };
 
-export const UserSettings: React.FC<Props> = (props) => {
+export const FollowingSettings: React.FC<Props> = (props) => {
     const { authentication, getAuthentication } = useAuthentication();
-    const { userSettings, error, setUserSettings } = useUserSettings(
-        props.instance
-    );
+    const {
+        followingSettings,
+        error,
+        setFollowingSettings,
+    } = useFollowingSettings(props.instance);
     const { register, errors, handleSubmit } = useForm();
 
     const [username, setUsername] = useState("");
 
     useEffect(() => {
-        setUsername(userSettings?.user || "");
-    }, [userSettings]);
+        setUsername(followingSettings?.user || "");
+    }, [followingSettings]);
 
     const afterSubmit = async (data: any) => {
-        setUserSettings(data.username);
+        setFollowingSettings(data.username);
 
         if (props.save) {
             props.save();
