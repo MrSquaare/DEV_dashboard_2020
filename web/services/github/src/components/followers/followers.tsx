@@ -10,6 +10,7 @@ import { Alert } from "@material-ui/lab";
 import * as React from "react";
 import { useFollowers } from "../../hooks";
 import UserItem from "../user_item/user_item";
+import {GitHub} from "@material-ui/icons";
 
 type Props = {
     instance: string;
@@ -21,6 +22,9 @@ const useStyle = makeStyles({
         alignItems: "center",
         justifyContent: "center",
         minHeight: "100%",
+    },
+    text: {
+        marginLeft: "0.5rem",
     },
 });
 
@@ -49,9 +53,12 @@ export const FollowersContent: React.FC<Props> = (props: Props) => {
     return (
         <CardContent className={classes.card}>
             <Box width={"100%"}>
-                <Typography variant="h5" component="h2">
-                    Followers
-                </Typography>
+                <Box display={"flex"}>
+                    <GitHub/>
+                    <Typography variant="h5" component="h2" className={classes.text}>
+                        Followers
+                    </Typography>
+                </Box>
                 {followers?.map((follower: GitHubUser) => {
                     return (
                         <Box key={follower.id} margin={"0.5rem"}>

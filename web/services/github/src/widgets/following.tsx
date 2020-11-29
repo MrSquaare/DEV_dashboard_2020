@@ -1,5 +1,5 @@
 import { Widget } from "@dashboard-web/service";
-import { SvgIconComponent, Person } from "@material-ui/icons";
+import { SvgIconComponent, GroupAdd } from "@material-ui/icons";
 import React from "react";
 import { FollowingContent, FollowingSettings } from "../components";
 
@@ -8,7 +8,7 @@ export class FollowingWidget extends Widget {
     readonly name: string = "Following";
     readonly description: string = "Following widget";
     readonly actionId: string = "following";
-    readonly icon: SvgIconComponent = Person;
+    readonly icon: SvgIconComponent = GroupAdd;
 
     createContent(instance: string): JSX.Element {
         return <FollowingContent instance={instance} />;

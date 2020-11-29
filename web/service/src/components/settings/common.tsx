@@ -1,5 +1,5 @@
 import { WidgetSettings } from "@dashboard-web/types";
-import { Box, Button, IconButton, Slider, Typography } from "@material-ui/core";
+import {Box, Button, IconButton, makeStyles, Slider, Typography} from "@material-ui/core";
 import { Delete } from "@material-ui/icons";
 import * as React from "react";
 import { useEffect, useState } from "react";
@@ -10,7 +10,15 @@ type Props = {
     deleteWidget: (widget: WidgetSettings) => void;
 };
 
+const useStyle = makeStyles({
+    button: {
+        marginBottom: "0.5rem",
+    },
+});
+
 export const CommonSettings: React.FC<Props> = (props) => {
+    const classes = useStyle();
+
     const [refreshMin, setRefreshMin] = useState(5);
     const [width, setWidth] = useState(1);
     const [height, setHeight] = useState(1);
@@ -76,6 +84,7 @@ export const CommonSettings: React.FC<Props> = (props) => {
                 color="secondary"
                 fullWidth
                 onClick={handleClick}
+                className={classes.button}
             >
                 Save
             </Button>

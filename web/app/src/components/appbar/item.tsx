@@ -2,7 +2,7 @@ import { User } from "@dashboard/types";
 import {
     AppBar,
     Box,
-    Button,
+    Button, makeStyles,
     Menu,
     MenuItem,
     Toolbar,
@@ -10,6 +10,7 @@ import {
 } from "@material-ui/core";
 import { AccountCircle, AddBox } from "@material-ui/icons";
 import Router from "next/router";
+import Image from "next/image";
 import * as React from "react";
 
 type Props = {
@@ -18,7 +19,15 @@ type Props = {
     setDrawerOpen: (open: boolean) => void;
 };
 
+const useStyle = makeStyles({
+    text: {
+        marginLeft: "0.5rem",
+    },
+});
+
 const AppBarItemComponent: React.FC<Props> = (props: Props) => {
+    const classes = useStyle();
+
     const [profileAnchor, setProfileAnchor] = React.useState<
         Element | undefined
     >();
@@ -49,8 +58,9 @@ const AppBarItemComponent: React.FC<Props> = (props: Props) => {
                     >
                         Add a widget
                     </Button>
-                    <Box flexGrow={"1"}>
-                        <Typography align={"center"} variant={"h6"}>
+                    <Box display={"flex"} alignItems={"center"} justifyContent={"center"} flexGrow={"1"}>
+                        <Image src={"/assets/images/logo.png"} width={"30"} height={"30"} />
+                        <Typography variant={"h6"} className={classes.text}>
                             Dashboard
                         </Typography>
                     </Box>
