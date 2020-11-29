@@ -17,6 +17,8 @@ const PartySignInPage: React.FC = () => {
 
     useEffect(() => {
         if (partySignedIn) {
+            window.opener.successSignal();
+
             window.close();
         }
     }, [partySignedIn]);

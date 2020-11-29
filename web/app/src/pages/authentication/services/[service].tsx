@@ -17,6 +17,8 @@ const ServiceSignInPage: React.FC = () => {
 
     useEffect(() => {
         if (serviceSignedIn) {
+            window.opener.successSignal();
+
             window.close();
         }
     }, [serviceSignedIn]);
