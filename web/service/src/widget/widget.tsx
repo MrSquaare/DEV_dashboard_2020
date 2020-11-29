@@ -27,7 +27,7 @@ export abstract class Widget {
 
         useEffect(() => {
             const timeout = setTimeout(() => {
-                setRefresh(Date.now);
+                setRefresh(Date.now());
             }, parseInt(widget.refreshMs));
 
             return () => clearTimeout(timeout);
